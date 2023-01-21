@@ -8,6 +8,7 @@ export const TYPE_CONTAINER_BASE_STYLE: object = {
     alignItems: 'center',
     boxSizing: 'border-box',
     padding: '11px 13px',
+    cursor: 'pointer',
 };
 
 export const TYPE_SELECTED_BASE_STYLE: object = {
