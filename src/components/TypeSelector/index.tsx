@@ -5,9 +5,11 @@ import ArrowDown from '../../assets/icons/arrowDown.svg';
 import { useElementSize, useEventOutside } from '../../lib/hooks';
 import { useRef, useState } from 'react';
 
-export const TypeSelector = (props: ITypeSelector = {}) => {
+export const TypeSelector = (props: ITypeSelector) => {
     const {
-        styles = {}
+        styles = {},
+        type,
+        setType
     } = props;
 
     const {
@@ -22,7 +24,6 @@ export const TypeSelector = (props: ITypeSelector = {}) => {
     const [typeContainerRef, { height: typeContainerHeight, width: typeContainerWidth }] = useElementSize();
     useEventOutside('click', [typeOptionsContainerRef, typeContainerRef], () => setShowOptions(false));
     const [showOptions, setShowOptions] = useState(false);
-    const [selectedType, setSelectedType] = useState(ICON_TYPES[0])
 
     return <div 
         style={typeContainer ? typeContainer(TYPE_CONTAINER_BASE_STYLE) : TYPE_CONTAINER_BASE_STYLE}
@@ -32,7 +33,7 @@ export const TypeSelector = (props: ITypeSelector = {}) => {
             <span
                 style={typeSelected ? typeSelected(TYPE_SELECTED_BASE_STYLE) : TYPE_SELECTED_BASE_STYLE}
             >
-                {selectedType.label}
+                {type.label}
             </span>
             <img
                 src={ArrowDown}
@@ -47,7 +48,7 @@ export const TypeSelector = (props: ITypeSelector = {}) => {
             {ICON_TYPES?.map(({ label, value }) => <div
                 style={typeOption ? typeOption(TYPE_OPTION_BASE_STYLE) : TYPE_OPTION_BASE_STYLE}
                 onClick={() => {
-                    setSelectedType({ label, value });
+                    setType({ label, value });
                     setShowOptions(false);
                 }}
             >

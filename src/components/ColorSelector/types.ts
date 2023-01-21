@@ -9,5 +9,7 @@ interface IStyles {
 }
 
 export interface IColorSelector {
-    styles?: IStyles
+    styles?: IStyles,
+    hsva: { h: number, s: number, v: number, a: number },
+    setHsva: (hsva: { h: number, s: number, v: number, a: number }) => void,
 }

@@ -1,3 +1,5 @@
+import { type } from "@testing-library/user-event/dist/type";
+
 interface IStyles {
     typeContainer?: (baseStyle: object) => object,
     typeSelected?: (baseStyle: object) => object,
@@ -7,5 +9,7 @@ interface IStyles {
 }
 
 export interface ITypeSelector {
-    styles?: IStyles
+    styles?: IStyles,
+    type: { label: string, value: string },
+    setType: (type: { label: string, value: string }) => void,
 }

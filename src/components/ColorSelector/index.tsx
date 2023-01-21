@@ -5,11 +5,13 @@ import ArrowDownIcon from '../../assets/icons/arrowDown.svg';
 import { useElementSize, useEventOutside } from "../../lib/hooks";
 import Hue from '@uiw/react-color-hue';
 import Saturation from '@uiw/react-color-saturation';
-import { hexToHsva, hsvaToHex } from "@uiw/color-convert";
+import { hsvaToHex } from "@uiw/color-convert";
 
-export const ColorSelector = (props: IColorSelector = {}) => {
+export const ColorSelector = (props: IColorSelector) => {
     const {
-        styles = {}
+        styles = {},
+        hsva,
+        setHsva,
     } = props;
 
     const {
@@ -22,7 +24,6 @@ export const ColorSelector = (props: IColorSelector = {}) => {
         hue,
     } = styles;
 
-    const [hsva, setHsva] = useState({ h: 0, s: 0, v: 0, a: 1 });
     const [colorSelectorContainerRef, { width: colorContainerWidth, height: colorContainerHeight }] = useElementSize();
     const [showPaletteContainer, setShowPaletteContainer] = useState(false);
     const paletteContainerRef = useRef<HTMLDivElement | null>(null);

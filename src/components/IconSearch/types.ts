@@ -5,5 +5,7 @@ interface IStyles {
 }
 
 export interface IIconSearch {
-    styles?: IStyles
+    styles?: IStyles,
+    iconSearch: string,
+    setIconSearch: (iconSearch: string) => void,
 }

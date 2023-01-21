@@ -22,7 +22,7 @@ export const COLOR_SELECTED_INDICATOR_BASE_STYLE = ({ color }: { color: string }
 export const COLOR_SELECTED_BASE_STYLE: object = {
     fontFamily: 'Arial serif',
     fontSize: '13px',
-    marginLeft: '5px',
+    marginLeft: '10px',
 };
 
 export const COLOR_SELECTOR_ARROW_BASE_STYLE: object = {

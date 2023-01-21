@@ -4,7 +4,9 @@ import { IIconSearch } from './types';
 
 export const IconSearch = (props: IIconSearch) => {
     const {
-        styles = {}
+        styles = {},
+        iconSearch,
+        setIconSearch,
     } = props;
 
     const { searchContainer, searchIcon, searchInput } = styles;
@@ -19,6 +21,8 @@ export const IconSearch = (props: IIconSearch) => {
         <input 
             style={searchInput? searchInput(SEARCH_INPUT_BASE_STYLE) : SEARCH_INPUT_BASE_STYLE}
             placeholder='Search'
+            value={iconSearch}
+            onChange={e => setIconSearch(e.target.value)}
         />
     </div>
 };
