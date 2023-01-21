@@ -4,6 +4,9 @@ interface IStyles {
     searchContainer?: (baseStyle: object) => object,
     searchIcon?: (baseStyle: object) => object,
     searchInput?: (baseStyle: object) => object,
+    typeContainer?: (baseStyle: object) => object,
+    typeSelected?: (baseStyle: object) => object,
+    typeArrow?: (baseStyle: object) => object,
 }
 
 export interface IMaterialIconsPicker {

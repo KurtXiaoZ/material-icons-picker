@@ -13,7 +13,10 @@ export const MaterialIconsPicker = ({
         optionContainer,
         searchContainer,
         searchIcon,
-        searchInput
+        searchInput,
+        typeContainer,
+        typeSelected,
+        typeArrow,
     } = styles;
 
     return <div
@@ -25,7 +28,9 @@ export const MaterialIconsPicker = ({
         <div 
             style={optionContainer ? optionContainer(OPTION_CONTAINER_BASE_STYLE) : OPTION_CONTAINER_BASE_STYLE}
         >
-            <TypeSelector />
+            <TypeSelector
+                styles={{ typeContainer, typeSelected, typeArrow }}
+            />
             <ColorSelector />
         </div>
     </div>
