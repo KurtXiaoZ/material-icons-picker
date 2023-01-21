@@ -35,7 +35,7 @@ export const TYPE_OPTIONS_CONTAINER_BASE_STYLE = ({ height = 0, width = 0 }: { h
 });
 
 export const TYPE_OPTION_BASE_STYLE: object = {
-    width: 'fit-content',
+    width: '100%',
     height: '20px',
     margin: '5px 13px',
     fontFamily: 'Arial serif',

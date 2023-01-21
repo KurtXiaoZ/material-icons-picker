@@ -1,5 +1,6 @@
 export const CONTAINER_BASE_STYLE: object = {
     width: '100%',
+    minWidth: '230px',
     height: '100%',
     boxShadow: '1px 1px 7px 2px rgba(0, 0, 0, 0.25)',
 };

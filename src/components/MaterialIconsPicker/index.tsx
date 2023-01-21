@@ -19,6 +19,13 @@ export const MaterialIconsPicker = ({
         typeArrow,
         typeOptionsContainer,
         typeOption,
+        colorSelectorContainer,
+        colorSelectedIndicator,
+        colorSelected,
+        colorSelectorArrow,
+        palatteContainer,
+        saturation,
+        hue,
     } = styles;
 
     return <div
@@ -33,7 +40,9 @@ export const MaterialIconsPicker = ({
             <TypeSelector
                 styles={{ typeContainer, typeSelected, typeArrow, typeOptionsContainer, typeOption }}
             />
-            <ColorSelector />
+            <ColorSelector
+                styles={{ colorSelectorContainer, colorSelectedIndicator, colorSelected, colorSelectorArrow, palatteContainer, saturation, hue }}
+            />
         </div>
     </div>
 };
