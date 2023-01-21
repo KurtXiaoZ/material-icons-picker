@@ -39,6 +39,7 @@ export const PALATTE_CONTAINER_BASE_STYLE = ({ colorContainerHeight, colorContai
     boxSizing: 'border-box',
     padding: '15px',
     boxShadow: 'rgba(60, 64, 67, 0.15) 0px 2px 6px 0px',
+    backgroundColor: '#FFFFFF'
 });
 
 export const SATURATION_BASE_STYLE: object = {

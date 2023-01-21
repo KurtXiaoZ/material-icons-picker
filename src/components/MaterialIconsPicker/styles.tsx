@@ -3,6 +3,8 @@ export const CONTAINER_BASE_STYLE: object = {
     minWidth: '230px',
     height: '100%',
     boxShadow: '1px 1px 7px 2px rgba(0, 0, 0, 0.25)',
+    display: 'flex',
+    flexDirection: 'column',
 };
 
 export const OPTION_CONTAINER_BASE_STYLE: object = {

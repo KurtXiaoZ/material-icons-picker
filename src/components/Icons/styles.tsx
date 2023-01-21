@@ -1,0 +1,20 @@
+import { hsvaToHex } from "@uiw/color-convert";
+
+export const ICONS_CONTAINER_BASE_STYLE: object = {
+    width: '100%',
+    height: '0',
+    flexGrow: '1',
+    boxSizing: 'border-box',
+    padding: '20px',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, 30px)',
+    gridTemplateRows: 'repeat(auto-fill, 30px)',
+    columnGap: '10px',
+    rowGap: '10px',
+};
+
+export const ICON_BASE_STYLE = ({ hsva }: { hsva: { h: number, s: number, v: number, a: number } }): object => ({
+    color: hsvaToHex(hsva),
+    textAlign: 'center',
+    lineHeight: '30px'
+});

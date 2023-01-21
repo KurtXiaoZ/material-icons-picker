@@ -16,6 +16,8 @@ interface IStyles {
     palatteContainer?: (baseStyle: object) => object,
     saturation?: (baseStyle: object) => object,
     hue?: (baseStyle: object) => object,
+    iconsContainer?: (baseStyle: object) => object,
+    icon?: (baseStyle: object) => object,
 }
 
 export interface IMaterialIconsPicker {

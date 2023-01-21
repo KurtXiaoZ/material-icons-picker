@@ -6,6 +6,7 @@ import { CONTAINER_BASE_STYLE, OPTION_CONTAINER_BASE_STYLE } from './styles';
 import { useState } from 'react';
 import { ICON_TYPES } from '../../lib/constants';
 import 'material-icons/iconfont/material-icons.css';
+import { Icons } from '../Icons';
 
 export const MaterialIconsPicker = ({
     styles = {}
@@ -29,6 +30,8 @@ export const MaterialIconsPicker = ({
         palatteContainer,
         saturation,
         hue,
+        iconsContainer,
+        icon,
     } = styles;
 
     const [type, setType] = useState(ICON_TYPES[0]);
@@ -40,7 +43,6 @@ export const MaterialIconsPicker = ({
     >
         <IconSearch 
             styles={{ searchContainer, searchIcon, searchInput }}
-            iconSearch={iconSearch}
             setIconSearch={setIconSearch}
         />
         <div 
@@ -57,5 +59,11 @@ export const MaterialIconsPicker = ({
                 setHsva={setHsva}
             />
         </div>
+        <Icons
+            styles={{ iconsContainer, icon }}
+            iconSearch={iconSearch}
+            type={type?.value}
+            hsva={hsva}
+        />
     </div>
 };
