@@ -1,8 +1,16 @@
-import styles from './styles.module.css';
-import classNames from 'classnames/bind';
-const cx = classNames.bind(styles);
+import { COLOR_SELECTOR_CONTAINER_BASE_STYLE } from "./styles";
+import { IColorSelector } from "./types";
 
-export const ColorSelector = () => {
+export const ColorSelector = (props: IColorSelector = {}) => {
+    const {
+        styles = {}
+    } = props;
 
-    return <div className={cx(styles.colorWrapper)}></div>
+    const {
+        colorSelectorContainer
+    } = styles;
+
+    return <div
+        style={colorSelectorContainer ? colorSelectorContainer(COLOR_SELECTOR_CONTAINER_BASE_STYLE) : COLOR_SELECTOR_CONTAINER_BASE_STYLE}
+    ></div>
 };

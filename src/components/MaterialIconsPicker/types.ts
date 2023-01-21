@@ -7,6 +7,9 @@ interface IStyles {
     typeContainer?: (baseStyle: object) => object,
     typeSelected?: (baseStyle: object) => object,
     typeArrow?: (baseStyle: object) => object,
+    colorSelectorContainer?: (baseStyle: object) => object,
+    typeOptionsContainer?: (baseStyle: object) => object,
+    typeOption?: (baseStyle: object) => object,
 }
 
 export interface IMaterialIconsPicker {
