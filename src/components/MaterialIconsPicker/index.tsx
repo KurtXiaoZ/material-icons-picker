@@ -5,6 +5,7 @@ import { ColorSelector } from '../ColorSelector';
 import { CONTAINER_BASE_STYLE, OPTION_CONTAINER_BASE_STYLE } from './styles';
 import { useState } from 'react';
 import { ICON_TYPES } from '../../lib/constants';
+import 'material-icons/iconfont/material-icons.css';
 
 export const MaterialIconsPicker = ({
     styles = {}
