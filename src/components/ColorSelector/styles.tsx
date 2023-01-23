@@ -34,6 +34,7 @@ export const PALATTE_CONTAINER_BASE_STYLE = ({ colorContainerHeight, colorContai
     width: colorContainerWidth,
     height: 'fit-content',
     position: 'absolute',
+    zIndex: '10',
     top: colorContainerHeight,
     right : '0',
     boxSizing: 'border-box',

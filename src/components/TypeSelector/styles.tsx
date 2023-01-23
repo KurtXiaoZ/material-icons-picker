@@ -25,6 +25,7 @@ export const TYPE_ARROW_BASE_STYLE: object = {
 
 export const TYPE_OPTIONS_CONTAINER_BASE_STYLE = ({ height = 0, width = 0 }: { height?: number, width?: number }): object => ({
     position: 'absolute',
+    zIndex: '10',
     top: height,
     left: '0',
     border: '1px solid black',

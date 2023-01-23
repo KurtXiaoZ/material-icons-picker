@@ -11,10 +11,23 @@ export const ICONS_CONTAINER_BASE_STYLE: object = {
     gridTemplateRows: 'repeat(auto-fill, 30px)',
     columnGap: '10px',
     rowGap: '10px',
+    position: 'relative',
+    overflowY: 'auto'
 };
 
 export const ICON_BASE_STYLE = ({ hsva }: { hsva: { h: number, s: number, v: number, a: number } }): object => ({
     color: hsvaToHex(hsva),
     textAlign: 'center',
-    lineHeight: '30px'
+    lineHeight: '30px',
 });
+
+export const ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE: object = {
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+    fontFamily: 'Arial serif',
+    fontSize: '17px',
+    textAlign: 'center',
+    color: '#86888A',
+};

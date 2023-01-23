@@ -18,6 +18,7 @@ interface IStyles {
     hue?: (baseStyle: object) => object,
     iconsContainer?: (baseStyle: object) => object,
     icon?: (baseStyle: object) => object,
+    iconsContainerPlaceholder?: (baseStyle: object) => object,
 }
 
 export interface IMaterialIconsPicker {

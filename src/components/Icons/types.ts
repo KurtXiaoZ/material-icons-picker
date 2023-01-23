@@ -1,6 +1,7 @@
 interface IStyles {
     iconsContainer?: (baseStyle: object) => object,
     icon?: (baseStyle: object) => object,
+    iconsContainerPlaceholder?: (baseStyle: object) => object,
 }
 
 export interface IIcon {

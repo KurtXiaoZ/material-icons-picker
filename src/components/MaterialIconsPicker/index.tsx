@@ -32,6 +32,7 @@ export const MaterialIconsPicker = ({
         hue,
         iconsContainer,
         icon,
+        iconsContainerPlaceholder,
     } = styles;
 
     const [type, setType] = useState(ICON_TYPES[0]);
@@ -60,7 +61,7 @@ export const MaterialIconsPicker = ({
             />
         </div>
         <Icons
-            styles={{ iconsContainer, icon }}
+            styles={{ iconsContainer, icon, iconsContainerPlaceholder }}
             iconSearch={iconSearch}
             type={type?.value}
             hsva={hsva}

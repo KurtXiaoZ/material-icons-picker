@@ -33,3 +33,26 @@ export const useEventOutside = (event: string, elementRefs: any[], callback: (e:
         return () => document.removeEventListener(event, listener);
     }, [elementRefs, callback]);
 };
+
+export const useLazyLoad = (containerDataset: string, childrenDataset: string): void => {
+    useEffect(() => {
+        let n = 0;
+        const container = document.querySelector(`[${containerDataset}]`);
+        const children: any = document.querySelectorAll(`[${childrenDataset}]`);
+        children.forEach((child: any) => child.style.visibility = 'hidden');
+
+        const lazyload = () => {
+            for(let i = n; i < children.length; ++i) {
+                console.log(children[i].offsetTop, container.clientHeight, container.scrollTop)
+                if(children[i].offsetTop < container.clientHeight + container.scrollTop) {
+                    children[i].style.visibility = 'visible';
+                    n = i + 1;
+                }
+                else break;
+            }
+        }
+
+        container?.addEventListener('scroll', lazyload);
+        lazyload();
+    }, [containerDataset, childrenDataset]);
+};
