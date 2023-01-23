@@ -11,4 +11,5 @@ export interface IIcon {
     icon: string;
     type: string;
     hsva: { h: number; s: number; v: number; a: number };
+    ref: React.Ref<HTMLElement>
 }

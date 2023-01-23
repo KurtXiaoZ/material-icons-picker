@@ -6,6 +6,7 @@ import {
 } from './styles';
 import { IIcons } from './types';
 import { Icon } from '../Icon';
+import { useElementSize } from '../../lib/hooks';
 
 export const Icons = (props: IIcons) => {
     const { styles = {}, iconSearch, type, hsva, defaultIconsNumber } = props;
@@ -23,6 +24,8 @@ export const Icons = (props: IIcons) => {
               s.toLowerCase().includes(iconSearch.toLowerCase())
           )
         : MATERIAL_ICONS.slice(0, defaultIconsNumber);
+    
+    const [iconsContainerRef] = useElementSize();
 
     return (
         <div
@@ -31,6 +34,7 @@ export const Icons = (props: IIcons) => {
                     ? iconsContainer(ICONS_CONTAINER_BASE_STYLE)
                     : ICONS_CONTAINER_BASE_STYLE
             }
+            ref={iconsContainerRef}
         >
             {iconSearchResults.length ? (
                 iconSearchResults.map((icon: string) => (
@@ -39,6 +43,7 @@ export const Icons = (props: IIcons) => {
                         icon={icon}
                         type={type}
                         hsva={hsva}
+                        ref={iconsContainerRef}
                     />
                 ))
             ) : (

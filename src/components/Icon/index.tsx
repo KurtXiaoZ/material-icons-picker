@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { ICON_TYPES } from '../../lib/constants';
 import {
     ICON_BASE_STYLE,
@@ -11,7 +11,7 @@ import { IIcon } from './types';
 
 const cx = classNames.bind(cssStyles);
 
-export const Icon = (props: IIcon) => {
+export const Icon = React.forwardRef((props: IIcon, ref) => {
     const { styles = {}, icon, type, hsva } = props;
 
     const {
@@ -44,4 +44,4 @@ export const Icon = (props: IIcon) => {
             </div>
         </div>
     );
-};
+});
