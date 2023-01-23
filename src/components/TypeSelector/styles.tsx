@@ -14,16 +14,21 @@ export const TYPE_CONTAINER_BASE_STYLE: object = {
 export const TYPE_SELECTED_BASE_STYLE: object = {
     fontFamily: 'Arial, serif',
     fontSize: '12px',
-
 };
 
 export const TYPE_ARROW_BASE_STYLE: object = {
     height: '50%',
     cursor: 'pointer',
-    marginLeft: 'auto'
+    marginLeft: 'auto',
 };
 
-export const TYPE_OPTIONS_CONTAINER_BASE_STYLE = ({ height = 0, width = 0 }: { height?: number, width?: number }): object => ({
+export const TYPE_OPTIONS_CONTAINER_BASE_STYLE = ({
+    height = 0,
+    width = 0,
+}: {
+    height?: number;
+    width?: number;
+}): object => ({
     position: 'absolute',
     zIndex: '10',
     top: height,
@@ -32,7 +37,7 @@ export const TYPE_OPTIONS_CONTAINER_BASE_STYLE = ({ height = 0, width = 0 }: { h
     width,
     height: 'fit-content',
     backgroundColor: '#222222',
-    boxShadow: '0px 2px 6px 2px rgba(60, 64, 67, 0.15)'
+    boxShadow: '0px 2px 6px 2px rgba(60, 64, 67, 0.15)',
 });
 
 export const TYPE_OPTION_BASE_STYLE: object = {

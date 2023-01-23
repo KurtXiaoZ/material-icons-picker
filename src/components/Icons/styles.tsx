@@ -1,4 +1,4 @@
-import { hsvaToHex } from "@uiw/color-convert";
+import { hsvaToHex } from '@uiw/color-convert';
 
 export const ICONS_CONTAINER_BASE_STYLE: object = {
     width: '100%',
@@ -12,14 +12,8 @@ export const ICONS_CONTAINER_BASE_STYLE: object = {
     columnGap: '10px',
     rowGap: '10px',
     position: 'relative',
-    overflowY: 'auto'
+    overflowY: 'auto',
 };
-
-export const ICON_BASE_STYLE = ({ hsva }: { hsva: { h: number, s: number, v: number, a: number } }): object => ({
-    color: hsvaToHex(hsva),
-    textAlign: 'center',
-    lineHeight: '30px',
-});
 
 export const ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE: object = {
     position: 'absolute',
