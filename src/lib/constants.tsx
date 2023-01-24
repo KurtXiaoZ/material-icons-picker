@@ -12,4 +12,4 @@ export const TEXT: {
     NO_ICON_FOUND: 'Nothing found. Try a more general search phrase.',
 };
 
-export const DEFAULT_ICONS_NUMBER: number = 250;
+export const DEFAULT_ICONS_NUMBER: number = 500;

@@ -20,7 +20,7 @@ export const Icons = (props: IIcons) => {
         iconsContainerPlaceholder,
     } = styles;
 
-
+    const [iconsContainerScrollTop, setIconsContainerScrollTop] = useState(0);
     const iconSearchResults = iconSearch
         ? MATERIAL_ICONS.filter((s) =>
               s.toLowerCase().includes(iconSearch.toLowerCase())
@@ -37,6 +37,7 @@ export const Icons = (props: IIcons) => {
                     : ICONS_CONTAINER_BASE_STYLE
             }
             ref={iconsContainerRef}
+            onScroll={(e: any) => setIconsContainerScrollTop(e.target.scrollTop)}
         >
             {iconSearchResults.length ? (
                 iconSearchResults.map((icon: string) => (
@@ -46,6 +47,7 @@ export const Icons = (props: IIcons) => {
                         type={type}
                         hsva={hsva}
                         ref={iconsContainerRef}
+                        iconsContainerScrollTop={iconsContainerScrollTop}
                     />
                 ))
             ) : (

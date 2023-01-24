@@ -13,7 +13,7 @@ import { IIcon } from './types';
 const cx = classNames.bind(cssStyles);
 
 export const Icon = React.forwardRef((props: IIcon, ref: any) => {
-    const { styles = {}, icon, type, hsva } = props;
+    const { styles = {}, icon, type, hsva, iconsContainerScrollTop } = props;
 
     const {
         iconContainer,
@@ -27,6 +27,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: any) => {
         containerRef: ref, 
         iconTipRef,
         iconContainerRef,
+        iconsContainerScrollTop,
     }) : {};
 
     const iconTipBaseStyle = ICON_TIP_BASE_STYLE({
