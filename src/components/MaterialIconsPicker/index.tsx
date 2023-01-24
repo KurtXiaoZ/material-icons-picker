@@ -86,7 +86,13 @@ export const MaterialIconsPicker = ({
                 />
             </div>
             <Icons
-                styles={{ iconsContainer, iconContainer, icon, iconTip, iconsContainerPlaceholder }}
+                styles={{
+                    iconsContainer,
+                    iconContainer,
+                    icon,
+                    iconTip,
+                    iconsContainerPlaceholder,
+                }}
                 iconSearch={iconSearch}
                 type={type?.value}
                 hsva={hsva}

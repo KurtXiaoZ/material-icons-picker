@@ -23,33 +23,43 @@ export const getIconTipPosition = ({
     containerRef,
     iconTipRef,
     iconContainerRef,
-    iconsContainerScrollTop
+    iconsContainerScrollTop,
 }: {
-    containerRef: any,
-    iconTipRef: any,
-    iconContainerRef: any,
-    iconsContainerScrollTop: number
+    containerRef: any;
+    iconTipRef: any;
+    iconContainerRef: any;
+    iconsContainerScrollTop: number;
 }): {
-    iconTipLeft: number,
-    iconTipTop: number,
+    iconTipLeft: number;
+    iconTipTop: number;
 } => {
     const containerRect = containerRef?.current?.getBoundingClientRect();
-    const iconContainerRect = iconContainerRef?.current?.getBoundingClientRect();
+    const iconContainerRect =
+        iconContainerRef?.current?.getBoundingClientRect();
     const iconTipRect = iconTipRef?.current?.getBoundingClientRect();
     let iconTipLeft = (iconContainerRect.width - iconTipRect.width) * 0.5;
     let iconTipTop = iconContainerRect.height + 2;
-    if(iconContainerRect.left + iconTipLeft < containerRect.left) iconTipLeft = 0;
-    else if(iconContainerRect.left + iconTipLeft + iconTipRect.width > containerRect.left + containerRect.width) iconTipLeft = iconContainerRect.width - iconTipRect.width;
-    if(iconContainerRef.current.offsetTop + iconTipTop + iconTipRect.height > iconsContainerScrollTop + containerRect.height) iconTipTop = -1 * iconTipRect.height - 2;
+    if (iconContainerRect.left + iconTipLeft < containerRect.left)
+        iconTipLeft = 0;
+    else if (
+        iconContainerRect.left + iconTipLeft + iconTipRect.width >
+        containerRect.left + containerRect.width
+    )
+        iconTipLeft = iconContainerRect.width - iconTipRect.width;
+    if (
+        iconContainerRef.current.offsetTop + iconTipTop + iconTipRect.height >
+        iconsContainerScrollTop + containerRect.height
+    )
+        iconTipTop = -1 * iconTipRect.height - 2;
     return { iconTipTop, iconTipLeft };
-}
+};
 
 export const ICON_TIP_BASE_STYLE = ({
     top = 0,
     left = 0,
 }: {
-    top: number,
-    left: number,
+    top: number;
+    left: number;
 }): object => {
     return {
         position: 'absolute',
@@ -65,5 +75,5 @@ export const ICON_TIP_BASE_STYLE = ({
         fontFamily: 'Arial serif',
         fontSize: '12px',
         borderRadius: '3px',
-    }
+    };
 };

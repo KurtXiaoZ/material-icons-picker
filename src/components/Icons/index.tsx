@@ -1,6 +1,7 @@
 import { MATERIAL_ICONS } from '../../assets/materialIcons';
 import { TEXT } from '../../lib/constants';
 import {
+    getIconsContainerRowColCounts,
     ICONS_CONTAINER_BASE_STYLE,
     ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE,
 } from './styles';
@@ -8,6 +9,7 @@ import { IIcons } from './types';
 import { Icon } from '../Icon';
 import { useElementSize } from '../../lib/hooks';
 import { useState } from 'react';
+import { ICON_CONTAINER_BASE_STYLE } from '../Icon/styles';
 
 export const Icons = (props: IIcons) => {
     const { styles = {}, iconSearch, type, hsva, defaultIconsNumber } = props;
@@ -26,8 +28,18 @@ export const Icons = (props: IIcons) => {
               s.toLowerCase().includes(iconSearch.toLowerCase())
           )
         : MATERIAL_ICONS.slice(0, defaultIconsNumber);
-    
+
     const [iconsContainerRef] = useElementSize();
+
+    const { rowCount, colCount } = getIconsContainerRowColCounts(
+        iconsContainerRef,
+        iconContainer
+            ? iconContainer(ICON_CONTAINER_BASE_STYLE)
+            : ICON_CONTAINER_BASE_STYLE
+    );
+
+    console.log('rowCount', rowCount);
+    console.log('colCount', colCount);
 
     return (
         <div
@@ -37,7 +49,9 @@ export const Icons = (props: IIcons) => {
                     : ICONS_CONTAINER_BASE_STYLE
             }
             ref={iconsContainerRef}
-            onScroll={(e: any) => setIconsContainerScrollTop(e.target.scrollTop)}
+            onScroll={(e: any) =>
+                setIconsContainerScrollTop(e.target.scrollTop)
+            }
         >
             {iconSearchResults.length ? (
                 iconSearchResults.map((icon: string) => (

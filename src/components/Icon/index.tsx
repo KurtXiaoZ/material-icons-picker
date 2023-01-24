@@ -15,35 +15,40 @@ const cx = classNames.bind(cssStyles);
 export const Icon = React.forwardRef((props: IIcon, ref: any) => {
     const { styles = {}, icon, type, hsva, iconsContainerScrollTop } = props;
 
-    const {
-        iconContainer,
-        icon: iconStyle,
-        iconTip,
-    } = styles;
+    const { iconContainer, icon: iconStyle, iconTip } = styles;
 
     const iconContainerRef = useRef<HTMLDivElement | null>(null);
     const iconTipRef = useRef<HTMLDivElement | null>(null);
-    const { iconTipTop = 0, iconTipLeft = 0 } = iconTipRef.current ? getIconTipPosition({ 
-        containerRef: ref, 
-        iconTipRef,
-        iconContainerRef,
-        iconsContainerScrollTop,
-    }) : {};
+    const { iconTipTop = 0, iconTipLeft = 0 } = iconTipRef.current
+        ? getIconTipPosition({
+              containerRef: ref,
+              iconTipRef,
+              iconContainerRef,
+              iconsContainerScrollTop,
+          })
+        : {};
 
     const iconTipBaseStyle = ICON_TIP_BASE_STYLE({
         top: iconTipTop,
         left: iconTipLeft,
     });
 
-    return (<div
-            style={iconContainer ? iconContainer(ICON_CONTAINER_BASE_STYLE) : ICON_CONTAINER_BASE_STYLE}
+    return (
+        <div
+            style={
+                iconContainer
+                    ? iconContainer(ICON_CONTAINER_BASE_STYLE)
+                    : ICON_CONTAINER_BASE_STYLE
+            }
             className={cx(cssStyles.iconContainer)}
             ref={iconContainerRef}
         >
             <div
-                className={cx(`material-icons${
-                    type === ICON_TYPES[0].value ? '' : '-' + type
-                }`)}
+                className={cx(
+                    `material-icons${
+                        type === ICON_TYPES[0].value ? '' : '-' + type
+                    }`
+                )}
                 style={
                     iconStyle
                         ? iconStyle(ICON_BASE_STYLE({ hsva }))
