@@ -8,7 +8,7 @@ import {
 import { IIcons } from './types';
 import { Icon } from '../Icon';
 import { useElementSize } from '../../lib/hooks';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ICON_CONTAINER_BASE_STYLE } from '../Icon/styles';
 
 export const Icons = (props: IIcons) => {
@@ -27,19 +27,15 @@ export const Icons = (props: IIcons) => {
         ? MATERIAL_ICONS.filter((s) =>
               s.toLowerCase().includes(iconSearch.toLowerCase())
           )
-        : MATERIAL_ICONS.slice(0, defaultIconsNumber);
-
+        : MATERIAL_ICONS;
+    
     const [iconsContainerRef] = useElementSize();
-
-    const { rowCount, colCount } = getIconsContainerRowColCounts(
-        iconsContainerRef,
-        iconContainer
-            ? iconContainer(ICON_CONTAINER_BASE_STYLE)
-            : ICON_CONTAINER_BASE_STYLE
-    );
-
-    console.log('rowCount', rowCount);
-    console.log('colCount', colCount);
+    const { rowCount, colCount } = getIconsContainerRowColCounts(iconsContainerRef, iconContainer ? iconContainer(ICON_CONTAINER_BASE_STYLE) : ICON_CONTAINER_BASE_STYLE);
+    const [icons, setIcons] = useState<any>(iconSearchResults?.slice(0, rowCount * colCount) || []);
+    
+    useEffect(() => {
+        setIcons(iconSearchResults?.slice(0, rowCount * colCount) || []);
+    }, [rowCount, colCount]);
 
     return (
         <div
@@ -49,12 +45,15 @@ export const Icons = (props: IIcons) => {
                     : ICONS_CONTAINER_BASE_STYLE
             }
             ref={iconsContainerRef}
-            onScroll={(e: any) =>
-                setIconsContainerScrollTop(e.target.scrollTop)
-            }
+            onScroll={(e: any) => {
+                if(e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight && icons.length < iconSearchResults.length) {
+                    setTimeout(() => setIcons([ ...icons, ...iconSearchResults.slice(icons.length, icons.length + 3 * colCount)]), 500);
+                }
+                setIconsContainerScrollTop(e.target.scrollTop);
+            }}
         >
-            {iconSearchResults.length ? (
-                iconSearchResults.map((icon: string) => (
+            {icons.length ? (
+                icons.map((icon: string) => (
                     <Icon
                         styles={{ iconContainer, icon: iconStyle, iconTip }}
                         icon={icon}
