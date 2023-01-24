@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { ICON_TYPES } from '../../lib/constants';
 import {
+    getIconTipPosition,
     ICON_BASE_STYLE,
     ICON_CONTAINER_BASE_STYLE,
     ICON_TIP_BASE_STYLE,
@@ -11,7 +12,7 @@ import { IIcon } from './types';
 
 const cx = classNames.bind(cssStyles);
 
-export const Icon = React.forwardRef((props: IIcon, ref) => {
+export const Icon = React.forwardRef((props: IIcon, ref: any) => {
     const { styles = {}, icon, type, hsva } = props;
 
     const {
@@ -20,9 +21,23 @@ export const Icon = React.forwardRef((props: IIcon, ref) => {
         iconTip,
     } = styles;
 
+    const iconContainerRef = useRef<HTMLDivElement | null>(null);
+    const iconTipRef = useRef<HTMLDivElement | null>(null);
+    const { iconTipTop = 0, iconTipLeft = 0 } = iconTipRef.current ? getIconTipPosition({ 
+        containerRef: ref, 
+        iconTipRef,
+        iconContainerRef,
+    }) : {};
+
+    const iconTipBaseStyle = ICON_TIP_BASE_STYLE({
+        top: iconTipTop,
+        left: iconTipLeft,
+    });
+
     return (<div
             style={iconContainer ? iconContainer(ICON_CONTAINER_BASE_STYLE) : ICON_CONTAINER_BASE_STYLE}
             className={cx(cssStyles.iconContainer)}
+            ref={iconContainerRef}
         >
             <div
                 className={cx(`material-icons${
@@ -37,8 +52,9 @@ export const Icon = React.forwardRef((props: IIcon, ref) => {
                 {icon}
             </div>
             <div
-                style={iconTip ? iconTip(ICON_TIP_BASE_STYLE({})) : ICON_TIP_BASE_STYLE({})}
+                style={iconTip ? iconTip(iconTipBaseStyle) : iconTipBaseStyle}
                 className={cx(cssStyles.iconTip)}
+                ref={iconTipRef}
             >
                 {icon}
             </div>

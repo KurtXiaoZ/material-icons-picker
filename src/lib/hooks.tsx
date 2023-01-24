@@ -2,7 +2,7 @@ import React, { RefObject, useEffect, useRef, useState } from 'react';
 
 // This hook listens to the resizing of an element
 export const useElementSize = (): [
-    elementRef: React.Ref<HTMLDivElement>,
+    elementRef: any,
     size: { width: number; height: number }
 ] => {
     const elementRef = useRef<HTMLDivElement | null>(null);

@@ -7,6 +7,7 @@ import {
 import { IIcons } from './types';
 import { Icon } from '../Icon';
 import { useElementSize } from '../../lib/hooks';
+import { useState } from 'react';
 
 export const Icons = (props: IIcons) => {
     const { styles = {}, iconSearch, type, hsva, defaultIconsNumber } = props;
@@ -18,6 +19,7 @@ export const Icons = (props: IIcons) => {
         iconTip,
         iconsContainerPlaceholder,
     } = styles;
+
 
     const iconSearchResults = iconSearch
         ? MATERIAL_ICONS.filter((s) =>
