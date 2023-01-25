@@ -3,7 +3,7 @@ export const ICONS_CONTAINER_BASE_STYLE: object = {
     height: '0',
     flexGrow: '1',
     boxSizing: 'border-box',
-    padding: '20px',
+    padding: '20px 20px 60px 20px',
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, 30px)',
     gridTemplateRows: 'repeat(auto-fill, 30px)',
@@ -72,3 +72,15 @@ export const getIconsContainerRowColCounts = (
             ) || 0) + 1,
     };
 };
+
+export const LOADING_BASE_STYLE = (
+    iconsContainerRef: any,
+    iconsContainerScrollTop: number
+): object => ({
+    position: 'absolute',
+    left: '50%',
+    top: parseInt(iconsContainerRef.current?.clientHeight) + parseInt(iconsContainerRef.current?.style.paddingBottom) / 2 + 'px' || '40px',
+    transform: 'translateX(-50%)',
+    width: parseInt(iconsContainerRef.current?.style.paddingBottom) / 2 + 'px',
+    animation: 'spin 4s linear infinite'
+});

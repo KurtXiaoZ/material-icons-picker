@@ -21,6 +21,7 @@ interface IStyles {
     icon?: (baseStyle: object) => object;
     iconTip?: (baseStyle: object) => object;
     iconsContainerPlaceholder?: (baseStyle: object) => object;
+    loading?: (baseStyle: object) => object;
 }
 
 export interface IMaterialIconsPicker {

@@ -4,12 +4,14 @@ import {
     getIconsContainerRowColCounts,
     ICONS_CONTAINER_BASE_STYLE,
     ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE,
+    LOADING_BASE_STYLE,
 } from './styles';
 import { IIcons } from './types';
 import { Icon } from '../Icon';
 import { useElementSize } from '../../lib/hooks';
 import { useEffect, useState } from 'react';
 import { ICON_CONTAINER_BASE_STYLE } from '../Icon/styles';
+import LoadingIcon from '../../assets/icons/loading.svg';
 
 export const Icons = (props: IIcons) => {
     const { styles = {}, iconSearch, type, hsva, defaultIconsNumber } = props;
@@ -20,6 +22,7 @@ export const Icons = (props: IIcons) => {
         icon: iconStyle,
         iconTip,
         iconsContainerPlaceholder,
+        loading,
     } = styles;
 
     const [iconsContainerScrollTop, setIconsContainerScrollTop] = useState(0);
@@ -36,6 +39,8 @@ export const Icons = (props: IIcons) => {
     useEffect(() => {
         setIcons(iconSearchResults?.slice(0, rowCount * colCount) || []);
     }, [rowCount, colCount]);
+
+    console.log(iconsContainerRef.current?.clientHeight);
 
     return (
         <div
@@ -76,6 +81,14 @@ export const Icons = (props: IIcons) => {
                     {TEXT.NO_ICON_FOUND}
                 </div>
             )}
+            <img
+                src={LoadingIcon}
+                style={
+                    loading 
+                        ? loading(LOADING_BASE_STYLE(iconsContainerRef, iconsContainerScrollTop))
+                        : LOADING_BASE_STYLE(iconsContainerRef, iconsContainerScrollTop)
+                }
+            />
         </div>
     );
 };
