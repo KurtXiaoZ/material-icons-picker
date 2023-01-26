@@ -34,7 +34,9 @@ export const MaterialIconsPicker = ({
         iconContainer,
         icon,
         iconTip,
+        iconsGrid,
         iconsContainerPlaceholder,
+        loadingContainer,
         loading
     } = styles;
 
@@ -89,10 +91,12 @@ export const MaterialIconsPicker = ({
             <Icons
                 styles={{
                     iconsContainer,
+                    iconsGrid,
                     iconContainer,
                     icon,
                     iconTip,
                     iconsContainerPlaceholder,
+                    loadingContainer,
                     loading
                 }}
                 iconSearch={iconSearch}

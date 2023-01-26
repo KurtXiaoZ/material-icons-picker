@@ -23,12 +23,12 @@ export const getIconTipPosition = ({
     containerRef,
     iconTipRef,
     iconContainerRef,
-    iconsContainerScrollTop,
+    iconsGridScrollTop,
 }: {
     containerRef: any;
     iconTipRef: any;
     iconContainerRef: any;
-    iconsContainerScrollTop: number;
+    iconsGridScrollTop: number;
 }): {
     iconTipLeft: number;
     iconTipTop: number;
@@ -48,7 +48,7 @@ export const getIconTipPosition = ({
         iconTipLeft = iconContainerRect.width - iconTipRect.width;
     if (
         iconContainerRef.current.offsetTop + iconTipTop + iconTipRect.height >
-        iconsContainerScrollTop + containerRect.height
+        iconsGridScrollTop + containerRect.height
     )
         iconTipTop = -1 * iconTipRect.height - 2;
     return { iconTipTop, iconTipLeft };

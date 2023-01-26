@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { ICON_TYPES } from '../../lib/constants';
 import {
     getIconTipPosition,
@@ -13,7 +13,7 @@ import { IIcon } from './types';
 const cx = classNames.bind(cssStyles);
 
 export const Icon = React.forwardRef((props: IIcon, ref: any) => {
-    const { styles = {}, icon, type, hsva, iconsContainerScrollTop } = props;
+    const { styles = {}, icon, type, hsva, iconsGridScrollTop } = props;
 
     const { iconContainer, icon: iconStyle, iconTip } = styles;
 
@@ -24,7 +24,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: any) => {
               containerRef: ref,
               iconTipRef,
               iconContainerRef,
-              iconsContainerScrollTop,
+              iconsGridScrollTop,
           })
         : {};
 
