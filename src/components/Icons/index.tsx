@@ -45,10 +45,11 @@ export const Icons = (props: IIcons) => {
     const iconsGridScrollTopRef = useRef<number>(0);
 
     useEffect(() => {
-        if(iconsGridRef.current) iconsGridRef.current.scrollTop = 0//iconsGridScrollTopRef.current;
+        if(iconsGridRef.current) iconsGridRef.current.scrollTop = iconsGridScrollTopRef.current;
     }, [icons]);
 
     useEffect(() => {
+        iconsGridScrollTopRef.current = 0;
         setIcons(iconSearchResults?.slice(0, rowCount * colCount) || []);
     }, [iconSearch]);
     
@@ -74,11 +75,11 @@ export const Icons = (props: IIcons) => {
                 onScroll={(e: any) => {
                     if(e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight && icons.length < iconSearchResults.length) {
                         iconsGridScrollTopRef.current = e.target.scrollTop;
-                        setShowLoading(true);
-                        setTimeout(() => {
-                            setIcons([ ...icons, ...iconSearchResults.slice(icons.length, icons.length + 5 * colCount)]);
-                            setShowLoading(false);
-                        }, 500);
+                        // setShowLoading(true);
+                        // setTimeout(() => {
+                            setIcons(prevIcons => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + 5 * colCount)]);
+                            // setShowLoading(false);
+                        // }, 1000);
                     }
                     setIconsGridScrollTop(e.target.scrollTop);
                 }}
