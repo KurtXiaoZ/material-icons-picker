@@ -47,33 +47,18 @@ export const useEventOutside = (
     }, [elementRefs, callback]);
 };
 
-/**
- * Get a throttled version of a function
- * @param {Function} callback the original function
- * @param {Number} limit time limit of the callback
- * @param {Array} dependencies dependencies of the throttled function
- * @returns the throttled version of the function
- */
-export const useThrottle = (callback: any, limit: any, dependencies: any = null) => {
-    const waiting = useRef(false);
-    const timerRef = useRef<any>();
+export const useDebounce = (callback: any, delay: any, dependencies = null) => {
+    const timerRef = useRef(null);
 
     useEffect(() => {
-        return () => {
-            waiting.current = false;
-            timerRef.current && clearTimeout(timerRef.current);
-        }
+        return () => timerRef.current && clearTimeout(timerRef.current);
     }, dependencies);
 
-    const throttledCallback = (...args) => {
-        if(!waiting.current) {
-            callback.call(null, ...args);
-            waiting.current = true;
-            timerRef.current = setTimeout(() => {
-                waiting.current = false;
-            }, limit)
-        }
-    };
-
-    return throttledCallback;
+    return (...args) => {
+        if(timerRef.current) clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => {
+            callback.apply(null, args);
+            timerRef.current = null;
+        }, delay);
+    }
 }

@@ -10,7 +10,7 @@ import {
 } from './styles';
 import { IIcons } from './types';
 import { Icon } from '../Icon';
-import { useElementSize, useThrottle } from '../../lib/hooks';
+import { useElementSize, useDebounce } from '../../lib/hooks';
 import { useEffect, useRef, useState } from 'react';
 import { ICON_CONTAINER_BASE_STYLE } from '../Icon/styles';
 import LoadingIcon from '../../assets/icons/loading.svg';
@@ -43,9 +43,13 @@ export const Icons = (props: IIcons) => {
     const [icons, setIcons] = useState<any>(iconSearchResults?.slice(0, rowCount * colCount) || []);
     const [showLoading, setShowLoading] = useState(false);
     const iconsGridScrollTopRef = useRef<number>(0);
+    const debouncedUpdateScrollTop = useDebounce((e: any) => setIconsGridScrollTop(e.target.scrollTop), 100, []);
 
     useEffect(() => {
-        if(iconsGridRef.current) iconsGridRef.current.scrollTop = iconsGridScrollTopRef.current;
+        if(iconsGridRef.current) {
+            // iconsGridRef.current.style.overflowY = 'visible';
+            iconsGridRef.current.scrollTop = iconsGridScrollTopRef.current;
+        }
     }, [icons]);
 
     useEffect(() => {
@@ -75,12 +79,14 @@ export const Icons = (props: IIcons) => {
                 onScroll={(e: any) => {
                     if(e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight && icons.length < iconSearchResults.length) {
                         iconsGridScrollTopRef.current = e.target.scrollTop;
-                        // setShowLoading(true);
-                        // setTimeout(() => {
+                        // iconsGridRef.current.style.overflowY = 'hidden';
+                        setShowLoading(true);
+                        setTimeout(() => {
                             setIcons(prevIcons => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + 5 * colCount)]);
-                            // setShowLoading(false);
-                        // }, 1000);
+                            setShowLoading(false);
+                        }, 1000);
                     }
+                    // debouncedUpdateScrollTop(e);
                     setIconsGridScrollTop(e.target.scrollTop);
                 }}
             >
