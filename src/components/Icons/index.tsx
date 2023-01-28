@@ -80,11 +80,11 @@ export const Icons = (props: IIcons) => {
                     if(e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight && icons.length < iconSearchResults.length) {
                         iconsGridScrollTopRef.current = e.target.scrollTop;
                         // iconsGridRef.current.style.overflowY = 'hidden';
-                        setShowLoading(true);
+                        // setShowLoading(true);
                         setTimeout(() => {
                             setIcons(prevIcons => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + 5 * colCount)]);
-                            setShowLoading(false);
-                        }, 1000);
+                            // setShowLoading(false);
+                        }, 500);
                     }
                     // debouncedUpdateScrollTop(e);
                     setIconsGridScrollTop(e.target.scrollTop);
