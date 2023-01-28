@@ -8,10 +8,11 @@ import {
 import { IIcons } from './types';
 import { Icon } from '../Icon';
 import { useElementSize, useDebounce } from '../../lib/hooks';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ICON_CONTAINER_BASE_STYLE } from '../Icon/styles';
 import cssStyles from './styles.module.css';
 import classNames from 'classnames/bind';
+import { xxx } from '../../lib/utils';
 const cx = classNames.bind(cssStyles);
 
 export const Icons = (props: IIcons) => {
@@ -36,9 +37,8 @@ export const Icons = (props: IIcons) => {
     const [icons, setIcons] = useState<any>(iconSearchResults?.slice(0, rowCount * colCount) || []);
     const debouncedUpdateScrollTop = useDebounce((e: any) => setIconsGridScrollTop(e.target.scrollTop), 100, []);
 
-    // console.log(rowCount, colCount);
-
     useEffect(() => {
+        iconsContainerRef.current.scrollTop = 0;
         setIcons(iconSearchResults?.slice(0, rowCount * colCount) || []);
     }, [iconSearch]);
     
@@ -60,6 +60,7 @@ export const Icons = (props: IIcons) => {
                     setIcons(prevIcons => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + 5 * colCount)]);
                 }
                 debouncedUpdateScrollTop(e);
+                // setIconsGridScrollTop(e.target.scrollTop)
             }}
         >
             {icons.length ? (

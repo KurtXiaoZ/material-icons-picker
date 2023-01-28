@@ -42,6 +42,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: any) => {
             }
             className={cx(cssStyles.iconContainer)}
             ref={iconContainerRef}
+            onMouseOver={() => console.log(iconContainerRef.current.offsetTop)}
         >
             <div
                 className={cx(

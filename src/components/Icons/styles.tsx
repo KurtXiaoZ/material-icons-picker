@@ -1,18 +1,4 @@
 export const ICONS_CONTAINER_BASE_STYLE: object = {
-    /*overflowY: 'auto',
-    overflowX: 'visible',
-    width: '100%',
-    height: '0',
-    flexGrow: '1',
-    boxSizing: 'border-box',
-    padding: '20px',
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, 30px)',
-    gridTemplateRows: 'repeat(auto-fill, 30px)',
-    rowGap: '10px',
-    columnGap: '10px',
-    position: 'relative',
-    margin: '0',*/
     width: '100%',
     height: '0',
     flexGrow: '1',
@@ -47,7 +33,6 @@ export const getIconsContainerRowColCounts = (
         iconsContainerRef.current &&
         window.getComputedStyle(iconsContainerRef.current);
 
-    console.log(iconsContainerRef.current?.style.columnCount)
     const iconsContainerRowGap = parseInt(iconsContainerComputedStyles?.getPropertyValue('row-gap'));
     const iconsContainerColGap = parseInt(iconsContainerComputedStyles?.getPropertyValue('column-gap'));
     const iconsContainerHeight = parseInt(iconsContainerComputedStyles?.getPropertyValue('height'));

@@ -8,6 +8,8 @@ export const ICON_CONTAINER_BASE_STYLE: object = {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: '2px',
+    margin: '0',
+    padding: 0,
 };
 
 export const ICON_BASE_STYLE = ({
@@ -33,24 +35,16 @@ export const getIconTipPosition = ({
     iconTipLeft: number;
     iconTipTop: number;
 } => {
+    const containerComputedStyles: any = window.getComputedStyle(containerRef.current);
     const containerRect = containerRef?.current?.getBoundingClientRect();
-    const iconContainerRect =
-        iconContainerRef?.current?.getBoundingClientRect();
+    const iconContainerRect = iconContainerRef?.current?.getBoundingClientRect();
     const iconTipRect = iconTipRef?.current?.getBoundingClientRect();
     let iconTipLeft = (iconContainerRect.width - iconTipRect.width) * 0.5;
     let iconTipTop = iconContainerRect.height + 2;
-    if (iconContainerRect.left + iconTipLeft < containerRect.left)
-        iconTipLeft = 0;
-    else if (
-        iconContainerRect.left + iconTipLeft + iconTipRect.width >
-        containerRect.left + containerRect.width
-    )
-        iconTipLeft = iconContainerRect.width - iconTipRect.width;
-    if (
-        iconContainerRef.current.offsetTop + iconTipTop + iconTipRect.height >
-        iconsGridScrollTop + containerRect.height
-    )
-        iconTipTop = -1 * iconTipRect.height - 2;
+    // console.log(iconContainerRef.current.offsetTop);
+    if (iconContainerRect.left + iconTipLeft < containerRect.left + parseInt(containerComputedStyles?.getPropertyValue('padding-left') || '0')) iconTipLeft = 0;
+    else if (iconContainerRect.left + iconTipLeft + iconTipRect.width > containerRect.left + containerRect.width - parseInt(containerComputedStyles?.getPropertyValue('padding-right') || '0')) iconTipLeft = iconContainerRect.width - iconTipRect.width;
+    if (iconContainerRef.current.offsetTop + iconTipTop + iconTipRect.height > iconsGridScrollTop + containerRect.height - parseInt(containerComputedStyles?.getPropertyValue('padding-bottom') || '0')) iconTipTop = -1 * iconTipRect.height - 2;
     return { iconTipTop, iconTipLeft };
 };
 
