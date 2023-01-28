@@ -29,7 +29,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: any) => {
         });
         setIconTipBaseStyle(ICON_TIP_BASE_STYLE({ top, left }));
 
-    }, [iconsContainerScrollTop]);
+    }, [iconsContainerScrollTop, icon]);
 
     return (
         <div
@@ -40,6 +40,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: any) => {
             }
             className={cx(cssStyles.iconContainer)}
             ref={iconContainerRef}
+            data-iconcontainer
         >
             <div
                 className={cx(

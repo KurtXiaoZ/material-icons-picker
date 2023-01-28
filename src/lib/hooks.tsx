@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect, useRef, useState } from 'react';
+import {useEffect, useRef, useState } from 'react';
 
 // This hook listens to the resizing of an element
 export const useElementSize = (): [

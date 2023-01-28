@@ -1,4 +1,0 @@
-.iconsContainer::after {
-    content: "";
-    flex: auto;
-}
