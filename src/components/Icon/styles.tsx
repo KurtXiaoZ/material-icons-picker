@@ -23,34 +23,22 @@ export const getIconTipPosition = ({
     containerRef,
     iconTipRef,
     iconContainerRef,
-    iconsGridScrollTop,
 }: {
     containerRef: any;
     iconTipRef: any;
     iconContainerRef: any;
-    iconsGridScrollTop: number;
 }): {
     iconTipLeft: number;
     iconTipTop: number;
 } => {
-    const containerRect = containerRef?.current?.getBoundingClientRect();
-    const iconContainerRect =
-        iconContainerRef?.current?.getBoundingClientRect();
-    const iconTipRect = iconTipRef?.current?.getBoundingClientRect();
+    const iconsContainerRect = containerRef.current?.getBoundingClientRect();
+    const iconContainerRect = iconContainerRef.current?.getBoundingClientRect();
+    const iconTipRect = iconTipRef.current?.getBoundingClientRect();
     let iconTipLeft = (iconContainerRect.width - iconTipRect.width) * 0.5;
     let iconTipTop = iconContainerRect.height + 2;
-    if (iconContainerRect.left + iconTipLeft < containerRect.left)
-        iconTipLeft = 0;
-    else if (
-        iconContainerRect.left + iconTipLeft + iconTipRect.width >
-        containerRect.left + containerRect.width
-    )
-        iconTipLeft = iconContainerRect.width - iconTipRect.width;
-    if (
-        iconContainerRef.current.offsetTop + iconTipTop + iconTipRect.height >
-        iconsGridScrollTop + containerRect.height
-    )
-        iconTipTop = -1 * iconTipRect.height - 2;
+    if(iconContainerRect.left + iconTipLeft < iconsContainerRect.left + 2) iconTipLeft = 0;
+    // else if(iconContainerRect.left + iconTipLeft + iconTipRect.width + 2 > iconsContainerRect.left + iconsContainerRect.width) iconTipLeft = iconContainerRect.width - iconTipRect.width;
+    if(iconContainerRect.top + iconTipTop + iconTipRect.height + 2 > iconsContainerRect.top + iconsContainerRect.height) iconTipTop = -1 * iconTipRect.height - 2;
     return { iconTipTop, iconTipLeft };
 };
 

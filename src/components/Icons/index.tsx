@@ -4,62 +4,44 @@ import {
     getIconsContainerRowColCounts,
     ICONS_CONTAINER_BASE_STYLE,
     ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE,
-    LOADING_CONTAINER_BASE_STYLE,
-    LOADING_BASE_STYLE,
-    ICONS_GRID_BASE_STYLE,
 } from './styles';
 import { IIcons } from './types';
 import { Icon } from '../Icon';
 import { useElementSize, useDebounce } from '../../lib/hooks';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ICON_CONTAINER_BASE_STYLE } from '../Icon/styles';
-import LoadingIcon from '../../assets/icons/loading.svg';
 import cssStyles from './styles.module.css';
 import classNames from 'classnames/bind';
+import { xxx } from '../../lib/utils';
 const cx = classNames.bind(cssStyles);
 
 export const Icons = (props: IIcons) => {
-    const { styles = {}, iconSearch, type, hsva, defaultIconsNumber } = props;
+    const { styles = {}, iconSearch, type, hsva } = props;
 
     const {
         iconsContainer,
-        iconsGrid,
         iconContainer,
         icon: iconStyle,
         iconTip,
         iconsContainerPlaceholder,
-        loadingContainer,
-        loading,
     } = styles;
 
-    const [iconsGridScrollTop, setIconsGridScrollTop] = useState(0);
-    const iconSearchResults = iconSearch
-        ? MATERIAL_ICONS.filter((s) =>
-              s.toLowerCase().includes(iconSearch.toLowerCase())
-          )
-        : MATERIAL_ICONS;
-    const [iconsGridRef] = useElementSize();
-    const { rowCount, colCount } = getIconsContainerRowColCounts(iconsGridRef, iconContainer ? iconContainer(ICON_CONTAINER_BASE_STYLE) : ICON_CONTAINER_BASE_STYLE);
+    const iconSearchResults = iconSearch ? MATERIAL_ICONS.filter((s) => s.toLowerCase().includes(iconSearch.toLowerCase())): MATERIAL_ICONS;
+    const [iconsContainerRef] = useElementSize();
+    const { rowCount, colCount } = getIconsContainerRowColCounts(iconsContainerRef, iconContainer ? iconContainer(ICON_CONTAINER_BASE_STYLE) : ICON_CONTAINER_BASE_STYLE);
     const [icons, setIcons] = useState<any>(iconSearchResults?.slice(0, rowCount * colCount) || []);
-    const [showLoading, setShowLoading] = useState(false);
-    const iconsGridScrollTopRef = useRef<number>(0);
-    const debouncedUpdateScrollTop = useDebounce((e: any) => setIconsGridScrollTop(e.target.scrollTop), 100, []);
+    const [iconsContainerScrollTop, setIconsContainerScrollTop] = useState(0);
+    const debouncedUpdateScrollTop = useDebounce((e: any) => setIconsContainerScrollTop(e.target.scrollTop), 100, []);
 
     useEffect(() => {
-        if(iconsGridRef.current) {
-            // iconsGridRef.current.style.overflowY = 'visible';
-            iconsGridRef.current.scrollTop = iconsGridScrollTopRef.current;
-        }
-    }, [icons]);
-
-    useEffect(() => {
-        iconsGridScrollTopRef.current = 0;
+        iconsContainerRef.current.scrollTop = 0;
         setIcons(iconSearchResults?.slice(0, rowCount * colCount) || []);
     }, [iconSearch]);
     
     useEffect(() => {
         setIcons(iconSearchResults?.slice(0, rowCount * colCount) || []);
     }, [rowCount, colCount]);
+
 
     return (
         <div
@@ -68,66 +50,39 @@ export const Icons = (props: IIcons) => {
                     ? iconsContainer(ICONS_CONTAINER_BASE_STYLE)
                     : ICONS_CONTAINER_BASE_STYLE
             }
-        >
-            <div
-                style={
-                    iconsGrid
-                        ? iconsGrid(ICONS_GRID_BASE_STYLE)
-                        : ICONS_GRID_BASE_STYLE
+            className={cx(cssStyles.iconsContainer)}
+            ref={iconsContainerRef}
+            onScroll={(e: any) => {
+                if(e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight && icons.length < iconSearchResults.length) {
+                    setIcons(prevIcons => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + 5 * colCount)]);
                 }
-                ref={iconsGridRef}
-                onScroll={(e: any) => {
-                    if(e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight && icons.length < iconSearchResults.length) {
-                        iconsGridScrollTopRef.current = e.target.scrollTop;
-                        // iconsGridRef.current.style.overflowY = 'hidden';
-                        // setShowLoading(true);
-                        setTimeout(() => {
-                            setIcons(prevIcons => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + 5 * colCount)]);
-                            // setShowLoading(false);
-                        }, 500);
-                    }
-                    // debouncedUpdateScrollTop(e);
-                    setIconsGridScrollTop(e.target.scrollTop);
-                }}
-            >
-                {icons.length ? (
-                    icons.map((icon: string) => (
-                        <Icon
-                            styles={{ iconContainer, icon: iconStyle, iconTip }}
-                            icon={icon}
-                            type={type}
-                            hsva={hsva}
-                            ref={iconsGridRef}
-                            iconsGridScrollTop={iconsGridScrollTop}
-                        />
-                    ))
-                ) : (
-                    <div
-                        style={
-                            iconsContainerPlaceholder
-                                ? iconsContainerPlaceholder(
-                                      ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE
-                                  )
-                                : ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE
-                        }
-                    >
-                        {TEXT.NO_ICON_FOUND}
-                    </div>
-                )}
-            </div>
-            {showLoading && <div
-                style={loadingContainer ? loadingContainer(LOADING_CONTAINER_BASE_STYLE) : LOADING_CONTAINER_BASE_STYLE}
-            >
-                <img
-                    src={LoadingIcon}
+                debouncedUpdateScrollTop(e);
+            }}
+        >
+            {icons.length ? (
+                icons.map((icon: string) => (
+                    <Icon
+                        styles={{ iconContainer, icon: iconStyle, iconTip }}
+                        icon={icon}
+                        type={type}
+                        hsva={hsva}
+                        ref={iconsContainerRef}
+                        iconsContainerScrollTop={iconsContainerScrollTop}
+                    />
+                ))
+            ) : (
+                <div
                     style={
-                        loading 
-                            ? loading(LOADING_BASE_STYLE(iconsGridRef, iconsGridScrollTop))
-                            : LOADING_BASE_STYLE(iconsGridRef, iconsGridScrollTop)
+                        iconsContainerPlaceholder
+                            ? iconsContainerPlaceholder(
+                                  ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE
+                              )
+                            : ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE
                     }
-                    className={cx(cssStyles.rotate)}
-                />
-            </div>}
+                >
+                    {TEXT.NO_ICON_FOUND}
+                </div>
+            )}
         </div>
     );
 };

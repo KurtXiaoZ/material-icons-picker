@@ -1,12 +1,9 @@
 interface IStyles {
     iconsContainer?: (baseStyle: object) => object;
-    iconsGrid?: (baseStyle: object) => object;
     iconContainer?: (baseStyle: object) => object;
     icon?: (baseStyle: object) => object;
     iconTip?: (baseStyle: object) => object;
     iconsContainerPlaceholder?: (baseStyle: object) => object;
-    loadingContainer?: (baseStyle: object) => object;
-    loading?: (baseStyle: object) => object;
 }
 
 export interface IIcons {

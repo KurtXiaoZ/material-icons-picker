@@ -4,22 +4,18 @@ export const ICONS_CONTAINER_BASE_STYLE: object = {
     flexGrow: '1',
     boxSizing: 'border-box',
     padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-};
-
-export const ICONS_GRID_BASE_STYLE: object = {
+    // display: 'flex',
+    // flexWrap: 'wrap',
+    // justifyContent: 'space-between',
+    // flexDirection: 'row',
+    // columnGap: '0',
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, 30px)',
     gridTemplateRows: 'repeat(auto-fill, 30px)',
     columnGap: '10px',
     rowGap: '10px',
-    position: 'relative',
-    overflowY: 'visible',
+    overflowY: 'auto',
     overflowX: 'hidden',
-    width: '100%',
-    height: '0',
-    flexGrow: '1',
 };
 
 export const ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE: object = {
@@ -33,54 +29,38 @@ export const ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE: object = {
     color: '#86888A',
 };
 
-export const LOADING_CONTAINER_BASE_STYLE: object = {
-    // marginTop: '10px',
-    width: '100%',
-    height: '30px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-};
-
-export const LOADING_BASE_STYLE = (
-    iconsGridRef: any,
-    iconsGridScrollTop: number
-): object => ({
-    height: '100%',
-    aspectRatio: '1/1',
-});
-
 export const getIconsContainerRowColCounts = (
-    iconsGridRef: any,
+    iconsContainerRef: any,
     iconContainerStyle: any
 ): { rowCount: number; colCount: number } => {
-    const iconsGridComputedStyles =
-        iconsGridRef.current &&
-        window.getComputedStyle(iconsGridRef.current);
-    const iconsContainerRowGap = parseInt(
-        iconsGridComputedStyles?.getPropertyValue('row-gap')
-    );
-    const iconsContainerColGap = parseInt(
-        iconsGridComputedStyles?.getPropertyValue('column-gap')
-    );
-    const iconsContainerHeight = parseInt(
-        iconsGridComputedStyles?.getPropertyValue('height')
-    );
-    const iconsContainerWidth = parseInt(
-        iconsGridComputedStyles?.getPropertyValue('width')
-    );
+    const iconsContainerComputedStyles =
+        iconsContainerRef.current &&
+        window.getComputedStyle(iconsContainerRef.current);
+
+    const iconsContainerRowGap = parseInt(iconsContainerComputedStyles?.getPropertyValue('row-gap'));
+    const iconsContainerColGap = parseInt(iconsContainerComputedStyles?.getPropertyValue('column-gap'));
+    const iconsContainerHeight = parseInt(iconsContainerComputedStyles?.getPropertyValue('height'));
+    const iconsContainerWidth = parseInt(iconsContainerComputedStyles?.getPropertyValue('width'));
+    const iconsContainerPaddingTop = parseInt(iconsContainerComputedStyles?.getPropertyValue('padding-top'));
+    const iconsContainerPaddingRight = parseInt(iconsContainerComputedStyles?.getPropertyValue('padding-right'));
+    const iconsContainerPaddingBottom = parseInt(iconsContainerComputedStyles?.getPropertyValue('padding-bottom'));
+    const iconsContainerPaddingLeft = parseInt(iconsContainerComputedStyles?.getPropertyValue('padding-left'));
     const iconContainerHeight = parseInt(iconContainerStyle?.height);
     const iconContainerWidth = parseInt(iconContainerStyle?.width);
     return {
         rowCount:
             (Math.round(
                 (iconsContainerHeight -
+                    iconsContainerPaddingTop -
+                    iconsContainerPaddingBottom -
                     iconContainerHeight) /
                     (iconContainerHeight + iconsContainerRowGap)
             ) || 0) + 1,
         colCount:
             (Math.round(
                 (iconsContainerWidth -
+                    iconsContainerPaddingLeft - 
+                    iconsContainerPaddingRight - 
                     iconContainerWidth) /
                     (iconContainerWidth + iconsContainerColGap)
             ) || 0) + 1,

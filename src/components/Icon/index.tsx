@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ICON_TYPES } from '../../lib/constants';
 import {
     getIconTipPosition,
@@ -13,25 +13,37 @@ import { IIcon } from './types';
 const cx = classNames.bind(cssStyles);
 
 export const Icon = React.forwardRef((props: IIcon, ref: any) => {
-    const { styles = {}, icon, type, hsva, iconsGridScrollTop } = props;
+    const { styles = {}, icon, type, hsva, iconsContainerScrollTop } = props;
 
     const { iconContainer, icon: iconStyle, iconTip } = styles;
 
     const iconContainerRef = useRef<HTMLDivElement | null>(null);
     const iconTipRef = useRef<HTMLDivElement | null>(null);
-    const { iconTipTop = 0, iconTipLeft = 0 } = iconTipRef.current
+    // const [iconTipTop, setIconTipTop] = useState(0);
+    // const [iconTipLeft, setIconTipLeft] = useState(0);
+    /*const { iconTipTop = 0, iconTipLeft = 0 } = iconTipRef.current
         ? getIconTipPosition({
               containerRef: ref,
               iconTipRef,
               iconContainerRef,
-              iconsGridScrollTop,
           })
         : {};
-
     const iconTipBaseStyle = ICON_TIP_BASE_STYLE({
         top: iconTipTop,
         left: iconTipLeft,
     });
+    */
+    const [iconTipBaseStyle, setIconTipBaseStyle] = useState({});
+
+    useEffect(() => {
+        const { iconTipTop: top = 0, iconTipLeft: left = 0 } = getIconTipPosition({
+            containerRef: ref,
+            iconTipRef,
+            iconContainerRef,
+        });
+        console.log(top, left);
+        setIconTipBaseStyle(ICON_TIP_BASE_STYLE({ top, left }));
+    }, [iconsContainerScrollTop]);
 
     return (
         <div
@@ -42,6 +54,11 @@ export const Icon = React.forwardRef((props: IIcon, ref: any) => {
             }
             className={cx(cssStyles.iconContainer)}
             ref={iconContainerRef}
+            onMouseOver={() => {
+                console.log(ref.current.getBoundingClientRect());
+                console.log(iconContainerRef.current.getBoundingClientRect());
+                console.log(iconTipRef.current.getBoundingClientRect());
+            }}
         >
             <div
                 className={cx(
