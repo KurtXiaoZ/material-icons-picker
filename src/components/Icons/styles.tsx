@@ -33,6 +33,21 @@ export const getIconsContainerRowColCounts = (
     iconsContainerRef: any,
     iconContainerStyle: any
 ): { rowCount: number; colCount: number } => {
+    let marginTop = 0, marginRight = 0, marginBottom = 0, marginLeft = 0;
+    Object.entries(iconContainerStyle).forEach((entry: any) => {
+        const [key, val] = entry;
+        if(key === 'marginTop') marginTop = parseInt(val);
+        else if(key === 'marginRight') marginRight = parseInt(val);
+        else if(key === 'marginBottom') marginBottom = parseInt(val);
+        else if(key === 'marginLeft') marginLeft = parseInt(val);
+        else if(key === 'margin') {
+            const marginArr = val.split(' ');
+        }
+    });
+
+
+
+
     const iconsContainerComputedStyles =
         iconsContainerRef.current &&
         window.getComputedStyle(iconsContainerRef.current);
