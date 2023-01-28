@@ -19,21 +19,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: any) => {
 
     const iconContainerRef = useRef<HTMLDivElement | null>(null);
     const iconTipRef = useRef<HTMLDivElement | null>(null);
-    // const [iconTipTop, setIconTipTop] = useState(0);
-    // const [iconTipLeft, setIconTipLeft] = useState(0);
-    /*const { iconTipTop = 0, iconTipLeft = 0 } = iconTipRef.current
-        ? getIconTipPosition({
-              containerRef: ref,
-              iconTipRef,
-              iconContainerRef,
-          })
-        : {};
-    const iconTipBaseStyle = ICON_TIP_BASE_STYLE({
-        top: iconTipTop,
-        left: iconTipLeft,
-    });
-    */
-    const [iconTipBaseStyle, setIconTipBaseStyle] = useState({});
+    const [iconTipBaseStyle, setIconTipBaseStyle] = useState(ICON_TIP_BASE_STYLE({ top: 0, left: 0 }));
 
     useEffect(() => {
         const { iconTipTop: top = 0, iconTipLeft: left = 0 } = getIconTipPosition({
@@ -41,8 +27,8 @@ export const Icon = React.forwardRef((props: IIcon, ref: any) => {
             iconTipRef,
             iconContainerRef,
         });
-        console.log(top, left);
         setIconTipBaseStyle(ICON_TIP_BASE_STYLE({ top, left }));
+
     }, [iconsContainerScrollTop]);
 
     return (
@@ -54,11 +40,6 @@ export const Icon = React.forwardRef((props: IIcon, ref: any) => {
             }
             className={cx(cssStyles.iconContainer)}
             ref={iconContainerRef}
-            onMouseOver={() => {
-                console.log(ref.current.getBoundingClientRect());
-                console.log(iconContainerRef.current.getBoundingClientRect());
-                console.log(iconTipRef.current.getBoundingClientRect());
-            }}
         >
             <div
                 className={cx(
