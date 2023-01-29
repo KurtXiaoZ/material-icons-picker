@@ -37,9 +37,8 @@ export const IconSearch = (props: IIconSearch) => {
                         : SEARCH_INPUT_BASE_STYLE
                 }
                 placeholder="Search"
-                // value={iconSearch}
-                // onChange={e => setIconSearch(e.target.value)}
                 ref={searchInputRef}
+                onKeyDown={e => e.key === 'Enter' && setIconSearch(searchInputRef.current.value)}
             />
         </div>
     );
