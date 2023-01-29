@@ -4,12 +4,17 @@ import {
     getIconsContainerRowColCounts,
     ICONS_CONTAINER_BASE_STYLE,
     ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE,
+    ICON_PLACEHOLDER,
+    LOADING_BASE_STYLE,
+    LOADING_CONTAINER_BASE_STYLE,
 } from './styles';
 import { IIcons } from './types';
 import { Icon } from '../Icon';
 import { useElementSize, useDebounce } from '../../lib/hooks';
 import { useEffect, useState } from 'react';
 import { ICON_CONTAINER_BASE_STYLE } from '../Icon/styles';
+import LoadingIcon from '../../assets/icons/loading.svg';
+import cssStyles from './styles.module.css';
 
 export const Icons = (props: IIcons) => {
     const { styles = {}, iconSearch, type, hsva } = props;
@@ -27,19 +32,31 @@ export const Icons = (props: IIcons) => {
     const { rowCount, colCount } = getIconsContainerRowColCounts(iconsContainerRef, iconContainer ? iconContainer(ICON_CONTAINER_BASE_STYLE) : ICON_CONTAINER_BASE_STYLE);
     const [icons, setIcons] = useState<any>(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []);
     const [iconsContainerScrollTop, setIconsContainerScrollTop] = useState(0);
+    const [loading, setLoading] = useState(false);
     const debouncedUpdateScrollTop = useDebounce((e: any) => setIconsContainerScrollTop(e.target.scrollTop), 100, []);
 
-    console.log(icons.length, rowCount, colCount, icons.length % colCount);
+    useEffect(() => {
+        setIcons(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []);
+        iconsContainerRef.current.scrollTop = 0;
+    }, [iconSearch]);
 
     useEffect(() => {
-        iconsContainerRef.current.scrollTop = 0;
-        setIcons(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []);
-    }, [iconSearch]);
+        if(loading) iconsContainerRef.current.scrollTop = iconsContainerRef.current.scrollHeight;
+    }, [loading]);
     
     useEffect(() => {
         setIcons(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []);
     }, [rowCount, colCount]);
 
+    const renderPlaceholderItems = () => {
+        const items = [];
+        for(let i = 1; i <= colCount - icons.length % colCount; ++i) {
+            items.push(<div
+                style={iconStyle ? iconStyle(ICON_PLACEHOLDER) : ICON_PLACEHOLDER}
+            ></div>)
+        }
+        return items;
+    }
 
     return (
         <div
@@ -51,7 +68,11 @@ export const Icons = (props: IIcons) => {
             ref={iconsContainerRef}
             onScroll={(e: any) => {
                 if(e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight && icons.length < iconSearchResults.length) {
-                    setTimeout(() => setIcons(prevIcons => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + 5 * colCount)]), 1000);
+                    setLoading(true);
+                    setTimeout(() => {
+                        setIcons(prevIcons => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + 5 * colCount)]);
+                        setLoading(false);
+                    }, 1000);
                 }
                 debouncedUpdateScrollTop(e);
             }}
@@ -67,6 +88,18 @@ export const Icons = (props: IIcons) => {
                         iconsContainerScrollTop={iconsContainerScrollTop}
                     />
                 ))}
+                {icons.length % colCount !== 0 && renderPlaceholderItems()}
+                {loading && <div
+                    style={LOADING_CONTAINER_BASE_STYLE}
+                >
+                    <img
+                        src={LoadingIcon}
+                        style={
+                            LOADING_BASE_STYLE
+                        }
+                        className={cssStyles.rotate}
+                    />
+                </div>}
             </> : (
                 <div
                     style={

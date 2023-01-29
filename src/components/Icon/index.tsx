@@ -29,7 +29,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: any) => {
         });
         setIconTipBaseStyle(ICON_TIP_BASE_STYLE({ top, left }));
 
-    }, [iconsContainerScrollTop, icon]);
+    }, [iconsContainerScrollTop, icon, type, hsva, styles]);
 
     return (
         <div

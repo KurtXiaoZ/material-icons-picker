@@ -44,3 +44,22 @@ export const getIconsContainerRowColCounts = (
     if(isNaN(rowCount) || isNaN(colCount)) return { rowCount: 0, colCount: 0 };
     return { rowCount, colCount };
 };
+
+export const ICON_PLACEHOLDER: object = {
+    width: 'auto',
+    aspectRatio: '1/1',
+};
+
+export const LOADING_CONTAINER_BASE_STYLE: object = {
+    height: 'fit-content',
+    gridColumn: '1/-1',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 0,
+};
+
+export const LOADING_BASE_STYLE: object = {
+    height: '30px',
+    width: '30px',
+}
