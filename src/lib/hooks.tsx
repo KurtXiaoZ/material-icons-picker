@@ -1,11 +1,11 @@
-import {useEffect, useRef, useState } from 'react';
+import {RefObject, useEffect, useRef, useState } from 'react';
 
 // This hook listens to the resizing of an element
-export const useElementSize = (): [
-    elementRef: any,
+export const useElementSize = <T extends Element,>(): [
+    elementRef: RefObject<T>,
     size: { width: number; height: number }
 ] => {
-    const elementRef = useRef<HTMLDivElement | null>(null);
+    const elementRef = useRef<T | null>(null);
     const [size, setSize] = useState<{ width: number; height: number }>({
         width: 0,
         height: 0,
@@ -28,14 +28,14 @@ export const useElementSize = (): [
 
 export const useEventOutside = (
     event: string,
-    elementRefs: any[],
+    elementRefs: RefObject<Element>[],
     callback: (e: Event) => void
 ): void => {
     useEffect(() => {
         const listener = (e: Event) => {
             let outside = true;
             for (const ref of elementRefs) {
-                if (!ref?.current || ref?.current?.contains(e.target)) {
+                if (!ref?.current || ref?.current?.contains(e.target as HTMLElement)) {
                     outside = false;
                     return;
                 }
@@ -47,7 +47,7 @@ export const useEventOutside = (
     }, [elementRefs, callback]);
 };
 
-export const useDebounce = (callback: any, delay: any, dependencies = null) => {
+export const useDebounce = (callback: (...args: any[]) => any, delay: number, dependencies = null) => {
     const timerRef = useRef(null);
 
     useEffect(() => {

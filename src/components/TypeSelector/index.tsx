@@ -26,7 +26,7 @@ export const TypeSelector = (props: ITypeSelector) => {
     const [
         typeContainerRef,
         { height: typeContainerHeight, width: typeContainerWidth },
-    ] = useElementSize();
+    ] = useElementSize<HTMLDivElement>();
     useEventOutside('click', [typeOptionsContainerRef, typeContainerRef], () =>
         setShowOptions(false)
     );

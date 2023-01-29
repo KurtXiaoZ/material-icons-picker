@@ -1,4 +1,5 @@
 import { hsvaToHex } from '@uiw/color-convert';
+import { RefObject } from 'react';
 
 export const ICON_CONTAINER_BASE_STYLE: object = {
     position: 'relative',
@@ -24,9 +25,9 @@ export const getIconTipPosition = ({
     iconTipRef,
     iconContainerRef,
 }: {
-    containerRef: any;
-    iconTipRef: any;
-    iconContainerRef: any;
+    containerRef: RefObject<HTMLElement>;
+    iconTipRef: RefObject<HTMLElement>;
+    iconContainerRef: RefObject<HTMLElement>;
 }): {
     iconTipLeft: number;
     iconTipTop: number;

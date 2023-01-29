@@ -11,7 +11,7 @@ import {
 import { IIcons } from './types';
 import { Icon } from '../Icon';
 import { useElementSize, useDebounce } from '../../lib/hooks';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, UIEvent } from 'react';
 import { ICON_CONTAINER_BASE_STYLE } from '../Icon/styles';
 import LoadingIcon from '../../assets/icons/loading.svg';
 import cssStyles from './styles.module.css';
@@ -28,12 +28,12 @@ export const Icons = (props: IIcons) => {
     } = styles;
 
     const iconSearchResults = iconSearch ? MATERIAL_ICONS.filter((s) => s.toLowerCase().includes(iconSearch.toLowerCase())): MATERIAL_ICONS;
-    const [iconsContainerRef] = useElementSize();
+    const [iconsContainerRef] = useElementSize<HTMLDivElement>();
     const { rowCount, colCount } = getIconsContainerRowColCounts(iconsContainerRef, iconContainer ? iconContainer(ICON_CONTAINER_BASE_STYLE) : ICON_CONTAINER_BASE_STYLE);
-    const [icons, setIcons] = useState<any>(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []);
+    const [icons, setIcons] = useState(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []);
     const [iconsContainerScrollTop, setIconsContainerScrollTop] = useState(0);
     const [loading, setLoading] = useState(false);
-    const debouncedUpdateScrollTop = useDebounce((e: any) => setIconsContainerScrollTop(e.target.scrollTop), 100, []);
+    const debouncedUpdateScrollTop = useDebounce((e: { target: HTMLDivElement }) => setIconsContainerScrollTop(e.target.scrollTop), 100, []);
 
     useEffect(() => {
         setIcons(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []);
@@ -66,11 +66,12 @@ export const Icons = (props: IIcons) => {
                     : ICONS_CONTAINER_BASE_STYLE(rowCount, colCount)
             }
             ref={iconsContainerRef}
-            onScroll={(e: any) => {
-                if(e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight && icons.length < iconSearchResults.length) {
+            onScroll={(e: UIEvent<HTMLElement>) => {
+                const eventTarget = e.target as HTMLElement;
+                if(eventTarget.scrollTop + eventTarget.clientHeight === eventTarget.scrollHeight && icons.length < iconSearchResults.length) {
                     setLoading(true);
                     setTimeout(() => {
-                        setIcons(prevIcons => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + 5 * colCount)]);
+                        setIcons((prevIcons: string[]) => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + 5 * colCount)]);
                         setLoading(false);
                     }, 1000);
                 }

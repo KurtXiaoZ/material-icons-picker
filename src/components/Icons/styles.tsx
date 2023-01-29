@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+
 export const ICONS_CONTAINER_BASE_STYLE = (rowCount: number, colCount: number): object => ({
     width: '100%',
     height: '0',
@@ -25,8 +27,8 @@ export const ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE: object = {
 };
 
 export const getIconsContainerRowColCounts = (
-    iconsContainerRef: any,
-    iconContainerStyle: any
+    iconsContainerRef: RefObject<HTMLElement>,
+    iconContainerStyle: { width?: string, height?: string }
 ): { rowCount: number; colCount: number } => {
     const iconsContainerComputedStyles = iconsContainerRef.current && window.getComputedStyle(iconsContainerRef.current);
     const containerWidth = iconsContainerRef.current?.clientWidth || 0;

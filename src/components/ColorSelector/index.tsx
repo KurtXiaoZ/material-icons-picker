@@ -31,7 +31,7 @@ export const ColorSelector = (props: IColorSelector) => {
     const [
         colorSelectorContainerRef,
         { width: colorContainerWidth, height: colorContainerHeight },
-    ] = useElementSize();
+    ] = useElementSize<HTMLDivElement>();
     const [showPaletteContainer, setShowPaletteContainer] = useState(false);
     const paletteContainerRef = useRef<HTMLDivElement | null>(null);
     useEventOutside(
