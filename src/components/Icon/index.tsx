@@ -1,5 +1,5 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
-import { ICON_TYPES } from '../../lib/constants';
+import { ICON_TYPES, NO_MARGIN } from '../../lib/constants';
 import {
     getIconTipPosition,
     ICON_BASE_STYLE,
@@ -35,8 +35,8 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
         <div
             style={
                 iconContainer
-                    ? iconContainer(ICON_CONTAINER_BASE_STYLE)
-                    : ICON_CONTAINER_BASE_STYLE
+                    ? { ...iconContainer(ICON_CONTAINER_BASE_STYLE), ...NO_MARGIN }
+                    : { ...ICON_CONTAINER_BASE_STYLE, ...NO_MARGIN }
             }
             className={cx(cssStyles.iconContainer)}
             ref={iconContainerRef}

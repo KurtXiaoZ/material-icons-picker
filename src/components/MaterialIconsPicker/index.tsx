@@ -35,6 +35,8 @@ export const MaterialIconsPicker = ({
         icon,
         iconTip,
         iconsContainerPlaceholder,
+        loadingContainer,
+        loading,
     } = styles;
 
     const [type, setType] = useState(ICON_TYPES[0]);
@@ -92,6 +94,8 @@ export const MaterialIconsPicker = ({
                     icon,
                     iconTip,
                     iconsContainerPlaceholder,
+                    loadingContainer,
+                    loading
                 }}
                 iconSearch={iconSearch}
                 type={type?.value}

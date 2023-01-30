@@ -25,6 +25,8 @@ export const Icons = (props: IIcons) => {
         icon: iconStyle,
         iconTip,
         iconsContainerPlaceholder,
+        loadingContainer,
+        loading: loadingStyle,
     } = styles;
 
     const iconSearchResults = iconSearch ? MATERIAL_ICONS.filter((s) => s.toLowerCase().includes(iconSearch.toLowerCase())): MATERIAL_ICONS;
@@ -91,13 +93,11 @@ export const Icons = (props: IIcons) => {
                 ))}
                 {icons.length % colCount !== 0 && renderPlaceholderItems()}
                 {loading && <div
-                    style={LOADING_CONTAINER_BASE_STYLE}
+                    style={loadingContainer ? loadingContainer(LOADING_CONTAINER_BASE_STYLE) : LOADING_CONTAINER_BASE_STYLE}
                 >
                     <img
                         src={LoadingIcon}
-                        style={
-                            LOADING_BASE_STYLE
-                        }
+                        style={loadingStyle ? loadingStyle(LOADING_BASE_STYLE) : LOADING_BASE_STYLE}
                         className={cssStyles.rotate}
                     />
                 </div>}
