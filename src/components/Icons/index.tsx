@@ -7,12 +7,12 @@ import {
     ICON_PLACEHOLDER,
     LOADING_BASE_STYLE,
     LOADING_CONTAINER_BASE_STYLE,
-} from './styles';
+    ICON_CONTAINER_BASE_STYLE
+} from '../../lib/styles';
 import { IIcons } from './types';
 import { Icon } from '../Icon';
 import { useElementSize, useDebounce } from '../../lib/hooks';
 import { useEffect, useState, UIEvent } from 'react';
-import { ICON_CONTAINER_BASE_STYLE } from '../Icon/styles';
 import LoadingIcon from '../../assets/icons/loading.svg';
 import cssStyles from './styles.module.css';
 

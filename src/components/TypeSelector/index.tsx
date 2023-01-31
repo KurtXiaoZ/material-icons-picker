@@ -5,7 +5,7 @@ import {
     TYPE_OPTION_BASE_STYLE,
     TYPE_SELECTED_BASE_STYLE,
     TYPE_OPTIONS_CONTAINER_BASE_STYLE,
-} from './styles';
+} from '../../lib/styles';
 import { ITypeSelector } from './types';
 import ArrowDown from '../../assets/icons/arrowDown.svg';
 import { useElementSize, useEventOutside } from '../../lib/hooks';

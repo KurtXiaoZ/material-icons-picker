@@ -2,7 +2,7 @@ import { IMaterialIconsPicker } from './types';
 import { IconSearch } from '../IconSearch';
 import { TypeSelector } from '../TypeSelector';
 import { ColorSelector } from '../ColorSelector';
-import { CONTAINER_BASE_STYLE, OPTION_CONTAINER_BASE_STYLE } from './styles';
+import { CONTAINER_BASE_STYLE, OPTION_CONTAINER_BASE_STYLE } from '../../lib/styles';
 import { useState } from 'react';
 import { DEFAULT_ICONS_NUMBER, ICON_TYPES } from '../../lib/constants';
 import 'material-icons/iconfont/material-icons.css';
@@ -45,6 +45,7 @@ export const MaterialIconsPicker = ({
 
     return (
         <div
+            data-testid='mip-container'
             style={
                 container
                     ? container(CONTAINER_BASE_STYLE)
@@ -56,6 +57,7 @@ export const MaterialIconsPicker = ({
                 setIconSearch={setIconSearch}
             />
             <div
+                data-testid='mip-optionContainer'
                 style={
                     optionContainer
                         ? optionContainer(OPTION_CONTAINER_BASE_STYLE)

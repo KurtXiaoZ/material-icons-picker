@@ -4,7 +4,7 @@ import {
     SEARCH_CONTAINER_BASE_STYLE,
     SEARCH_ICON_BASE_STYLE,
     SEARCH_INPUT_BASE_STYLE,
-} from './styles';
+} from '../../lib/styles';
 import { IIconSearch } from './types';
 
 export const IconSearch = (props: IIconSearch) => {

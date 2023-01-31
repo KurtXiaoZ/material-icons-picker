@@ -7,7 +7,7 @@ import {
     PALATTE_CONTAINER_BASE_STYLE,
     SATURATION_BASE_STYLE,
     HUE_BASE_STYLE,
-} from './styles';
+} from '../../lib/styles';
 import { IColorSelector } from './types';
 import ArrowDownIcon from '../../assets/icons/arrowDown.svg';
 import { useElementSize, useEventOutside } from '../../lib/hooks';

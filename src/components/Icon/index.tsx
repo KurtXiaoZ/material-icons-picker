@@ -5,7 +5,7 @@ import {
     ICON_BASE_STYLE,
     ICON_CONTAINER_BASE_STYLE,
     ICON_TIP_BASE_STYLE,
-} from './styles';
+} from '../../lib/styles';
 import cssStyles from './styles.module.css';
 import classNames from 'classnames/bind';
 import { IIcon } from './types';
