@@ -20,6 +20,7 @@ export const IconSearch = (props: IIconSearch) => {
                     ? searchContainer(SEARCH_CONTAINER_BASE_STYLE)
                     : SEARCH_CONTAINER_BASE_STYLE
             }
+            data-testid='mip-searchContainer'
         >
             <img
                 src={SearchIcon}
@@ -29,6 +30,7 @@ export const IconSearch = (props: IIconSearch) => {
                         : SEARCH_ICON_BASE_STYLE
                 }
                 onClick={() => setIconSearch(searchInputRef.current.value)}
+                data-testid='mip-searchIcon'
             />
             <input
                 style={
@@ -39,6 +41,7 @@ export const IconSearch = (props: IIconSearch) => {
                 placeholder="Search"
                 ref={searchInputRef}
                 onKeyDown={e => e.key === 'Enter' && setIconSearch(searchInputRef.current.value)}
+                data-testid='mip-searchInput'
             />
         </div>
     );

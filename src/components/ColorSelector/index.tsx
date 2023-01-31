@@ -51,6 +51,7 @@ export const ColorSelector = (props: IColorSelector) => {
             }
             ref={colorSelectorContainerRef}
             onMouseDown={() => setShowPaletteContainer(true)}
+            data-testid='mip-colorSelectorContainer'
         >
             <span
                 style={
@@ -64,6 +65,7 @@ export const ColorSelector = (props: IColorSelector) => {
                               color: hsvaToHex(hsva),
                           })
                 }
+                data-testid='mip-colorSelectedIndicator'
             ></span>
             <span
                 style={
@@ -71,6 +73,7 @@ export const ColorSelector = (props: IColorSelector) => {
                         ? colorSelected(COLOR_SELECTED_BASE_STYLE)
                         : COLOR_SELECTED_BASE_STYLE
                 }
+                data-testid='mip-colorSelected'
             >
                 {hsvaToHex(hsva)}
             </span>
@@ -81,6 +84,7 @@ export const ColorSelector = (props: IColorSelector) => {
                         ? colorSelectorArrow(COLOR_SELECTOR_ARROW_BASE_STYLE)
                         : COLOR_SELECTOR_ARROW_BASE_STYLE
                 }
+                data-testid='mip-colorSelectorArrow'
             />
             {showPaletteContainer && (
                 <div
@@ -97,6 +101,7 @@ export const ColorSelector = (props: IColorSelector) => {
                                   colorContainerWidth,
                               })
                     }
+                    data-testid='mip-palatteContainer'
                     ref={paletteContainerRef}
                 >
                     <Saturation

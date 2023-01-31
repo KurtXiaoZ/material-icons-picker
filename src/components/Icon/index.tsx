@@ -40,7 +40,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
             }
             className={cx(cssStyles.iconContainer)}
             ref={iconContainerRef}
-            data-iconcontainer
+            data-testid='mip-iconContainer'
         >
             <div
                 className={cx(
@@ -53,6 +53,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
                         ? iconStyle(ICON_BASE_STYLE({ hsva }))
                         : ICON_BASE_STYLE({ hsva })
                 }
+                data-testid='mip-icon'
             >
                 {icon}
             </div>
@@ -60,6 +61,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
                 style={iconTip ? iconTip(iconTipBaseStyle) : iconTipBaseStyle}
                 className={cx(cssStyles.iconTip)}
                 ref={iconTipRef}
+                data-testid='mip-iconTip'
             >
                 {icon}
             </div>
