@@ -58,7 +58,9 @@ export const Icons = (props: IIcons) => {
             ></div>)
         }
         return items;
-    }
+    };
+
+    console.log('iconSearchResults', iconSearchResults);
 
     return (
         <div
@@ -79,6 +81,7 @@ export const Icons = (props: IIcons) => {
                 }
                 debouncedUpdateScrollTop(e);
             }}
+            data-testid='mip-iconsContainer'
         >
             {icons.length ? <>
                 {icons.map((icon: string) => (
