@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface IStyles {
     iconsContainer?: (baseStyle: object) => object;
     iconContainer?: (baseStyle: object) => object;

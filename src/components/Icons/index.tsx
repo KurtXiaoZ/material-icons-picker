@@ -60,7 +60,8 @@ export const Icons = (props: IIcons) => {
         return items;
     };
 
-    console.log('iconSearchResults', iconSearchResults);
+    // console.log('rowCount', rowCount);
+    // console.log('colCount', colCount);
 
     return (
         <div
@@ -97,11 +98,13 @@ export const Icons = (props: IIcons) => {
                 {icons.length % colCount !== 0 && renderPlaceholderItems()}
                 {loading && <div
                     style={loadingContainer ? loadingContainer(LOADING_CONTAINER_BASE_STYLE) : LOADING_CONTAINER_BASE_STYLE}
+                    data-testid='mip-loadingContainer'
                 >
                     <img
                         src={LoadingIcon}
                         style={loadingStyle ? loadingStyle(LOADING_BASE_STYLE) : LOADING_BASE_STYLE}
                         className={cssStyles.rotate}
+                        data-testid='mip-loading'
                     />
                 </div>}
             </> : (
@@ -113,6 +116,7 @@ export const Icons = (props: IIcons) => {
                               )
                             : ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE
                     }
+                    data-testid='mip-iconsContainerPlaceholder'
                 >
                     {TEXT.NO_ICON_FOUND}
                 </div>

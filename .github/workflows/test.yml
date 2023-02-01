@@ -1,27 +1,18 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+name: e2e testing
 
-name: tests
-
-on:
-  push:
-  pull_request:
+on: [push]
 
 jobs:
-  build:
-
+  cypress-run:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js 18.10.0
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18.10.0
-        cache: 'npm'
-    - run: npm ci
-    - run: npm test
+      - name: Checkout
+        uses: actions/checkout@v3
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v5.x.x # use the explicit version number
+        with:
+          browser: chrome
+        run:
+          npm run cy:tests

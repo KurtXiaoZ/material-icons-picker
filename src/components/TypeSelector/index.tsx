@@ -41,6 +41,7 @@ export const TypeSelector = (props: ITypeSelector) => {
             }
             ref={typeContainerRef}
             onMouseDown={() => setShowOptions(true)}
+            data-testid='mip-typeContainer'
         >
             <span
                 style={
@@ -48,6 +49,7 @@ export const TypeSelector = (props: ITypeSelector) => {
                         ? typeSelected(TYPE_SELECTED_BASE_STYLE)
                         : TYPE_SELECTED_BASE_STYLE
                 }
+                data-testid='mip-typeSelected'
             >
                 {type.label}
             </span>
@@ -58,6 +60,7 @@ export const TypeSelector = (props: ITypeSelector) => {
                         ? typeArrow(TYPE_ARROW_BASE_STYLE)
                         : TYPE_ARROW_BASE_STYLE
                 }
+                data-testid='mip-typeArrow'
             />
             {showOptions && (
                 <div
@@ -75,6 +78,7 @@ export const TypeSelector = (props: ITypeSelector) => {
                               })
                     }
                     ref={typeOptionsContainerRef}
+                    data-testid='mip-typeOptionsContainer'
                 >
                     {ICON_TYPES?.map(({ label, value }) => (
                         <div
@@ -87,6 +91,7 @@ export const TypeSelector = (props: ITypeSelector) => {
                                 setType({ label, value });
                                 setShowOptions(false);
                             }}
+                            data-testid='mip-typeOption'
                         >
                             {label}
                         </div>

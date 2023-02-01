@@ -1,5 +1,3 @@
-import { type } from '@testing-library/user-event/dist/type';
-
 interface IStyles {
     typeContainer?: (baseStyle: object) => object;
     typeSelected?: (baseStyle: object) => object;

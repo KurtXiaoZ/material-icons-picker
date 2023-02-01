@@ -1,9 +1,9 @@
 interface IStyles {
     container?: (baseStyle: object) => object;
-    optionContainer?: (baseStyle: object) => object;
     searchContainer?: (baseStyle: object) => object;
     searchIcon?: (baseStyle: object) => object;
     searchInput?: (baseStyle: object) => object;
+    optionContainer?: (baseStyle: object) => object;
     typeContainer?: (baseStyle: object) => object;
     typeSelected?: (baseStyle: object) => object;
     typeArrow?: (baseStyle: object) => object;
@@ -20,9 +20,9 @@ interface IStyles {
     iconContainer?: (baseStyle: object) => object;
     icon?: (baseStyle: object) => object;
     iconTip?: (baseStyle: object) => object;
-    iconsContainerPlaceholder?: (baseStyle: object) => object;
     loadingContainer?: (baseStyle: object) => object;
     loading?: (baseStyle: object) => object;
+    iconsContainerPlaceholder?: (baseStyle: object) => object;
 }
 
 export interface IMaterialIconsPicker {
