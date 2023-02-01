@@ -190,7 +190,6 @@ export const getIconsContainerRowColCounts = (
     const containerRowGap = parseInt(iconsContainerComputedStyles?.getPropertyValue('row-gap') || '0');
     const iconWidth = parseInt(iconContainerStyle.width || '0');
     const iconHeight = parseInt(iconContainerStyle.height || '0');
-    console.log('containerHeight', containerHeight);
     const rowCount = Math.floor((containerHeight - containerPaddingBottom - containerPaddingTop - containerRowGap) / (iconHeight + containerRowGap));
     const colCount = Math.floor((containerWidth - containerPaddingLeft - containerPaddingRight - containerColumnGap) / (iconWidth + containerColumnGap));
     if(isNaN(rowCount) || isNaN(colCount)) return { rowCount: 0, colCount: 0 };

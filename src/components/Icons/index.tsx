@@ -60,9 +60,6 @@ export const Icons = (props: IIcons) => {
         return items;
     };
 
-    // console.log('rowCount', rowCount);
-    // console.log('colCount', colCount);
-
     return (
         <div
             style={
