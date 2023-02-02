@@ -14,7 +14,7 @@ const DEFAULT_PROPS: object = {
 
 };
 
-describe('Rendering of the elements of <MaterialIconsPicker />', () => {
+describe('rendering of the elements of <MaterialIconsPicker />', () => {
   it('expected elements are rendered correctly without props', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy.get('[data-testid=mip-container]').should('be.visible');
@@ -47,6 +47,50 @@ describe('Rendering of the elements of <MaterialIconsPicker />', () => {
     cy.get('[data-testid=mip-iconsContainerPlaceholder]').should('not.exist');
   });
 
+  it('mip-palatteContainer, .w-color-saturation, and .w-color-alpha-pointer should be visible after clicking on mip-colorSelectorContainer and be not in the document after clicking outside', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy.get('[data-testid=mip-colorSelectorContainer]').click();
+    cy.get('.w-color-saturation').should('be.visible');
+    cy.get('.w-color-alpha-pointer').should('be.visible');
+    cy.get('body').click(0, 0, { force: true });
+    cy.get('.w-color-saturation').should('not.exist');
+    cy.get('.w-color-alpha-pointer').should('not.exist');
+  });
+});
+
+describe('interaction related to searching the icons', () => {
+  it('change the value of mip-searchInput to book and click on mip-searchIcon', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy.get('[data-testid=mip-iconContainer]').should('have.length.greaterThan', 12);
+    cy.get('[data-testid=mip-searchInput]').type('book');
+    cy.get('[data-testid=mip-searchIcon]').click();
+    cy.get('[data-testid=mip-iconContainer]').should('have.length', 12);
+    cy.get('[data-testid=mip-searchInput]').invoke('val', '');
+    cy.get('[data-testid=mip-searchIcon]').click();
+    cy.get('[data-testid=mip-iconContainer]').should('have.length.greaterThan', 12);
+  });
+
+  it('change the value of mip-searchInput to book and hit the enter key', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy.get('[data-testid=mip-iconContainer]').should('have.length.greaterThan', 12);
+    cy.get('[data-testid=mip-searchInput]').type('book');
+    cy.get('[data-testid=mip-searchInput]').trigger('keydown', { key: 'Enter' });
+    cy.get('[data-testid=mip-iconContainer]').should('have.length', 12);
+    cy.get('[data-testid=mip-searchInput]').invoke('val', '');
+    cy.get('[data-testid=mip-searchInput]').trigger('keydown', { key: 'Enter' });
+    cy.get('[data-testid=mip-iconContainer]').should('have.length.greaterThan', 12);
+  });
+
+  it('pressing Enter without focusing on mip-searchInput does not trigger rerendering', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy.get('[data-testid=mip-iconContainer]').should('have.length.greaterThan', 12);
+    cy.get('[data-testid=mip-searchInput]').type('book');
+    cy.get('body').trigger('keydown', { key: 'Enter', force: true });
+    cy.get('[data-testid=mip-iconContainer]').should('have.length.greaterThan', 12);
+  });
+});
+
+describe('interaction related to icon type selection', () => {
   it('mip-typeOptionsContainer and its five mip-typeOption should be visible after clicking on mip-typeContainer and be not in the document after clicking outside', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy.get('[data-testid=mip-typeContainer]').click();
@@ -61,26 +105,16 @@ describe('Rendering of the elements of <MaterialIconsPicker />', () => {
     cy.get('[data-testid=mip-typeOption]').should('not.exist');
   });
 
-  it('mip-palatteContainer, .w-color-saturation, and .w-color-alpha-pointer should be visible after clicking on mip-colorSelectorContainer and be not in the document after clicking outside', () => {
+  it('selecting one mip-typeOption hides the dropdown and changes the className of all mip-icon to contain the selected type', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
-    cy.get('[data-testid=mip-colorSelectorContainer]').click();
-    cy.get('.w-color-saturation').should('be.visible');
-    cy.get('.w-color-alpha-pointer').should('be.visible');
-    cy.get('body').click(0, 0, { force: true });
-    cy.get('.w-color-saturation').should('not.exist');
-    cy.get('.w-color-alpha-pointer').should('not.exist');
-  });
-});
-
-describe('Interaction related to searching the icons', () => {
-  it('change the value of mip-searchInput to book and click on mip-searchIcon', () => {
-    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
-    cy.get('[data-testid=mip-iconContainer]').should('have.length.greaterThan', 12);
-    cy.get('[data-testid=mip-searchInput]').type('book');
-    cy.get('[data-testid=mip-searchIcon]').click();
-    cy.get('[data-testid=mip-iconContainer]').should('have.length', 12);
-    cy.get('[data-testid=mip-searchInput]').invoke('val', '');
-    cy.get('[data-testid=mip-searchIcon]').click();
-    cy.get('[data-testid=mip-iconContainer]').should('have.length.greaterThan', 12);
+    cy.get('[data-testid=mip-icon]').each($el => {
+      cy.wrap($el).invoke('attr', 'class').then(className => className.split('-')).should('have.length', 2);
+    });
+    cy.get('[data-testid=mip-typeContainer]').click();
+    cy.get('[data-testid=mip-typeOption]').eq(1).click();
+    cy.get('[data-testid=mip-icon]').each($el => {
+      cy.wrap($el).invoke('attr', 'class').should('equal', `material-icons-${ICON_TYPES[1].value}`);
+    });
+    cy.get('[data-testid=mip-typeOptionsContainer]').should('not.exist');
   });
 });
