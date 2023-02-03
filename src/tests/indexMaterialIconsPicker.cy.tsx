@@ -19,7 +19,7 @@ const hexToRgb = (hex: string): string => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
 }
-/*
+
 describe('rendering of the elements of <MaterialIconsPicker />', () => {
   it('expected elements are rendered correctly without props', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -153,7 +153,9 @@ describe('interaction related to color selection', () => {
 describe('number of icons', () => {
   it('number of icons of the initial render is equal to col * (row + 1)', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
-    cy.get('[data-testid=mip-iconContainer]').should('have.length', 13 * 9);
+    cy
+      .get('[data-testid=mip-iconContainer]')
+      .should('have.length', 13 * 9);
   });
 
   it('number of icons increases by DEFAULT_ROW_ADDITION_NUMBER * col by default', async () => {
@@ -179,67 +181,39 @@ describe('number of icons', () => {
       })
   });
 });
-*/
-describe('positioning of mip-iconTip', () => {
-  // it('mip-iconTip should be visible after hovering the mouse over an icon', () => {
-  //   cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
-  //   cy.get('[data-testid=mip-iconContainer]')
-  //     .then(elements => cy.wrap(elements[0]).realHover())
-  //     .then(() => cy.get('[data-testid=mip-iconTip]'))
-  //     .then(elements => {
-  //       for(let i = 0; i < elements.length; ++i) {
-  //         cy.wrap(elements[i]).should(i === 0 ? 'be.visible' : 'not.be.visible');
-  //       }
-  //     });
-  // });
 
+describe('positioning of mip-iconTip', () => {
   it('mip-iconTip and mip-iconContainer are aligned by their vertical central axis', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     let iconsContainer: HTMLElement;
     let iconContainers: JQuery<HTMLElement>;
     let iconTips: JQuery<HTMLElement>;
-
-     cy.get('[data-testid=mip-iconsContainer]')
-      .then($iconsContainers => {
-        cy.get('[data-testid=mip-iconContainer]')
-          .then($iconContainers => {
-            cy.get('[data-testid=mip-iconTip]')
-              .then($iconTips => {
-                const length = $iconContainers.length;
-                for(let i = 0; i < length; ++i) {
-                  cy.wrap($iconContainers[i]).realHover().then(() => cy.wrap($iconTips[i], { timeout: 1000 })).should('be.visible');
-                }
-              });
-          })
-      })
-
-    // cy.get('[data-testid=mip-iconContainer]').each((element, i) => cy.wrap(element).as('iconContainer' + i));
-    // cy.get('[data-testid=mip-iconTip]').each((element, i) => cy.wrap(element).as('iconTip' + i));
-    // cy.get('[data-testid=mip-iconContainer]').each((element, i) => {
-    //   cy.wrap(element).realHover();
-    //   cy.wait('@iconTip' + i).should('be.visible');
-    // })
-    // cy.get('[data-testid=mip-iconsContainer]')
-    //    .then(iconsContainerEles => iconsContainer = iconsContainerEles[0])
-    //    .then(() => cy.get('[data-testid=mip-iconContainer]'))
-    //    .then(iconContainerEles => iconContainers = iconContainerEles)
-    //    .then(() => cy.get('[data-testid=mip-iconTip]'))
-    //    .then(iconTipEles => iconTips = iconTipEles)
-    //    .then(() => {
-    //       const iconsContainerRect = iconsContainer.getBoundingClientRect();
-    //       const length = iconContainers.length;
-    //       for(let i = 0; i < length; ++i) {
-    //         cy.wrap(iconContainers[i]).realHover();
-    //         cy.wait(500);
-    //         cy.wrap(iconTips[i]).should('be.visible');
-    //         // const iconContainerRect = iconContainers[i].getBoundingClientRect();
-    //         // const iconTipRect = iconTips[i].getBoundingClientRect();
-    //         // let expectedIconTipX = iconContainerRect.x + (iconContainerRect.width - iconTipRect.width) * 0.5;
-    //         // if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconContainerRect.left;
-    //         // else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + iconsContainerRect.width) expectedIconTipX = iconContainerRect.left + iconContainerRect.width - iconTipRect.width;
-    //         // // console.log(iconContainerRect, iconTipRect, iconTips[i]);
-    //         // cy.wrap(Math.abs(expectedIconTipX - iconTipRect.x)).should('be.lessThan', 1.1);
-    //       }
-    //    })
+    cy
+      .get('[data-testid=mip-iconsContainer]')
+      .then(elements => iconsContainer = elements[0])
+      .then(() => cy.get('[data-testid=mip-iconContainer]'))
+      .then(elements => iconContainers = elements)
+      .then(() => cy.get('[data-testid=mip-iconTip]'))
+      .then(elements => iconTips = elements)
+      .then(() => {
+        const length = iconContainers.length;
+        const iconsContainerRect = iconsContainer.getBoundingClientRect();
+        for(let i = 0; i < length; ++i) {
+          cy
+            .wrap(iconContainers[i])
+            .realHover()
+            .wait(100)
+            .then(() => cy.wrap(iconTips[i], { timeout: 3000 }))
+            .should('be.visible')
+            .then(() => {
+              const iconContainerRect = iconContainers[i].getBoundingClientRect();
+              const iconTipRect = iconTips[i].getBoundingClientRect();
+              let expectedIconTipX = iconContainerRect.x + (iconContainerRect.width - iconTipRect.width) * 0.5;
+              if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconContainerRect.left;
+              else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + iconsContainerRect.width) expectedIconTipX = iconContainerRect.left + iconContainerRect.width - iconTipRect.width;
+              cy.wrap(Math.abs(expectedIconTipX - iconTipRect.x)).should('be.lessThan', 0.1);
+            });
+        }
+      });
   });
 });

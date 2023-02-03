@@ -13,12 +13,12 @@ jobs:
         with:
           command: npm run cy:tests
           browser: chrome
-      - name: Cypress run on chrome
+      - name: Cypress run on firefox
         uses: cypress-io/github-action@v5
         with:
           command: npm run cy:tests
           browser: firefox
-      - name: Cypress run on chrome
+      - name: Cypress run on electron
         uses: cypress-io/github-action@v5
         with:
           command: npm run cy:tests
