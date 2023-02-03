@@ -14,6 +14,8 @@ export const TEXT: {
 
 export const DEFAULT_ICONS_NUMBER: number = 500;
 
+export const DEFAULT_ROW_ADDITION_NUMBER: number = 5;
+
 export const NO_MARGIN: object = {
     margin: '0',
     marginLeft: '0',

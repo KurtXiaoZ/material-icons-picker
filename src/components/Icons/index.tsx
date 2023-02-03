@@ -1,5 +1,5 @@
 import { MATERIAL_ICONS } from '../../assets/materialIcons';
-import { TEXT } from '../../lib/constants';
+import { DEFAULT_ROW_ADDITION_NUMBER, TEXT } from '../../lib/constants';
 import {
     getIconsContainerRowColCounts,
     ICONS_CONTAINER_BASE_STYLE,
@@ -73,7 +73,7 @@ export const Icons = (props: IIcons) => {
                 if(eventTarget.scrollTop + eventTarget.clientHeight === eventTarget.scrollHeight && icons.length < iconSearchResults.length) {
                     setLoading(true);
                     setTimeout(() => {
-                        setIcons((prevIcons: string[]) => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + 5 * colCount)]);
+                        setIcons((prevIcons: string[]) => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + DEFAULT_ROW_ADDITION_NUMBER * colCount)]);
                         setLoading(false);
                     }, 1000);
                 }

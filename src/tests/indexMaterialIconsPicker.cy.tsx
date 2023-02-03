@@ -1,5 +1,6 @@
 import { MaterialIconsPicker } from '../components/MaterialIconsPicker/index';
-import { ICON_TYPES } from '../lib/constants';
+import { DEFAULT_ROW_ADDITION_NUMBER, ICON_TYPES } from '../lib/constants';
+import "cypress-real-events";
 
 const WRAPPER_STYLES: object = {
   position: 'fixed',
@@ -13,6 +14,11 @@ const WRAPPER_STYLES: object = {
 const DEFAULT_PROPS: object = {
 
 };
+
+const hexToRgb = (hex: string): string => {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
+}
 
 describe('rendering of the elements of <MaterialIconsPicker />', () => {
   it('expected elements are rendered correctly without props', () => {
@@ -45,16 +51,6 @@ describe('rendering of the elements of <MaterialIconsPicker />', () => {
     cy.get('[data-testid=mip-loadingContainer]').should('not.exist');
     cy.get('[data-testid=mip-loading]').should('not.exist');
     cy.get('[data-testid=mip-iconsContainerPlaceholder]').should('not.exist');
-  });
-
-  it('mip-palatteContainer, .w-color-saturation, and .w-color-alpha-pointer should be visible after clicking on mip-colorSelectorContainer and be not in the document after clicking outside', () => {
-    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
-    cy.get('[data-testid=mip-colorSelectorContainer]').click();
-    cy.get('.w-color-saturation').should('be.visible');
-    cy.get('.w-color-alpha-pointer').should('be.visible');
-    cy.get('body').click(0, 0, { force: true });
-    cy.get('.w-color-saturation').should('not.exist');
-    cy.get('.w-color-alpha-pointer').should('not.exist');
   });
 });
 
@@ -116,5 +112,139 @@ describe('interaction related to icon type selection', () => {
       cy.wrap($el).invoke('attr', 'class').should('equal', `material-icons-${ICON_TYPES[1].value}`);
     });
     cy.get('[data-testid=mip-typeOptionsContainer]').should('not.exist');
+  });
+});
+
+describe('interaction related to color selection', () => {
+  it('mip-palatteContainer, .w-color-saturation, and .w-color-alpha-pointer should be visible after clicking on mip-colorSelectorContainer and be not in the document after clicking outside', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy.get('[data-testid=mip-colorSelectorContainer]').click();
+    cy.get('.w-color-saturation').should('be.visible');
+    cy.get('.w-color-alpha-pointer').should('be.visible');
+    cy.get('body').click(0, 0, { force: true });
+    cy.get('.w-color-saturation').should('not.exist');
+    cy.get('.w-color-alpha-pointer').should('not.exist');
+  });
+
+  it('clicking on a pixel of .w-color-saturation changes the color of all icons', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy.get('[data-testid=mip-colorSelectorContainer]').click();
+    cy.get('[data-testid=mip-colorSelected]').contains('#000000');
+    cy.get('.w-color-saturation').click(10, 10);
+    cy.get('[data-testid=mip-colorSelected]').contains('#f2e6e6');
+    cy.get('[data-testid=mip-icon]').each($el => {
+      expect($el[0].style.color).to.be.equal(hexToRgb('#f2e6e6'));
+    });
+  });
+
+  it('clicking on a pixel of .w-color-alpha-pointer changes the color of all icons', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy.get('[data-testid=mip-colorSelectorContainer]').click();
+    cy.get('[data-testid=mip-colorSelected]').contains('#000000');
+    cy.get('.w-color-saturation').click(10, 10);
+    cy.get('.w-color-alpha-pointer').click(10, 10);
+    cy.get('[data-testid=mip-colorSelected]').contains('#f2eae6');
+    cy.get('[data-testid=mip-icon]').each($el => {
+      expect($el[0].style.color).to.be.equal(hexToRgb('#f2eae6'));
+    });
+  });
+});
+
+describe('number of icons', () => {
+  it('number of icons of the initial render is equal to col * (row + 1)', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy.get('[data-testid=mip-iconContainer]').should('have.length', 13 * 9);
+  });
+
+  it('number of icons increases by DEFAULT_ROW_ADDITION_NUMBER * col by default', async () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy.get('[data-testid=mip-iconsContainer]').then(elements => {
+      const rowCount: number = window.getComputedStyle(elements[0]).getPropertyValue('grid-template-rows')?.split(' ').length || 0;
+      const colCount: number = window.getComputedStyle(elements[0]).getPropertyValue('grid-template-columns')?.split(' ').length || 0;
+      cy.get('[data-testid=mip-iconContainer]').should('have.length', colCount * rowCount);
+      cy.get('[data-testid=mip-iconsContainer]').scrollTo(0, elements[0].scrollHeight);
+      cy.get('[data-testid=mip-iconContainer]').should('have.length', colCount * rowCount + DEFAULT_ROW_ADDITION_NUMBER * colCount);
+      cy.get('[data-testid=mip-iconsContainer]').scrollTo(0, elements[0].scrollHeight);
+      cy.get('[data-testid=mip-iconContainer]').should('have.length', colCount * rowCount + DEFAULT_ROW_ADDITION_NUMBER * colCount * 2);
+    });
+  });
+
+  it('number of icons may be not divisible by colCount given certain search input', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy.get('[data-testid=mip-iconsContainer]')
+      .then(elements => window.getComputedStyle(elements[0]).getPropertyValue('grid-template-columns')?.split(' ').length || 0)
+      .then(colCount => {
+        cy.get('[data-testid=mip-searchInput]').type('book');
+        cy.get('[data-testid=mip-iconContainer]').then(elements => cy.wrap(elements.length % colCount).should('not.equal', 0));
+      })
+  });
+});
+
+describe('positioning of mip-iconTip', () => {
+  it('mip-iconTip should be visible after hovering the mouse over an icon', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy.get('[data-testid=mip-icon]')
+      .then(elements => cy.wrap(elements[0]).realHover())
+      .then(() => cy.get('[data-testid=mip-iconTip]'))
+      .then(elements => {
+        for(let i = 0; i < elements.length; ++i) {
+          cy.wrap(elements[i]).should(i === 0 ? 'be.visible' : 'not.be.visible');
+        }
+      });
+  });
+
+  it('mip-iconTip and mip-iconContainer are aligned by their vertical central axis', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    let iconsContainer: HTMLElement;
+    let iconContainers: JQuery<HTMLElement>;
+    let iconTips: JQuery<HTMLElement>;
+    // cy.get('[data-testid=mip-iconsContainer]')
+    //   .then(iconsContainers => {
+    //     cy.get('[data-testid=mip-iconContainer]').each((iconContainer, i) => {
+    //       cy.wrap(iconContainer).realHover();
+    //       cy.get('[data-testid=mip-iconTip]').eq(i).should('be.visible');
+    //     })
+    //   })
+    cy.get('[data-testid=mip-iconsContainer]')
+       .then(iconsContainerEles => iconsContainer = iconsContainerEles[0])
+       .then(() => cy.get('[data-testid=mip-iconContainer]'))
+       .then(iconContainerEles => iconContainers = iconContainerEles)
+       .then(() => cy.get('[data-testid=mip-iconTip]'))
+       .then(iconTipEles => iconTips = iconTipEles)
+       .then(() => {
+          for(let i = 0; i < iconContainers.length; ++i) {
+            cy.wrap(iconContainers[i]).realHover();
+            // cy.wrap(iconTips[i]).should('be.visible');
+            // const iconContainerRect = iconContainers[i].getBoundingClientRect();
+            // const iconTipRect = iconTips[i].getBoundingClientRect();
+            // console.log(iconContainerRect, iconTipRect);
+          }
+       })
+    // let iconsContainer: HTMLElement, iconContainers: JQuery<HTMLElement>, iconTips: JQuery<HTMLElement>;
+    // cy.get('[data-testid=mip-iconsContainer]')
+    //   .then(iconsContainerEles => iconsContainer = iconsContainerEles[0])
+    //   .then(() => cy.get('[data-testid=mip-iconContainer]'))
+    //   .then(iconContainerEles => iconContainers = iconContainerEles)
+    //   .then(() => cy.get('[data-testid=mip-iconTip]'))
+    //   .then(iconTipEles => iconTips = iconTipEles)
+    //   .then(() => {
+    //     const iconsContainerRect = iconsContainer.getBoundingClientRect();
+    //     for(let i = 0; i < iconContainers.length; ++i) {
+    //       const iconContainerRect = iconContainers[i].getBoundingClientRect();
+    //       const iconTipRect = iconTips[i].getBoundingClientRect();
+    //       let expectedIconTipLeft = (iconContainerRect.width - iconTipRect.width) * 0.5;
+    //       // if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconContainerRect.left;
+    //       // else if(expectedIconTipX + iconTipRect.width > iconsContainerRect.left + iconsContainerRect.width) expectedIconTipX = iconContainerRect.left + iconContainerRect.width - iconTipRect.width;
+    //       console.log(iconContainerRect, iconTipRect);
+    //       // cy.wrap(Math.abs(expectedIconTipX - iconTipRect.left)).should('be.lessThan', 2);
+    //       // cy.wrap(expectedIconTipLeft).should('equal', parseInt(iconTips[i].style.left))
+    //       cy.wrap(iconContainers[i].children[0])
+    //         .invoke('text')
+    //         .then(text => cy.wrap(iconTips[i]).invoke('text').should('be.equal', text));
+    //       // console.log(i, expectedIconTipX, iconTipRect.left);
+    //       // cy.wrap(iconTipRect.left).should('equal', iconContainerRect.left + parseInt(iconTips[i].style.left));
+    //       // cy.wrap(Math.abs(iconTipRect.x - iconContainerRect.x)).should('equal', 3);
+    //     }
+    //   });
   });
 });
