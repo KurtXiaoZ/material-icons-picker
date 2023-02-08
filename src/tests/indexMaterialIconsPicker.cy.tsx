@@ -208,6 +208,7 @@ describe('positioning of mip-iconTip', () => {
             .then(() => {
               const iconContainerRect = iconContainers[i].getBoundingClientRect();
               const iconTipRect = iconTips[i].getBoundingClientRect();
+              console.log(iconContainerRect, iconTipRect);
               let expectedIconTipX = iconContainerRect.x + (iconContainerRect.width - iconTipRect.width) * 0.5;
               if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconContainerRect.left;
               else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + iconsContainerRect.width) expectedIconTipX = iconContainerRect.left + iconContainerRect.width - iconTipRect.width;
