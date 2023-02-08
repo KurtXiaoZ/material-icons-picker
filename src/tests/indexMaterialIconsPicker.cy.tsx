@@ -202,7 +202,7 @@ describe('positioning of mip-iconTip', () => {
           cy
             .wrap(iconContainers[i])
             .realHover()
-            .wait(200)
+            // .wait(200)
             .then(() => cy.wrap(iconTips[i], { timeout: 3000 }))
             .should('be.visible')
             .then(() => {
