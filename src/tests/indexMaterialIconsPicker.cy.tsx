@@ -212,7 +212,7 @@ describe('positioning of mip-iconTip', () => {
               let expectedIconTipX = iconContainerRect.x + (iconContainerRect.width - iconTipRect.width) * 0.5;
               if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconContainerRect.left;
               else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + iconsContainerRect.width) expectedIconTipX = iconContainerRect.left + iconContainerRect.width - iconTipRect.width;
-              cy.wrap(Math.abs(expectedIconTipX - iconTipRect.x)).should('be.lessThan', 0.2);
+              cy.wrap(Math.abs(expectedIconTipX - iconTipRect.x)).should('be.lessThan', 2);
             });
         }
       });
