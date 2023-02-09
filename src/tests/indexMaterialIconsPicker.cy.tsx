@@ -20,6 +20,13 @@ const hexToRgb = (hex: string): string => {
   return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
 }
 
+const wait = (time: number) => {
+  // return a promise that resolves after 1 second
+  return new Cypress.Promise((resolve, reject) => {
+    setTimeout(resolve, time)
+  })
+};
+
 describe('rendering of the elements of <MaterialIconsPicker />', () => {
   it('expected elements are rendered correctly without props', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -237,9 +244,23 @@ describe('positioning of mip-iconTip', () => {
           cy
             .wrap(this.iconContainers[i])
             .realHover()
-            .wait(100)
-            .wrap(this.iconTips[i])
-            .should('be.visible')
+            // .then(() => wait(1000))
+            // .wrap(this.iconTips[i])
+            // .should('be.visible')
+            .then(() => {
+              // let iconTipLeft = parseInt(this.iconTips[i].style.left);
+              // expect(iconTipLeft).to.be.oneOf([
+              //   0,
+              //   
+              // ])
+              const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
+              const iconContainerRect = this.iconContainers[i].getBoundingClientRect();
+              const iconTipRect = this.iconTips[i].getBoundingClientRect();
+              let expectedIconTipX = iconContainerRect.x + (iconContainerRect.width - iconTipRect.width) * 0.5;
+              if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconContainerRect.left;
+              else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.x + this.iconsContainers[0].clientWidth) expectedIconTipX = iconContainerRect.left + iconContainerRect.width - iconTipRect.width;
+              cy.wrap(Math.abs(expectedIconTipX - iconTipRect.x)).should('be.lessThan', 2);
+            })
         }
       })
   });
