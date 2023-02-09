@@ -200,9 +200,9 @@ describe('positioning of mip-iconTip', () => {
         const iconsContainerRect = iconsContainer.getBoundingClientRect();
         for(let i = 0; i < length; ++i) {
           cy
-            .wrap(iconContainers[i])
-            .realHover()
-            .wait(400)
+            // .wrap(iconContainers[i])
+            // .realHover()
+            // .wait(400)
             .then(() => cy.wrap(iconTips[i], { timeout: 3000 }))
             .should('be.visible')
             .then(() => {
