@@ -189,52 +189,28 @@ describe('number of icons', () => {
   });
 });
 
-describe('positioning of mip-iconTip', () => {
-  it('mip-iconTip and mip-iconContainer are aligned by their vertical central axis', function() {
-    cy.viewport(500, 500);
+describe('interaction of mip-iconTip', () => {
+  it('mip-iconTip is visible once users hover over mip-icon', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
-    // cy
-    //   .get('[data-testid=mip-icon]')
-    //   .contains('30fps_select')
-    //   .first()
-    //   .realHover()
-    //   .get('[data-testid=mip-iconTip]')
-    //   .contains('30fps_select')
-    //   .first()
-    //   .should('be.visible')
-    //   .then(el => el[0].style.left)
-    //   .should('equal', '0px');
-    // let iconsContainer: HTMLElement;
-    // let iconContainers: JQuery<HTMLElement>;
-    // let iconTips: JQuery<HTMLElement>;
-    // cy
-    //   .get('[data-testid=mip-iconsContainer]')
-    //   .then(elements => iconsContainer = elements[0])
-    //   .then(() => cy.get('[data-testid=mip-iconContainer]'))
-    //   .then(elements => iconContainers = elements)
-    //   .then(() => cy.get('[data-testid=mip-iconTip]'))
-    //   .then(elements => iconTips = elements)
-    //   .then(() => {
-    //     const length = iconContainers.length;
-    //     const iconsContainerRect = iconsContainer.getBoundingClientRect();
-    //     for(let i = 0; i < length; ++i) {
-    //       cy
-    //         // .wrap(iconContainers[i])
-    //         // .realHover()
-    //         // .wait(400)
-    //         // .then(() => cy.wrap(iconTips[i], { timeout: 3000 }))
-    //         // .should('be.visible')
-    //         .then(() => {
-    //           const iconContainerRect = iconContainers[i].getBoundingClientRect();
-    //           const iconTipRect = iconTips[i].getBoundingClientRect();
-    //           console.log(iconContainerRect, iconTipRect);
-    //           let expectedIconTipX = iconContainerRect.x + (iconContainerRect.width - iconTipRect.width) * 0.5;
-    //           if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconContainerRect.left;
-    //           else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + iconsContainerRect.width) expectedIconTipX = iconContainerRect.left + iconContainerRect.width - iconTipRect.width;
-    //           cy.wrap(Math.abs(expectedIconTipX - iconTipRect.x)).should('be.lessThan', 2);
-    //         });
-    //     }
-    //   });
+    cy
+      .get('[data-testid=mip-iconContainer]').as('iconContainers')
+      .get('[data-testid=mip-iconTip]').as('iconTips')
+      .then(() => {
+        for(let i = 0; i < this.iconContainers.length; ++i) {
+          cy
+            .wrap(this.iconContainers[i])
+            .realHover()
+            .wrap(this.iconTips[i])
+            .should('be.visible')
+        }
+      })
+  });
+
+  it(`the position of mip-iconTip
+      1) below mip-iconContainer
+      2) aligned with mip-cionContainer by central vertical axis
+      3) within the boundary of mip-iconsContainer`, function() {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy
       .get('[data-testid=mip-iconsContainer]').as('iconsContainers')
       .get('[data-testid=mip-iconContainer]').as('iconContainers')
@@ -244,15 +220,7 @@ describe('positioning of mip-iconTip', () => {
           cy
             .wrap(this.iconContainers[i])
             .realHover()
-            // .then(() => wait(1000))
-            // .wrap(this.iconTips[i])
-            // .should('be.visible')
             .then(() => {
-              // let iconTipLeft = parseInt(this.iconTips[i].style.left);
-              // expect(iconTipLeft).to.be.oneOf([
-              //   0,
-              //   
-              // ])
               const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
               const iconContainerRect = this.iconContainers[i].getBoundingClientRect();
               const iconTipRect = this.iconTips[i].getBoundingClientRect();
@@ -260,6 +228,7 @@ describe('positioning of mip-iconTip', () => {
               if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconContainerRect.left;
               else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.x + this.iconsContainers[0].clientWidth) expectedIconTipX = iconContainerRect.left + iconContainerRect.width - iconTipRect.width;
               cy.wrap(Math.abs(expectedIconTipX - iconTipRect.x)).should('be.lessThan', 2);
+              expect(parseInt(this.iconTips[i].style.top)).to.be.oneOf([iconContainerRect.height + 2, -1 * iconTipRect.height - 2])
             })
         }
       })
