@@ -183,20 +183,20 @@ describe('number of icons', () => {
 });
 
 describe('positioning of mip-iconTip', () => {
-  it('mip-iconTip and mip-iconContainer are aligned by their vertical central axis', () => {
+  it('mip-iconTip and mip-iconContainer are aligned by their vertical central axis', function() {
     cy.viewport(500, 500);
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
-    let icon: HTMLElement, iconContainer: HTMLElement, iconTip: HTMLElement;
-    cy
-      .get('[data-testid=mip-icon]')
-      .contains('30fps_select')
-      .then(el => icon = el[0])
-      .then(() => iconContainer = icon.parentElement)
-      .then(() => cy.wrap(iconContainer))
-      .realHover()
-      .get('[data-testid=mip-iconTip]')
-      .contains('30fps_select')
-      .should('be.visible');
+    // cy
+    //   .get('[data-testid=mip-icon]')
+    //   .contains('30fps_select')
+    //   .first()
+    //   .realHover()
+    //   .get('[data-testid=mip-iconTip]')
+    //   .contains('30fps_select')
+    //   .first()
+    //   .should('be.visible')
+    //   .then(el => el[0].style.left)
+    //   .should('equal', '0px');
     // let iconsContainer: HTMLElement;
     // let iconContainers: JQuery<HTMLElement>;
     // let iconTips: JQuery<HTMLElement>;
@@ -228,5 +228,19 @@ describe('positioning of mip-iconTip', () => {
     //         });
     //     }
     //   });
+    cy
+      .get('[data-testid=mip-iconsContainer]').as('iconsContainers')
+      .get('[data-testid=mip-iconContainer]').as('iconContainers')
+      .get('[data-testid=mip-iconTip]').as('iconTips')
+      .then(() => {
+        for(let i = 0; i < this.iconContainers.length; ++i) {
+          cy
+            .wrap(this.iconContainers[i])
+            .realHover()
+            .wait(100)
+            .wrap(this.iconTips[i])
+            .should('be.visible')
+        }
+      })
   });
 });
