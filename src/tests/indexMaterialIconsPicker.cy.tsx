@@ -20,13 +20,6 @@ const hexToRgb = (hex: string): string => {
   return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
 }
 
-const wait = (time: number) => {
-  // return a promise that resolves after 1 second
-  return new Cypress.Promise((resolve, reject) => {
-    setTimeout(resolve, time)
-  })
-};
-
 describe('rendering of the elements of <MaterialIconsPicker />', () => {
   it('expected elements are rendered correctly without props', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -190,27 +183,33 @@ describe('number of icons', () => {
 });
 
 describe('interaction of mip-iconTip', () => {
-  it('mip-iconTip is visible once users hover over mip-icon and contains the right content', function() {
+  it('mip-iconTip contains the right text content', function() {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy
+      .get('[data-testid=mip-icon]')
+      .each((el, i) => {
+        cy
+          .get('[data-testid=mip-iconTip]')
+          .eq(i)
+          .invoke('text')
+          .should('eq', el.text());
+      })
+  });
+  it('mip-iconTip is visible once users hover over mip-icon', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy
       .get('[data-testid=mip-icon]').as('icons')
       .get('[data-testid=mip-iconTip]').as('iconTips')
       .then(() => {
         for(let i = 0; i < this.icons.length; ++i) {
-          let value: string;
           cy
             .wrap(this.icons[i])
             .realHover()
+            .wait(10)
             .wrap(this.iconTips[i])
-            .should('be.visible')
-            .wrap(this.icons[i])
-            .invoke('text')
-            .then(text => value = text)
-            .wrap(this.iconTips[i])
-            .invoke('text')
-            .should('equal', value);;
+            .should('be.visible');
         }
-      })
+      });
   });
 
   it(`the position of mip-iconTip
