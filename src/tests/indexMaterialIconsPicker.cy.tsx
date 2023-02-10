@@ -183,6 +183,58 @@ describe('number of icons', () => {
 });
 
 describe('interaction of mip-iconTip', () => {
+  function testIconTipPosition(context: any) {
+    cy
+    .get('[data-testid=mip-iconsContainer]').as('iconsContainers')
+    .get('[data-testid=mip-iconContainer]').as('iconContainers')
+    .get('[data-testid=mip-iconTip]').as('iconTips')
+    .then(() => {
+      for(let i = 0; i < context.iconContainers.length; ++i) {
+        cy
+          .wrap(context.iconContainers[i])
+          .realHover()
+          .then(() => {
+            const iconsContainerRect = context.iconsContainers[0].getBoundingClientRect();
+            const iconContainerRect = context.iconContainers[i].getBoundingClientRect();
+            const iconTipRect = context.iconTips[i].getBoundingClientRect();
+            let expectedIconTipX = iconContainerRect.x + (iconContainerRect.width - iconTipRect.width) * 0.5;
+            if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconContainerRect.left;
+            else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.x + context.iconsContainers[0].clientWidth) expectedIconTipX = iconContainerRect.left + iconContainerRect.width - iconTipRect.width;
+            cy.wrap(Math.abs(expectedIconTipX - iconTipRect.x)).should('be.lessThan', 2);
+            expect(parseInt(context.iconTips[i].style.top)).to.be.oneOf([iconContainerRect.height + 2, -1 * iconTipRect.height - 2])
+          })
+      }
+    });
+  }
+
+  it('mip-iconTip is visible once users hover over mip-icon', function() {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy
+      .get('[data-testid=mip-icon]')
+      .each((el, i) => {
+        cy
+          .wrap(el)
+          .realHover()
+          .wait(10)
+          .get('[data-testid=mip-iconTip]')
+          .eq(i)
+          .should('be.visible');
+      })
+    // cy
+    //   .get('[data-testid=mip-icon]').as('icons')
+    //   .get('[data-testid=mip-iconTip]').as('iconTips')
+    //   .then(() => {
+    //     for(let i = 0; i < this.icons.length; ++i) {
+    //       cy
+    //         .wrap(this.icons[i])
+    //         .realHover()
+    //         // .wait(50)
+    //         .wrap(this.iconTips[i])
+    //         .should('be.visible');
+    //     }
+    //   });
+  });
+
   it('mip-iconTip contains the right text content', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy
@@ -195,48 +247,16 @@ describe('interaction of mip-iconTip', () => {
           .should('eq', el.text());
       })
   });
-  it('mip-iconTip is visible once users hover over mip-icon', function() {
-    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
-    cy
-      .get('[data-testid=mip-icon]').as('icons')
-      .get('[data-testid=mip-iconTip]').as('iconTips')
-      .then(() => {
-        for(let i = 0; i < this.icons.length; ++i) {
-          cy
-            .wrap(this.icons[i])
-            .realHover()
-            .wait(10)
-            .wrap(this.iconTips[i])
-            .should('be.visible');
-        }
-      });
-  });
 
   it(`the position of mip-iconTip
       1) below mip-iconContainer
       2) aligned with mip-cionContainer by central vertical axis
       3) within the boundary of mip-iconsContainer`, function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
-    cy
-      .get('[data-testid=mip-iconsContainer]').as('iconsContainers')
-      .get('[data-testid=mip-iconContainer]').as('iconContainers')
-      .get('[data-testid=mip-iconTip]').as('iconTips')
-      .then(() => {
-        for(let i = 0; i < this.iconContainers.length; ++i) {
-          cy
-            .wrap(this.iconContainers[i])
-            .realHover()
-            .then(() => {
-              const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
-              const iconContainerRect = this.iconContainers[i].getBoundingClientRect();
-              const iconTipRect = this.iconTips[i].getBoundingClientRect();
-              let expectedIconTipX = iconContainerRect.x + (iconContainerRect.width - iconTipRect.width) * 0.5;
-              if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconContainerRect.left;
-              else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.x + this.iconsContainers[0].clientWidth) expectedIconTipX = iconContainerRect.left + iconContainerRect.width - iconTipRect.width;
-              cy.wrap(Math.abs(expectedIconTipX - iconTipRect.x)).should('be.lessThan', 2);
-              expect(parseInt(this.iconTips[i].style.top)).to.be.oneOf([iconContainerRect.height + 2, -1 * iconTipRect.height - 2])
-            })
-        }
-      })
+    testIconTipPosition(this);
+  });
+
+  it('test the positioning of mip-iconTip under different browser sizes', function() {
+
   });
 });
