@@ -197,19 +197,18 @@ describe('interaction of mip-iconTip', () => {
       .get('[data-testid=mip-iconTip]').as('iconTips')
       .then(() => {
         for(let i = 0; i < this.icons.length; ++i) {
+          let value: string;
           cy
             .wrap(this.icons[i])
             .realHover()
             .wrap(this.iconTips[i])
-            .should('be.visible');
-          let value: string;
-          cy
+            .should('be.visible')
             .wrap(this.icons[i])
             .invoke('text')
             .then(text => value = text)
             .wrap(this.iconTips[i])
             .invoke('text')
-            .should('equal', value);
+            .should('equal', value);;
         }
       })
   });
