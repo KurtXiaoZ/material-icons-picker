@@ -190,7 +190,7 @@ describe('number of icons', () => {
 });
 
 describe('interaction of mip-iconTip', () => {
-  it('mip-iconTip is visible once users hover over mip-icon', function() {
+  it('mip-iconTip is visible once users hover over mip-icon and contains the right content', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy
       .get('[data-testid=mip-icon]').as('icons')
@@ -202,6 +202,7 @@ describe('interaction of mip-iconTip', () => {
             .realHover()
             .wrap(this.iconTips[i])
             .should('be.visible')
+          expect(this.icons[i].text()).to.equal(this.iconTips[i].text());
         }
       })
   });
