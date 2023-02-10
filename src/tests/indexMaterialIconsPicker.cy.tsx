@@ -208,7 +208,7 @@ describe('interaction of mip-iconTip', () => {
             .invoke('text')
             .then(text => value = text)
             .wrap(this.iconTips[i])
-            .invoke('text1')
+            .invoke('text')
             .should('equal', value);
         }
       })
