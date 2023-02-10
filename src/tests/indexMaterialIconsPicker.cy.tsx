@@ -152,8 +152,9 @@ describe('interaction related to color selection', () => {
 
 describe('number of icons', () => {
   it('number of icons of the initial render is equal to col * (row + 1)', () => {
-    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy
+      .viewport(500, 500)
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>)
       .get('[data-testid=mip-iconContainer]')
       .should('have.length', 13 * 9);
   });
@@ -259,6 +260,6 @@ describe('interaction of mip-iconTip', () => {
       .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>)
       .then(function() {
         testIconTipPosition(this);
-      })
+      });
   });
 });
