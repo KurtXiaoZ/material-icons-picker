@@ -202,7 +202,7 @@ describe('interaction of mip-iconTip', () => {
             .realHover()
             .wrap(this.iconTips[i])
             .should('be.visible')
-          expect(this.icons[i].text()).to.equal(this.iconTips[i].text());
+          cy.wrap(this.icons[i].text()).should('eq', this.iconTips[i].text());
         }
       })
   });
