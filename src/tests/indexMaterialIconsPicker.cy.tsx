@@ -201,8 +201,15 @@ describe('interaction of mip-iconTip', () => {
             .wrap(this.icons[i])
             .realHover()
             .wrap(this.iconTips[i])
-            .should('be.visible')
-          cy.wrap(this.icons[i].text()).should('eq', this.iconTips[i].text());
+            .should('be.visible');
+          let value: string;
+          cy
+            .wrap(this.icons[i])
+            .invoke('text')
+            .then(text => value = text)
+            .wrap(this.iconTips[i])
+            .invoke('text1')
+            .should('equal', value);
         }
       })
   });
