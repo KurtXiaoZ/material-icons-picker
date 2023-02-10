@@ -220,19 +220,6 @@ describe('interaction of mip-iconTip', () => {
           .eq(i)
           .should('be.visible');
       })
-    // cy
-    //   .get('[data-testid=mip-icon]').as('icons')
-    //   .get('[data-testid=mip-iconTip]').as('iconTips')
-    //   .then(() => {
-    //     for(let i = 0; i < this.icons.length; ++i) {
-    //       cy
-    //         .wrap(this.icons[i])
-    //         .realHover()
-    //         // .wait(50)
-    //         .wrap(this.iconTips[i])
-    //         .should('be.visible');
-    //     }
-    //   });
   });
 
   it('mip-iconTip contains the right text content', function() {
@@ -257,6 +244,21 @@ describe('interaction of mip-iconTip', () => {
   });
 
   it('test the positioning of mip-iconTip under different browser sizes', function() {
-
+    cy.
+      viewport(300, 600)
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>)
+      .then(function() {
+        testIconTipPosition(this);
+      })
+      .viewport(600, 300)
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>)
+      .then(function() {
+        testIconTipPosition(this);
+      })
+      .viewport(900, 600)
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>)
+      .then(function() {
+        testIconTipPosition(this);
+      })
   });
 });
