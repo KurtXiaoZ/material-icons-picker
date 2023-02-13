@@ -5,7 +5,7 @@ export const CONTAINER_BASE_STYLE: object = {
     width: '100%',
     minWidth: '230px',
     height: '100%',
-    boxShadow: '1px 1px 7px 2px rgba(0, 0, 0, 0.25)',
+    boxShadow: 'rgba(0, 0, 0, 0.25) 1px 1px 7px 2px',
     display: 'flex',
     flexDirection: 'column',
 };
@@ -13,7 +13,7 @@ export const CONTAINER_BASE_STYLE: object = {
 export const OPTION_CONTAINER_BASE_STYLE: object = {
     width: '100%',
     height: '40px',
-    borderBottom: '1px solid #E5E5E5',
+    borderBottom: '1px solid rgb(229, 229, 229)',
     boxSizing: 'border-box',
     display: 'flex',
     alignItems: 'center',
@@ -218,7 +218,7 @@ export const LOADING_BASE_STYLE: object = {
 export const SEARCH_CONTAINER_BASE_STYLE: object = {
     width: '100%',
     height: '40px',
-    borderBottom: '1px solid #E5E5E5',
+    borderBottom: '1px solid rgb(229, 229, 229)',
     boxSizing: 'border-box',
     padding: '11px 10px',
     display: 'flex',
@@ -232,6 +232,7 @@ export const SEARCH_ICON_BASE_STYLE: object = {
 };
 
 export const SEARCH_INPUT_BASE_STYLE: object = {
+    flexGrow: '1',
     outline: 'none',
     border: '0',
     fontSize: '12px',
@@ -240,7 +241,7 @@ export const SEARCH_INPUT_BASE_STYLE: object = {
 
 export const TYPE_CONTAINER_BASE_STYLE: object = {
     height: '100%',
-    width: '0',
+    width: '0px',
     flexGrow: '1',
     borderRight: '1px solid #E5E5E5',
     position: 'relative',

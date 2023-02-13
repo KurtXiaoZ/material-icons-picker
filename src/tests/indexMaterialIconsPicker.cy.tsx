@@ -1,5 +1,6 @@
 import { MaterialIconsPicker } from '../components/MaterialIconsPicker/index';
 import { DEFAULT_ROW_ADDITION_NUMBER, ICON_TYPES } from '../lib/constants';
+import * as baseStyles from '../lib/styles';
 import "cypress-real-events";
 
 const WRAPPER_STYLES: object = {
@@ -261,5 +262,143 @@ describe('interaction of mip-iconTip', () => {
       .then(function() {
         testIconTipPosition(this);
       });
+  });
+});
+
+describe('test the styles prop', () => {
+  it('test styles prop: container', function() {
+    const containerStyle = {
+      border: '1px solid red',
+      borderRadius: '5px'
+    }
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      container: (baseStyle: object) => ({
+        ...baseStyle,
+        ...containerStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-container]')
+      .as('container')
+      .then(() => Object.entries({ ...baseStyles.CONTAINER_BASE_STYLE, ...containerStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        cy
+          .wrap(this.container[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', val)
+      }));
+  });
+
+  it('test styles prop: searchContainer', function() {
+    const searchContainerStyle = {
+      padding: '10px',
+      height: '60px',
+    }
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      searchContainer: (baseStyle: object) => ({
+        ...baseStyle,
+        ...searchContainerStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-searchContainer]')
+      .as('searchContainer')
+      .then(() => Object.entries({ ...baseStyles.SEARCH_CONTAINER_BASE_STYLE, ...searchContainerStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        cy
+          .wrap(this.searchContainer[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', val)
+      }));
+  });
+
+  it('test styles prop: searchIcon', function() {
+    const searchIconStyle = {
+      marginRight: '20px',
+      height: '90%',
+      border: '1px solid blue'
+    }
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      searchIcon: (baseStyle: object) => ({
+        ...baseStyle,
+        ...searchIconStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-searchIcon]')
+      .as('searchIcon')
+      .then(() => Object.entries({ ...baseStyles.SEARCH_ICON_BASE_STYLE, ...searchIconStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        cy
+          .wrap(this.searchIcon[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', val)
+      }));
+  });
+
+  it('test styles prop: searchInput', function() {
+    const searchInputStyle = {
+      width: '60%',
+      flexGrow: 'unset',
+      border: '1px solid black'
+    }
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      searchInput: (baseStyle: object) => ({
+        ...baseStyle,
+        ...searchInputStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-searchInput]')
+      .as('searchInput')
+      .then(() => Object.entries({ ...baseStyles.SEARCH_INPUT_BASE_STYLE, ...searchInputStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        cy
+          .wrap(this.searchInput[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', val)
+      }));
+  });
+
+  it('test styles prop: optionContainer', function() {
+    const optionContainerStyle = {
+      width: '80%',
+      height: '30px',
+
+    }
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      optionContainer: (baseStyle: object) => ({
+        ...baseStyle,
+        ...optionContainerStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-optionContainer]')
+      .as('optionContainer')
+      .then(() => Object.entries({ ...baseStyles.OPTION_CONTAINER_BASE_STYLE, ...optionContainerStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        cy
+          .wrap(this.optionContainer[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', val)
+      }));
+  });
+
+  it('test styles prop: typeContainer', function() {
+    const typeContainerStyle = {
+      flexGrow: '2',
+      borderRight: '1px solid red',
+      padding: '11px 13px'
+    }
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      typeContainer: (baseStyle: object) => ({
+        ...baseStyle,
+        ...typeContainerStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-typeContainer]')
+      .as('typeContainer')
+      .then(() => Object.entries({ ...baseStyles.TYPE_CONTAINER_BASE_STYLE, ...typeContainerStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        cy
+          .wrap(this.typeContainer[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', val)
+      }));
   });
 });
