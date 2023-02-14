@@ -21,7 +21,7 @@ export const OPTION_CONTAINER_BASE_STYLE: object = {
 
 export const COLOR_SELECTOR_CONTAINER_BASE_STYLE: object = {
     height: '100%',
-    width: '0',
+    width: '0px',
     flexGrow: '1',
     boxSizing: 'border-box',
     padding: '11px 13px',
@@ -273,12 +273,12 @@ export const TYPE_OPTIONS_CONTAINER_BASE_STYLE = ({
     position: 'absolute',
     zIndex: '10',
     top: height,
-    left: '0',
+    left: '0px',
     border: '1px solid black',
     width,
     height: 'fit-content',
-    backgroundColor: '#222222',
-    boxShadow: '0px 2px 6px 2px rgba(60, 64, 67, 0.15)',
+    backgroundColor: 'rgb(34, 34, 34)',
+    boxShadow: 'rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
 });
 
 export const TYPE_OPTION_BASE_STYLE: object = {
@@ -288,5 +288,5 @@ export const TYPE_OPTION_BASE_STYLE: object = {
     fontFamily: 'Arial serif',
     fontSize: '12px',
     cursor: 'pointer',
-    color: '#FDFDFD',
+    color: 'rgb(253, 253, 253)',
 };

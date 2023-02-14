@@ -270,7 +270,7 @@ describe('test the styles prop', () => {
     const containerStyle = {
       border: '1px solid red',
       borderRadius: '5px'
-    }
+    };
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
       container: (baseStyle: object) => ({
         ...baseStyle,
@@ -292,7 +292,7 @@ describe('test the styles prop', () => {
     const searchContainerStyle = {
       padding: '10px',
       height: '60px',
-    }
+    };
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
       searchContainer: (baseStyle: object) => ({
         ...baseStyle,
@@ -315,7 +315,7 @@ describe('test the styles prop', () => {
       marginRight: '20px',
       height: '90%',
       border: '1px solid blue'
-    }
+    };
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
       searchIcon: (baseStyle: object) => ({
         ...baseStyle,
@@ -338,7 +338,7 @@ describe('test the styles prop', () => {
       width: '60%',
       flexGrow: 'unset',
       border: '1px solid black'
-    }
+    };
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
       searchInput: (baseStyle: object) => ({
         ...baseStyle,
@@ -360,8 +360,7 @@ describe('test the styles prop', () => {
     const optionContainerStyle = {
       width: '80%',
       height: '30px',
-
-    }
+    };
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
       optionContainer: (baseStyle: object) => ({
         ...baseStyle,
@@ -384,7 +383,7 @@ describe('test the styles prop', () => {
       flexGrow: '2',
       borderRight: '1px solid red',
       padding: '11px 13px'
-    }
+    };
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
       typeContainer: (baseStyle: object) => ({
         ...baseStyle,
@@ -399,6 +398,129 @@ describe('test the styles prop', () => {
         cy
           .wrap(this.typeContainer[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
           .should('eq', val)
+      }));
+  });
+
+  it('test styles prop: typeSelected', function() {
+    const typeSelectedStyle = {
+      color: 'red',
+      fontSize: '200%',
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      typeSelected: (baseStyle: object) => ({
+        ...baseStyle,
+        ...typeSelectedStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-typeSelected]')
+      .as('typeSelected')
+      .then(() => Object.entries({ ...baseStyles.TYPE_SELECTED_BASE_STYLE, ...typeSelectedStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        cy
+          .wrap(this.typeSelected[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', val);
+      }));
+  });
+
+  it('test styles prop: typeArrow', function() {
+    const typeArrowStyle = {
+      height: '80%',
+      marginTop: '10px',
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      typeArrow: (baseStyle: object) => ({
+        ...baseStyle,
+        ...typeArrowStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-typeArrow]')
+      .as('typeArrow')
+      .then(() => Object.entries({ ...baseStyles.TYPE_ARROW_BASE_STYLE, ...typeArrowStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        cy
+          .wrap(this.typeArrow[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', val);
+      }));
+  });
+
+  it('test styles prop: typeOptionsContainer', function() {
+    const typeOptionsContainerStyle = {
+      border: '1px solid grey',
+      borderRadius: '3px',
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      typeOptionsContainer: (baseStyle: object) => ({
+        ...baseStyle,
+        ...typeOptionsContainerStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-typeContainer]')
+      .first()
+      .click()
+      .get('[data-testid=mip-typeOptionsContainer]')
+      .as('typeOptionsContainer')
+      .then(() => Object.entries({ ...baseStyles.TYPE_OPTIONS_CONTAINER_BASE_STYLE({ height: 39, width: 225 }), ...typeOptionsContainerStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        let expectedVal: any = val;
+        if(key === 'top') expectedVal = '39px';
+        else if(key === 'width') expectedVal = '225px';
+        cy
+          .wrap(this.typeOptionsContainer[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', expectedVal);
+      }));
+  });
+
+  it('test styles prop: typeOption', function() {
+    const typeOptionStyle = {
+      height: '30px',
+      border: '1px solid white',
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      typeOption: (baseStyle: object) => ({
+        ...baseStyle,
+        ...typeOptionStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-typeContainer]')
+      .first()
+      .click()
+      .get('[data-testid=mip-typeOption]')
+      .as('typeOption')
+      .then(() => Object.entries({ ...baseStyles.TYPE_OPTION_BASE_STYLE, ...typeOptionStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        let expectedVal = val;
+        if(key === 'fontFamily') expectedVal = '"Arial serif"';
+        cy
+          .wrap(this.typeOption[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', expectedVal);
+      }));
+  });
+
+  it('test styles prop: colorSelectorContainer', function() {
+    const colorSelectorContainerStyle = {
+      border: '1px solid black',
+      cursor: 'none',
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      colorSelectorContainer: (baseStyle: object) => ({
+        ...baseStyle,
+        ...colorSelectorContainerStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-colorSelectorContainer]')
+      .as('colorSelectorContainer')
+      .then(() => Object.entries({ ...baseStyles.COLOR_SELECTOR_CONTAINER_BASE_STYLE, ...colorSelectorContainerStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        let expectedVal = val;
+        if(key === 'fontFamily') expectedVal = '"Arial serif"';
+        cy
+          .wrap(this.colorSelectorContainer[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', expectedVal);
       }));
   });
 });
