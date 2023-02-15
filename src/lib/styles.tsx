@@ -172,7 +172,7 @@ export const ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE: object = {
     fontFamily: 'Arial serif',
     fontSize: '17px',
     textAlign: 'center',
-    color: '#86888A',
+    color: 'rgb(134, 136, 138)',
 };
 
 export const getIconsContainerRowColCounts = (
@@ -203,11 +203,11 @@ export const ICON_PLACEHOLDER: object = {
 
 export const LOADING_CONTAINER_BASE_STYLE: object = {
     height: 'fit-content',
-    gridColumn: '1/-1',
+    gridColumn: '1 / -1',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 0,
+    padding: '0px',
 };
 
 export const LOADING_BASE_STYLE: object = {

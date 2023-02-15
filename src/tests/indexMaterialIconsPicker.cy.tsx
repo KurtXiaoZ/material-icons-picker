@@ -774,4 +774,84 @@ describe('test the styles prop', () => {
         }
       }));
   });
+
+  it('test styles prop: loadingContainer', function() {
+    const loadingContainerStyle = {
+      opacity: '0.5',
+      height: '30px',
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      loadingContainer: (baseStyle: object) => ({
+        ...baseStyle,
+        ...loadingContainerStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-iconsContainer]')
+      .then(elements => cy.get('[data-testid=mip-iconsContainer]').scrollTo(0, elements[0].scrollHeight))
+      .get('[data-testid=mip-loadingContainer]')
+      .as('loadingContainer')
+      .then(() => Object.entries({ ...baseStyles.LOADING_CONTAINER_BASE_STYLE, ...loadingContainerStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        cy
+          .wrap(this.loadingContainer[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim())
+          .should('eq', val);
+      }));
+  });
+
+  it('test styles prop: loading', function() {
+    const loadingStyle = {
+      height: '50px',
+      border: '1px solid red',
+      aspectRatio: '1 / 1',
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      loading: (baseStyle: object) => ({
+        ...baseStyle,
+        ...loadingStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-iconsContainer]')
+      .then(elements => cy.get('[data-testid=mip-iconsContainer]').scrollTo(0, elements[0].scrollHeight))
+      .get('[data-testid=mip-loading]')
+      .as('loading')
+      .then(() => Object.entries({ ...baseStyles.LOADING_BASE_STYLE, ...loadingStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        cy
+          .wrap(this.loading[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim())
+          .should('eq', val);
+      }));
+  });
+
+  it('test styles prop: iconsContainerPlaceholder', function() {
+    const iconsContainerPlaceholderStyle = {
+      height: '50px',
+      border: '1px solid red',
+      aspectRatio: '1 / 1',
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      iconsContainerPlaceholder: (baseStyle: object) => ({
+        ...baseStyle,
+        ...iconsContainerPlaceholderStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('aiowejfoiawgivhjawiofawioe')
+      .get('[data-testid=mip-searchIcon]')
+      .first()
+      .click()
+      .get('[data-testid=mip-iconsContainerPlaceholder]')
+      .as('iconsContainerPlaceholder')
+      .then(() => Object.entries({ ...baseStyles.ICONS_CONTAINER_PLACEHOLDER_BASE_STYLE, ...iconsContainerPlaceholderStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        let expectedVal = val;
+        if(key === 'fontFamily') expectedVal = '"Arial serif"';
+        cy
+          .wrap(this.iconsContainerPlaceholder[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim())
+          .should('eq', expectedVal);
+      }));
+  });
 });
