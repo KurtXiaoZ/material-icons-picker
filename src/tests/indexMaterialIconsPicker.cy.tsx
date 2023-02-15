@@ -697,4 +697,81 @@ describe('test the styles prop', () => {
           .should('eq', val);
       }));
   });
+
+  it('test styles prop: iconContainer', function() {
+    const iconContainerStyle = {
+      border: '1px solid black',
+      width: '80%',
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      iconContainer: (baseStyle: object) => ({
+        ...baseStyle,
+        ...iconContainerStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-iconContainer]')
+      .as('iconContainer')
+      .then(() => Object.entries({ ...baseStyles.ICON_CONTAINER_BASE_STYLE, ...iconContainerStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        for(let i = 0; i < this.iconContainer.length; ++i) {
+          cy
+            .wrap(this.iconContainer[i].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim())
+            .should('eq', val);
+        }
+      }));
+  });
+
+  it('test styles prop: icon', function() {
+    const iconStyle = {
+      opacity: '0.5',
+      border: '1px solid red'
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      icon: (baseStyle: object) => ({
+        ...baseStyle,
+        ...iconStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-icon]')
+      .as('icon')
+      .then(() => Object.entries({ ...baseStyles.ICON_BASE_STYLE({ hsva: { h: 0, s: 0, v: 0, a: 0 } }), ...iconStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        let expectedVal = val;
+        if(key === 'color') expectedVal = 'rgb(0, 0, 0)';
+        for(let i = 0; i < this.icon.length; ++i) {
+          cy
+            .wrap(this.icon[i].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim())
+            .should('eq', expectedVal);
+        }
+      }));
+  });
+
+  it('test styles prop: iconTip', function() {
+    const iconTipStyle = {
+      opacity: '0.5'
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      iconTip: (baseStyle: object) => ({
+        ...baseStyle,
+        ...iconTipStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-iconTip]')
+      .as('iconTip')
+      .then(() => Object.entries({ ...baseStyles.ICON_TIP_BASE_STYLE({}), ...iconTipStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        if(key !== 'top' && key !== 'left') {
+          let expectedVal = val;
+          if(key === 'fontFamily') expectedVal = '"Arial serif"';
+          for(let i = 0; i < this.iconTip.length; ++i) {
+            cy
+              .wrap(this.iconTip[i].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim())
+              .should('eq', expectedVal);
+          }
+        }
+      }));
+  });
 });

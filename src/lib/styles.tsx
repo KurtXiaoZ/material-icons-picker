@@ -129,8 +129,8 @@ export const ICON_TIP_BASE_STYLE = ({
     top = 0,
     left = 0,
 }: {
-    top: number;
-    left: number;
+    top?: number;
+    left?: number;
 }): object => {
     return {
         position: 'absolute',
@@ -139,8 +139,8 @@ export const ICON_TIP_BASE_STYLE = ({
         left: left + 'px',
         width: 'fit-content',
         height: 'fit-content',
-        backgroundColor: '#222222',
-        color: '#FFFFFF',
+        backgroundColor: 'rgb(34, 34, 34)',
+        color: 'rgb(255, 255, 255)',
         boxSizing: 'border-box',
         padding: '7px',
         fontFamily: 'Arial serif',
