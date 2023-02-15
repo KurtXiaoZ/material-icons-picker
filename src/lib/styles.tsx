@@ -67,11 +67,11 @@ export const PALATTE_CONTAINER_BASE_STYLE = ({
     position: 'absolute',
     zIndex: '10',
     top: colorContainerHeight,
-    right: '0',
+    right: '0px',
     boxSizing: 'border-box',
     padding: '15px',
     boxShadow: 'rgba(60, 64, 67, 0.15) 0px 2px 6px 0px',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'rgb(255, 255, 255)',
 });
 
 export const SATURATION_BASE_STYLE: object = {

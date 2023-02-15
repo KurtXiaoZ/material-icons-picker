@@ -523,4 +523,132 @@ describe('test the styles prop', () => {
           .should('eq', expectedVal);
       }));
   });
+
+  it('test styles prop: colorSelectedIndicator', function() {
+    const colorSelectedIndicatorStyle = {
+      height: '80%',
+      marginLeft: '10px'
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      colorSelectedIndicator: (baseStyle: object) => ({
+        ...baseStyle,
+        ...colorSelectedIndicatorStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-colorSelectedIndicator]')
+      .as('colorSelectedIndicator')
+      .then(() => Object.entries({ ...baseStyles.COLOR_SELECTED_INDICATOR_BASE_STYLE({ color: '#000000' }), ...colorSelectedIndicatorStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        let expectedVal = val;
+        if(key === 'aspectRatio') expectedVal = '1 / 1';
+        else if(key === 'backgroundColor') expectedVal = 'rgb(0, 0, 0)';
+        cy
+          .wrap(this.colorSelectedIndicator[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', expectedVal);
+      }));
+  });
+
+  it('test styles prop: colorSelected', function() {
+    const colorSelectedStyle = {
+      fontSize: '15px',
+      color: 'blue'
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      colorSelected: (baseStyle: object) => ({
+        ...baseStyle,
+        ...colorSelectedStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-colorSelected]')
+      .as('colorSelected')
+      .then(() => Object.entries({ ...baseStyles.COLOR_SELECTED_BASE_STYLE, ...colorSelectedStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        let expectedVal = val;
+        if(key === 'fontFamily') expectedVal = '"Arial serif"';
+        cy
+          .wrap(this.colorSelected[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', expectedVal);
+      }));
+  });
+
+  it('test styles prop: colorSelectorArrow', function() {
+    const colorSelectorArrowStyle = {
+      height: '80%',
+      color: 'red'
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      colorSelectorArrow: (baseStyle: object) => ({
+        ...baseStyle,
+        ...colorSelectorArrowStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-colorSelectorArrow]')
+      .as('colorSelectorArrow')
+      .then(() => Object.entries({ ...baseStyles.COLOR_SELECTOR_ARROW_BASE_STYLE, ...colorSelectorArrowStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        let expectedVal = val;
+        if(key === 'fontFamily') expectedVal = '"Arial serif"';
+        cy
+          .wrap(this.colorSelectorArrow[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', expectedVal);
+      }));
+  });
+
+  it('test styles prop: palatteContainer', function() {
+    const palatteContainerStyle = {
+      height: '80%',
+      color: 'red'
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      palatteContainer: (baseStyle: object) => ({
+        ...baseStyle,
+        ...palatteContainerStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-colorSelectorContainer]')
+      .first()
+      .click()
+      .get('[data-testid=mip-palatteContainer]')
+      .as('palatteContainer')
+      .then(() => Object.entries({ ...baseStyles.PALATTE_CONTAINER_BASE_STYLE({ colorContainerHeight: 39, colorContainerWidth: 255 }), ...palatteContainerStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        let expectedVal = val;
+        if(key === 'width') expectedVal = '225px';
+        else if(key === 'top') expectedVal = '39px';
+        cy
+          .wrap(this.palatteContainer[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', expectedVal);
+      }));
+  });
+
+  it('test styles prop: saturation', function() {
+    const saturationStyle = {
+      width: '80%',
+      border: '1px solid red'
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      saturation: (baseStyle: object) => ({
+        ...baseStyle,
+        ...saturationStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-colorSelectorContainer]')
+      .first()
+      .click()
+      .get('.w-color-saturation')
+      .as('saturation')
+      .then(() => Object.entries({ ...baseStyles.SATURATION_BASE_STYLE, ...saturationStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        let expectedVal = val;
+        if(key === 'aspectRatio') expectedVal = '1 / 1';
+        cy
+          .wrap(this.saturation[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
+          .should('eq', expectedVal);
+      }));
+  });
 });
