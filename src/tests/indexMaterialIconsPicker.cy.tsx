@@ -44,7 +44,7 @@ describe('rendering of the elements of <MaterialIconsPicker />', () => {
     cy.get('[data-testid=mip-colorSelectorArrow]').should('be.visible');
     cy.get('[data-testid=mip-palatteContainer]').should('not.exist');
     cy.get('.w-color-saturation').should('not.exist');
-    cy.get('.w-color-alpha-pointer').should('not.exist');
+    cy.get('.w-color-hue').should('not.exist');
     cy.get('[data-testid=mip-iconsContainer]').should('be.visible');
     cy.get('[data-testid=mip-iconContainer]').should('be.visible');
     cy.get('[data-testid=mip-icon]').should('be.visible');
@@ -117,14 +117,14 @@ describe('interaction related to icon type selection', () => {
 });
 
 describe('interaction related to color selection', () => {
-  it('mip-palatteContainer, .w-color-saturation, and .w-color-alpha-pointer should be visible after clicking on mip-colorSelectorContainer and be not in the document after clicking outside', () => {
+  it('mip-palatteContainer, .w-color-saturation, and .w-color-hue should be visible after clicking on mip-colorSelectorContainer and be not in the document after clicking outside', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy.get('[data-testid=mip-colorSelectorContainer]').click();
     cy.get('.w-color-saturation').should('be.visible');
-    cy.get('.w-color-alpha-pointer').should('be.visible');
+    cy.get('.w-color-hue').should('be.visible');
     cy.get('body').click(0, 0, { force: true });
     cy.get('.w-color-saturation').should('not.exist');
-    cy.get('.w-color-alpha-pointer').should('not.exist');
+    cy.get('.w-color-hue').should('not.exist');
   });
 
   it('clicking on a pixel of .w-color-saturation changes the color of all icons', () => {
@@ -138,12 +138,12 @@ describe('interaction related to color selection', () => {
     });
   });
 
-  it('clicking on a pixel of .w-color-alpha-pointer changes the color of all icons', () => {
+  it('clicking on a pixel of .w-color-hue changes the color of all icons', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy.get('[data-testid=mip-colorSelectorContainer]').click();
     cy.get('[data-testid=mip-colorSelected]').contains('#000000');
     cy.get('.w-color-saturation').click(10, 10);
-    cy.get('.w-color-alpha-pointer').click(10, 10);
+    cy.get('.w-color-hue').click(10, 10);
     cy.get('[data-testid=mip-colorSelected]').contains('#f2eae6');
     cy.get('[data-testid=mip-icon]').each($el => {
       expect($el[0].style.color).to.be.equal(hexToRgb('#f2eae6'));
@@ -649,6 +649,52 @@ describe('test the styles prop', () => {
         cy
           .wrap(this.saturation[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
           .should('eq', expectedVal);
+      }));
+  });
+
+  it('test styles prop: hue', function() {
+    const hueStyle = {
+      marginTop: '50px',
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      hue: (baseStyle: object) => ({
+        ...baseStyle,
+        ...hueStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-colorSelectorContainer]')
+      .first()
+      .click()
+      .get('.w-color-hue')
+      .as('hue')
+      .then(() => Object.entries({ ...baseStyles.HUE_BASE_STYLE, ...hueStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        cy
+          .wrap(this.hue[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim())
+          .should('eq', val);
+      }));
+  });
+
+  it('test styles prop: iconsContainer', function() {
+    const iconsContainerStyle = {
+      border: '1px solid black',
+      width: '80%',
+    };
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker styles={{
+      iconsContainer: (baseStyle: object) => ({
+        ...baseStyle,
+        ...iconsContainerStyle
+      })
+    }}/></div>);
+    cy
+      .get('[data-testid=mip-iconsContainer]')
+      .as('iconsContainer')
+      .then(() => Object.entries({ ...baseStyles.ICONS_CONTAINER_BASE_STYLE(7, 10), ...iconsContainerStyle }))
+      .then(entries => entries.forEach(([key, val]) => {
+        cy
+          .wrap(this.iconsContainer[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim())
+          .should('eq', val);
       }));
   });
 });

@@ -36,7 +36,7 @@ export const Icons = (props: IIcons) => {
     const [iconsContainerScrollTop, setIconsContainerScrollTop] = useState(0);
     const [loading, setLoading] = useState(false);
     const debouncedUpdateScrollTop = useDebounce((e: { target: HTMLDivElement }) => setIconsContainerScrollTop(e.target.scrollTop), 100, []);
-
+    
     useEffect(() => {
         setIcons(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []);
         iconsContainerRef.current.scrollTop = 0;

@@ -151,7 +151,7 @@ export const ICON_TIP_BASE_STYLE = ({
 
 export const ICONS_CONTAINER_BASE_STYLE = (rowCount: number, colCount: number): object => ({
     width: '100%',
-    height: '0',
+    height: '0px',
     flexGrow: '1',
     boxSizing: 'border-box',
     padding: '20px',
