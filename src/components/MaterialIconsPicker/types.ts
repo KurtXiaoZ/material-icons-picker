@@ -27,5 +27,5 @@ interface IStyles {
 
 export interface IMaterialIconsPicker {
     styles?: IStyles;
-    defaultIconsNumber?: number;
+    onSearch?: (searchValue: string) => void;
 }

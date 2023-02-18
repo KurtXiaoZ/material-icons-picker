@@ -13,5 +13,4 @@ export interface IIcons {
     iconSearch: string;
     type: string;
     hsva: { h: number; s: number; v: number; a: number };
-    defaultIconsNumber: number;
 }

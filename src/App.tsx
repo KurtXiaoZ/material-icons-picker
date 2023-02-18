@@ -7,7 +7,9 @@ export const App = () => {
     return (
         <>
             <div className={cx(styles.wrapper)}>
-                <MaterialIconsPicker />
+                <MaterialIconsPicker 
+                    onSearch={str => console.log('search input value', str)}
+                />
             </div>
         </>
     );

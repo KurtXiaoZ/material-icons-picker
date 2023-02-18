@@ -26,6 +26,12 @@ export const useElementSize = <T extends Element,>(): [
     return [elementRef, size];
 };
 
+/**
+ * This hook registers a callback that listens to an event fired outside of one or more elements 
+ * @param event name of the event, used in addEventListener
+ * @param elementRefs an array of the refs of target elements
+ * @param callback the event listener
+ */
 export const useEventOutside = (
     event: string,
     elementRefs: RefObject<Element>[],
@@ -47,6 +53,13 @@ export const useEventOutside = (
     }, [elementRefs, callback]);
 };
 
+/**
+ * Get the debounced version of a function
+ * @param callback the original function
+ * @param delay the value of delay for the debounced function
+ * @param dependencies an array of states and props whose changes terminate the debounced function
+ * @returns the debounced function
+ */
 export const useDebounce = (callback: (...args: any[]) => any, delay: number, dependencies = null) => {
     const timerRef = useRef(null);
 
@@ -54,11 +67,30 @@ export const useDebounce = (callback: (...args: any[]) => any, delay: number, de
         return () => timerRef.current && clearTimeout(timerRef.current);
     }, dependencies);
 
-    return (...args) => {
+    return (...args: any) => {
         if(timerRef.current) clearTimeout(timerRef.current);
         timerRef.current = setTimeout(() => {
             callback.apply(null, args);
             timerRef.current = null;
         }, delay);
     }
+};
+
+/**
+ * Trigger callback function after a state or prop is updated
+ * @param callback handler that triggers when the dependencies update
+ * @param dependencies dependencies of the callbacks
+ * @param cleanUp clean up function that triggers when the dependencies update
+ */
+export const useUpdate = (callback: (...args: any) => any, dependencies?: any[], cleanUp?: (...args: any) => void) => {
+    const firstRender = useRef(true);
+
+    useEffect(() => {
+        if(firstRender.current) {
+            firstRender.current = false;
+            return;
+        }
+        if(typeof callback === 'function') callback();
+        if(typeof cleanUp === 'function') return cleanUp();
+    }, dependencies);
 }

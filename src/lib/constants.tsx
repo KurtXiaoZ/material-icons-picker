@@ -12,8 +12,6 @@ export const TEXT: {
     NO_ICON_FOUND: 'Nothing found. Try a more general search phrase.',
 };
 
-export const DEFAULT_ICONS_NUMBER: number = 500;
-
 export const DEFAULT_ROW_ADDITION_NUMBER: number = 5;
 
 export const NO_MARGIN: object = {

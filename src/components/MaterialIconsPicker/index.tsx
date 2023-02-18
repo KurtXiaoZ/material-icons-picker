@@ -4,13 +4,14 @@ import { TypeSelector } from '../TypeSelector';
 import { ColorSelector } from '../ColorSelector';
 import { CONTAINER_BASE_STYLE, OPTION_CONTAINER_BASE_STYLE } from '../../lib/styles';
 import { useState } from 'react';
-import { DEFAULT_ICONS_NUMBER, ICON_TYPES } from '../../lib/constants';
+import { ICON_TYPES } from '../../lib/constants';
 import 'material-icons/iconfont/material-icons.css';
 import { Icons } from '../Icons';
+import { useUpdate } from '../../lib/hooks';
 
 export const MaterialIconsPicker = ({
     styles = {},
-    defaultIconsNumber = DEFAULT_ICONS_NUMBER,
+    onSearch
 }: IMaterialIconsPicker) => {
     const {
         container,
@@ -42,6 +43,8 @@ export const MaterialIconsPicker = ({
     const [type, setType] = useState(ICON_TYPES[0]);
     const [hsva, setHsva] = useState({ h: 0, s: 0, v: 0, a: 1 });
     const [iconSearch, setIconSearch] = useState('');
+
+    useUpdate(() => typeof onSearch === 'function' && onSearch(iconSearch), [iconSearch]);
 
     return (
         <div
@@ -102,7 +105,6 @@ export const MaterialIconsPicker = ({
                 iconSearch={iconSearch}
                 type={type?.value}
                 hsva={hsva}
-                defaultIconsNumber={defaultIconsNumber}
             />
         </div>
     );
