@@ -855,3 +855,64 @@ describe('test the styles prop', () => {
       }));
   });
 });
+
+describe('test the onSearch prop', () => {
+  it('onSearch should not be invoked when <MaterialIconPicker /> mounts', () => {
+    const onSearch = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>);
+    expect(onSearch).not.to.be.calledOnce;
+  });
+
+  it('onSearch should be invoked when there is a new input for mip-searchInput and mip-searchIcon is clicked', () => {
+    const onSearch = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>);
+    expect(onSearch).not.to.be.calledOnce;
+    cy
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('book')
+      .get('[data-testid=mip-searchIcon]')
+      .first()
+      .click()
+      .then(() => expect(onSearch).to.be.calledOnceWithExactly('book'));
+  });
+
+  it('onSearch should be invoked when there is a new input for mip-searchInput and mip-searchIcon is clicked', () => {
+    const onSearch = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>);
+    expect(onSearch).not.to.be.calledOnce;
+    cy
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('book')
+      .get('[data-testid=mip-searchIcon]')
+      .first()
+      .click()
+      .then(() => expect(onSearch).to.be.calledOnceWithExactly('book'));
+  });
+
+  it('onSearch should be invoked when there is a new input for mip-searchInput and enter is hit when mip-searchInput is focused', () => {
+    const onSearch = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>);
+    expect(onSearch).not.to.be.calledOnce;
+    cy
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('book')
+      .trigger('keydown', { key: 'Enter' })
+      .then(() => expect(onSearch).to.be.calledOnceWithExactly('book'));
+  });
+
+  it('onSearch should not be invoked when there is a new input for mip-searchInput and enter is hit when mip-searchInput is not focused', () => {
+    const onSearch = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>);
+    expect(onSearch).not.to.be.calledOnce;
+    cy
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('book')
+      .get('body')
+      .trigger('keydown', { key: 'Enter', force: true })
+      .then(() => expect(onSearch).not.to.be.calledOnce);
+  });
+});
