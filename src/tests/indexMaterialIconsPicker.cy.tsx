@@ -62,7 +62,7 @@ describe('interaction related to searching the icons', () => {
     cy.get('[data-testid=mip-searchInput]').type('book');
     cy.get('[data-testid=mip-searchIcon]').click();
     cy.get('[data-testid=mip-iconContainer]').should('have.length', 12);
-    cy.get('[data-testid=mip-searchInput]').invoke('val', '');
+    cy.get('[data-testid=mip-searchInput]').clear();
     cy.get('[data-testid=mip-searchIcon]').click();
     cy.get('[data-testid=mip-iconContainer]').should('have.length.greaterThan', 12);
   });
@@ -73,7 +73,7 @@ describe('interaction related to searching the icons', () => {
     cy.get('[data-testid=mip-searchInput]').type('book');
     cy.get('[data-testid=mip-searchInput]').trigger('keydown', { key: 'Enter' });
     cy.get('[data-testid=mip-iconContainer]').should('have.length', 12);
-    cy.get('[data-testid=mip-searchInput]').invoke('val', '');
+    cy.get('[data-testid=mip-searchInput]').clear();
     cy.get('[data-testid=mip-searchInput]').trigger('keydown', { key: 'Enter' });
     cy.get('[data-testid=mip-iconContainer]').should('have.length.greaterThan', 12);
   });
@@ -914,5 +914,30 @@ describe('test the onSearch prop', () => {
       .get('body')
       .trigger('keydown', { key: 'Enter', force: true })
       .then(() => expect(onSearch).not.to.be.calledOnce);
+  });
+});
+
+describe('test onSearchValueChange prop', () => {
+  it('onSearchValueChange should not be invoked when <MaterialIconPicker /> mounts', () => {
+    const onSearchValueChange = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearchValueChange={onSearchValueChange}/></div>);
+    expect(onSearchValueChange).not.to.be.calledOnce;
+  });
+
+  it('onSearchValueChange should be invoked when the value mip-searchInput changes', () => {
+    const onSearchValueChange = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearchValueChange={onSearchValueChange}/></div>);
+    cy
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('book')
+      .then(() => expect(onSearchValueChange).to.be.calledWith('b'))
+      .then(() => expect(onSearchValueChange).to.be.calledWith('bo'))
+      .then(() => expect(onSearchValueChange).to.be.calledWith('boo'))
+      .then(() => expect(onSearchValueChange).to.be.calledWith('book'))
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .clear()
+      .then(() => expect(onSearchValueChange).to.be.calledWith(''))
   });
 });

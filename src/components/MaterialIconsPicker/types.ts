@@ -28,4 +28,5 @@ interface IStyles {
 export interface IMaterialIconsPicker {
     styles?: IStyles;
     onSearch?: (searchValue: string) => void;
+    onSearchValueChange?: (searchValue: string) => void;
 }

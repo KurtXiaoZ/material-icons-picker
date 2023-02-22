@@ -7,4 +7,5 @@ interface IStyles {
 export interface IIconSearch {
     styles?: IStyles;
     setIconSearch: (iconSearch: string) => void;
+    onSearchValueChange?: (searchValue: string) => void;
 }

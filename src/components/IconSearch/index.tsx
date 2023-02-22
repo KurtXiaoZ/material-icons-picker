@@ -5,10 +5,11 @@ import {
     SEARCH_ICON_BASE_STYLE,
     SEARCH_INPUT_BASE_STYLE,
 } from '../../lib/styles';
+import React from "react";
 import { IIconSearch } from './types';
 
 export const IconSearch = (props: IIconSearch) => {
-    const { styles = {}, setIconSearch } = props;
+    const { styles = {}, setIconSearch, onSearchValueChange } = props;
 
     const { searchContainer, searchIcon, searchInput } = styles;
     const searchInputRef = useRef<HTMLInputElement>(null);
@@ -38,9 +39,10 @@ export const IconSearch = (props: IIconSearch) => {
                         ? searchInput(SEARCH_INPUT_BASE_STYLE)
                         : SEARCH_INPUT_BASE_STYLE
                 }
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => typeof onSearchValueChange === 'function' && onSearchValueChange(e.target.value)}
                 placeholder="Search"
                 ref={searchInputRef}
-                onKeyDown={e => e.key === 'Enter' && setIconSearch(searchInputRef.current.value)}
+                onKeyDown={(e: KeyboardEvent) => e.key === 'Enter' && setIconSearch(searchInputRef.current.value)}
                 data-testid='mip-searchInput'
             />
         </div>

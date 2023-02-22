@@ -86,11 +86,8 @@ export const useUpdate = (callback: (...args: any) => any, dependencies?: any[],
     const firstRender = useRef(true);
 
     useEffect(() => {
-        if(firstRender.current) {
-            firstRender.current = false;
-            return;
-        }
-        if(typeof callback === 'function') callback();
-        if(typeof cleanUp === 'function') return cleanUp();
+        if(firstRender.current) firstRender.current = false;
+        else if(typeof callback === 'function') callback();
+        return cleanUp;
     }, dependencies);
 }

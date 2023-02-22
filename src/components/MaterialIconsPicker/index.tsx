@@ -11,7 +11,8 @@ import { useUpdate } from '../../lib/hooks';
 
 export const MaterialIconsPicker = ({
     styles = {},
-    onSearch
+    onSearch,
+    onSearchValueChange
 }: IMaterialIconsPicker) => {
     const {
         container,
@@ -58,6 +59,7 @@ export const MaterialIconsPicker = ({
             <IconSearch
                 styles={{ searchContainer, searchIcon, searchInput }}
                 setIconSearch={setIconSearch}
+                onSearchValueChange={onSearchValueChange}
             />
             <div
                 data-testid='mip-optionContainer'
