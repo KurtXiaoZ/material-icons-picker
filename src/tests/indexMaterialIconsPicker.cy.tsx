@@ -1,5 +1,6 @@
 import { MaterialIconsPicker } from '../components/MaterialIconsPicker/index';
 import { DEFAULT_ROW_ADDITION_NUMBER, ICON_TYPES } from '../lib/constants';
+import { useState } from 'react';
 import * as baseStyles from '../lib/styles';
 import "cypress-real-events";
 
@@ -939,5 +940,60 @@ describe('test onSearchValueChange prop', () => {
       .first()
       .clear()
       .then(() => expect(onSearchValueChange).to.be.calledWith(''))
+  });
+});
+
+describe('test searchValue prop', () => {
+  it('mip-searchInput has the value of searchValue', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker searchValue='book'/></div>)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .invoke('val')
+      .should('eq', 'book');
+  });
+
+  it('mip-searchInput has the value of placeholder if searchValue is an empty string', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker searchValue=''/></div>)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .invoke('attr', 'placeholder')
+      .should('eq', 'Search');
+  });
+
+  it('mip-searchInput can not change value if there is a searchValue', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker searchValue='book'/></div>)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('dummy')
+      .invoke('val')
+      .should('eq', 'book')
+  });
+
+  it('mip-searchInput can not change value if there is a searchValue(empty string)', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker searchValue=''/></div>)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('dummy')
+      .invoke('val')
+      .should('eq', '')
+  });
+
+  it('mip-searchInput can change value if there are both searchValue and onSearchValueChange', () => {
+    const Container = () => {
+      const [searchValue, setSearchValue] = useState('book');
+      return <div style={WRAPPER_STYLES}><MaterialIconsPicker searchValue={searchValue} onSearchValueChange={newVal => setSearchValue(newVal)}/></div>;
+    }
+    
+    cy
+      .mount(<Container />)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('music')
+      .invoke('val')
+      .should('eq', 'bookmusic')
   });
 });

@@ -9,7 +9,7 @@ import React from "react";
 import { IIconSearch } from './types';
 
 export const IconSearch = (props: IIconSearch) => {
-    const { styles = {}, setIconSearch, onSearchValueChange } = props;
+    const { styles = {}, setIconSearch, onSearchValueChange, searchValue } = props;
 
     const { searchContainer, searchIcon, searchInput } = styles;
     const searchInputRef = useRef<HTMLInputElement>(null);
@@ -39,6 +39,7 @@ export const IconSearch = (props: IIconSearch) => {
                         ? searchInput(SEARCH_INPUT_BASE_STYLE)
                         : SEARCH_INPUT_BASE_STYLE
                 }
+                value={searchValue}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => typeof onSearchValueChange === 'function' && onSearchValueChange(e.target.value)}
                 placeholder="Search"
                 ref={searchInputRef}

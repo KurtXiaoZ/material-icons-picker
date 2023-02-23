@@ -12,7 +12,8 @@ import { useUpdate } from '../../lib/hooks';
 export const MaterialIconsPicker = ({
     styles = {},
     onSearch,
-    onSearchValueChange
+    onSearchValueChange,
+    searchValue,
 }: IMaterialIconsPicker) => {
     const {
         container,
@@ -43,7 +44,7 @@ export const MaterialIconsPicker = ({
 
     const [type, setType] = useState(ICON_TYPES[0]);
     const [hsva, setHsva] = useState({ h: 0, s: 0, v: 0, a: 1 });
-    const [iconSearch, setIconSearch] = useState('');
+    const [iconSearch, setIconSearch] = useState(searchValue);
 
     useUpdate(() => typeof onSearch === 'function' && onSearch(iconSearch), [iconSearch]);
 
@@ -60,6 +61,7 @@ export const MaterialIconsPicker = ({
                 styles={{ searchContainer, searchIcon, searchInput }}
                 setIconSearch={setIconSearch}
                 onSearchValueChange={onSearchValueChange}
+                searchValue={searchValue}
             />
             <div
                 data-testid='mip-optionContainer'
