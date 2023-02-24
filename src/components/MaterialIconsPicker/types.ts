@@ -30,4 +30,5 @@ export interface IMaterialIconsPicker {
     onSearch?: (searchValue: string) => void;
     onSearchValueChange?: (searchValue: string) => void;
     searchValue?: string;
+    defaultSearchValue?: string;
 }

@@ -10,9 +10,9 @@ export const App = () => {
         <>
             <div className={cx(styles.wrapper)}>
                 <MaterialIconsPicker 
-                    onSearch={str => console.log('search input value', str)}
-                    onSearchValueChange={str => setSearchValue(str)}
-                    searchValue={searchValue}
+                    // onSearch={str => console.log('search input value', str)}
+                    // onSearchValueChange={str => setSearchValue(str)}
+                    // defaultSearchValue={'book'}
                 />
             </div>
         </>

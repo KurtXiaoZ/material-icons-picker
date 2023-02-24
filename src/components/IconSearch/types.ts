@@ -9,4 +9,5 @@ export interface IIconSearch {
     setIconSearch: (iconSearch: string) => void;
     onSearchValueChange?: (searchValue: string) => void;
     searchValue?: string;
+    defaultSearchValue?: string;
 }

@@ -939,7 +939,7 @@ describe('test onSearchValueChange prop', () => {
       .get('[data-testid=mip-searchInput]')
       .first()
       .clear()
-      .then(() => expect(onSearchValueChange).to.be.calledWith(''))
+      .then(() => expect(onSearchValueChange).to.be.calledWith(''));
   });
 });
 
@@ -969,7 +969,7 @@ describe('test searchValue prop', () => {
       .first()
       .type('dummy')
       .invoke('val')
-      .should('eq', 'book')
+      .should('eq', 'book');
   });
 
   it('mip-searchInput can not change value if there is a searchValue(empty string)', () => {
@@ -979,21 +979,85 @@ describe('test searchValue prop', () => {
       .first()
       .type('dummy')
       .invoke('val')
-      .should('eq', '')
+      .should('eq', '');
   });
 
   it('mip-searchInput can change value if there are both searchValue and onSearchValueChange', () => {
     const Container = () => {
       const [searchValue, setSearchValue] = useState('book');
       return <div style={WRAPPER_STYLES}><MaterialIconsPicker searchValue={searchValue} onSearchValueChange={newVal => setSearchValue(newVal)}/></div>;
-    }
-    
+    };
     cy
       .mount(<Container />)
       .get('[data-testid=mip-searchInput]')
       .first()
       .type('music')
       .invoke('val')
-      .should('eq', 'bookmusic')
+      .should('eq', 'bookmusic');
+  });
+});
+
+
+describe('test defaultSearchValue prop', () => {
+  it('mip-searchInput has the value of defaultSearchValue', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker defaultSearchValue='book'/></div>)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .invoke('val')
+      .should('eq', 'book');
+  });
+
+  it('mip-searchInput has the value of searchValue if both defaultSearchValue and searchValue exist', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker defaultSearchValue='book' searchValue='music'/></div>)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .invoke('val')
+      .should('eq', 'music');
+  });
+
+  it('mip-searchInput with a defaultSearchValue can change value', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker defaultSearchValue='book'/></div>)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('newbook')
+      .invoke('val')
+      .should('eq', 'booknewbook');
+  });
+
+  it('mip-searchInput with both a defaultSearchValue and a searchValue can not change value', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker defaultSearchValue='book' searchValue='music'/></div>)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('newbook')
+      .invoke('val')
+      .should('eq', 'music');
+  });
+
+  it('mip-searchInput with both a defaultSearchValue and a searchValue as well as a onSearchValueChange can change value', () => {
+    const Container = () => {
+      const [searchValue, setSearchValue] = useState('book');
+      return <div style={WRAPPER_STYLES}>
+        <MaterialIconsPicker
+          searchValue={searchValue}
+          onSearchValueChange={newVal => setSearchValue(newVal)}
+          defaultSearchValue={'music'}
+        />
+      </div>;
+    };
+    cy
+      .mount(<Container />)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .invoke('val')
+      .should('eq', 'book')
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('123')
+      .invoke('val')
+      .should('eq', 'book123');
   });
 });

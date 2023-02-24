@@ -14,6 +14,7 @@ export const MaterialIconsPicker = ({
     onSearch,
     onSearchValueChange,
     searchValue,
+    defaultSearchValue,
 }: IMaterialIconsPicker) => {
     const {
         container,
@@ -44,7 +45,7 @@ export const MaterialIconsPicker = ({
 
     const [type, setType] = useState(ICON_TYPES[0]);
     const [hsva, setHsva] = useState({ h: 0, s: 0, v: 0, a: 1 });
-    const [iconSearch, setIconSearch] = useState(searchValue);
+    const [iconSearch, setIconSearch] = useState(searchValue || defaultSearchValue || '');
 
     useUpdate(() => typeof onSearch === 'function' && onSearch(iconSearch), [iconSearch]);
 
@@ -62,6 +63,7 @@ export const MaterialIconsPicker = ({
                 setIconSearch={setIconSearch}
                 onSearchValueChange={onSearchValueChange}
                 searchValue={searchValue}
+                defaultSearchValue={defaultSearchValue}
             />
             <div
                 data-testid='mip-optionContainer'
