@@ -12,7 +12,8 @@ export const App = () => {
         <>
             <div className={cx(styles.wrapper)}>
                 <MaterialIconsPicker
-                    hsva={hsva}
+                    defaultHsva={{ h: 100, s: 100, v: 100, a: 1 }}
+                    // hsva={hsva}
                     onHsvaChange={newHsva => setHsva(newHsva)}
                 />
             </div>

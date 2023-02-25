@@ -22,6 +22,7 @@ export const MaterialIconsPicker = React.forwardRef((props: IProps, refs: IRefs)
         onTypeOptionClick,
         onHsvaChange,
         hsva: hsvaProp,
+        defaultHsva,
     } = props || {};
 
     const {
@@ -56,7 +57,7 @@ export const MaterialIconsPicker = React.forwardRef((props: IProps, refs: IRefs)
     } = styles;
 
     const [type, setType] = useState<{ label: string, value: string }>(defaultType || ICON_TYPES[0]);
-    const [hsva, setHsva] = useState({ h: 0, s: 0, v: 0, a: 1 });
+    const [hsva, setHsva] = useState(defaultHsva || { h: 0, s: 0, v: 0, a: 1 });
     const [iconSearch, setIconSearch] = useState(searchValue || defaultSearchValue || '');
 
     useUpdate(() => typeof onSearch === 'function' && onSearch(iconSearch), [iconSearch]);
