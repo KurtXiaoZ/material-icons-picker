@@ -17,6 +17,7 @@ export const MaterialIconsPicker = React.forwardRef((props: IProps, refs: IRefs)
         searchValue,
         defaultSearchValue,
         onTypeChange,
+        type: typeProp,
     } = props || {};
 
     const {
@@ -55,7 +56,6 @@ export const MaterialIconsPicker = React.forwardRef((props: IProps, refs: IRefs)
     const [iconSearch, setIconSearch] = useState(searchValue || defaultSearchValue || '');
 
     useUpdate(() => typeof onSearch === 'function' && onSearch(iconSearch), [iconSearch]);
-    useUpdate(() => typeof onTypeChange === 'function' && onTypeChange(type), [type]);
 
     return (
         <div
@@ -90,8 +90,10 @@ export const MaterialIconsPicker = React.forwardRef((props: IProps, refs: IRefs)
                         typeOptionsContainer,
                         typeOption,
                     }}
-                    type={type}
+                    type={typeProp || type}
+                    typeProp={typeProp}
                     setType={setType}
+                    onTypeChange={onTypeChange}
                 />
                 <ColorSelector
                     styles={{
@@ -118,7 +120,7 @@ export const MaterialIconsPicker = React.forwardRef((props: IProps, refs: IRefs)
                     loading
                 }}
                 iconSearch={iconSearch}
-                type={type?.value}
+                type={typeProp ? typeProp.value : type?.value}
                 hsva={hsva}
             />
         </div>

@@ -1128,3 +1128,43 @@ describe('test onTypeChange', () => {
     }
   });
 });
+
+describe('test type', () => {
+  it('mip-typeSelected should have the value of type.label', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker type={ICON_TYPES[1]}/></div>)
+      .get('[data-testid=mip-typeSelected]')
+      .first()
+      .should('have.text', ICON_TYPES[1].label);
+  });
+
+  it('click on another mip-typeOption does not change the type if the type prop has a value', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker type={ICON_TYPES[1]}/></div>)
+      .get('[data-testid=mip-typeContainer]')
+      .click()
+      .get('[data-testid=mip-typeOption]')
+      .first()
+      .click()
+      .get('[data-testid=mip-typeSelected]')
+      .first()
+      .should('have.text', ICON_TYPES[1].label);
+  });
+
+  it('having type and onTypeChange at the same time allows changing the type', () => {
+    const Container = () => {
+      const [type, setType] = useState(ICON_TYPES[1]);
+      return <div style={WRAPPER_STYLES}><MaterialIconsPicker type={type} onTypeChange={newType => setType(newType)}/></div>;
+    };
+    cy
+      .mount(<Container />)
+      .get('[data-testid=mip-typeContainer]')
+      .click()
+      .get('[data-testid=mip-typeOption]')
+      .first()
+      .click()
+      .get('[data-testid=mip-typeSelected]')
+      .first()
+      .should('have.text', ICON_TYPES[0].label);
+  });
+});

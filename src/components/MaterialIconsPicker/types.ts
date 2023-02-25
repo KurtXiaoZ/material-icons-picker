@@ -54,4 +54,5 @@ export interface IProps {
     searchValue?: string;
     defaultSearchValue?: string;
     onTypeChange?: (type: { label: iconTypesLabel, value: iconTypesValue }) => void;
+    type?: { label: iconTypesLabel, value: iconTypesValue };
 }

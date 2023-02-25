@@ -12,7 +12,7 @@ import { useElementSize, useEventOutside } from '../../lib/hooks';
 import { useRef, useState } from 'react';
 
 export const TypeSelector = (props: ITypeSelector) => {
-    const { styles = {}, type, setType } = props;
+    const { styles = {}, type, typeProp, setType, onTypeChange } = props;
 
     const {
         typeContainer,
@@ -88,7 +88,10 @@ export const TypeSelector = (props: ITypeSelector) => {
                                     : TYPE_OPTION_BASE_STYLE
                             }
                             onClick={() => {
-                                type.value !== value && setType({ label, value });
+                                if(type.value !== value) {
+                                    typeof onTypeChange === 'function' && onTypeChange({ label, value });
+                                    !typeProp && setType({ label, value });
+                                }
                                 setShowOptions(false);
                             }}
                             data-testid='mip-typeOption'
