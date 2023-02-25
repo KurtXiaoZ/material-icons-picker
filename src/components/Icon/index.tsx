@@ -27,7 +27,6 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
             iconTipRef,
             iconContainerRef,
         });
-        // console.log(top, left);
         setIconTipBaseStyle(ICON_TIP_BASE_STYLE({ top, left }));
 
     }, [iconsContainerScrollTop, icon, type, hsva, styles]);
