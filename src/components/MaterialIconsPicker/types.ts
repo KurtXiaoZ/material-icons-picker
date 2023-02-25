@@ -1,5 +1,21 @@
 import React from 'react';
 
+enum iconTypesLabel {
+    filled = 'Filled',
+    outlined = 'Outlined',
+    round = 'Rounded',
+    sharp = 'Sharp',
+    two_tone = 'Two Tone',
+}
+
+enum iconTypesValue {
+    filled = 'filled',
+    outlined = 'outlined',
+    round = 'round',
+    sharp = 'sharp',
+    two_tone = 'two-tone',
+}
+
 interface IStyles {
     container?: (baseStyle: object) => object;
     searchContainer?: (baseStyle: object) => object;
@@ -37,4 +53,5 @@ export interface IProps {
     onSearchValueChange?: (searchValue: string) => void;
     searchValue?: string;
     defaultSearchValue?: string;
+    onTypeChange?: (type: { label: iconTypesLabel, value: iconTypesValue }) => void;
 }

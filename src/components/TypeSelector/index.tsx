@@ -88,7 +88,7 @@ export const TypeSelector = (props: ITypeSelector) => {
                                     : TYPE_OPTION_BASE_STYLE
                             }
                             onClick={() => {
-                                setType({ label, value });
+                                type.value !== value && setType({ label, value });
                                 setShowOptions(false);
                             }}
                             data-testid='mip-typeOption'

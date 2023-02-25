@@ -11,10 +11,7 @@ export const App = () => {
         <>
             <div className={cx(styles.wrapper)}>
                 <MaterialIconsPicker 
-                    ref={{searchInputRef}}
-                    onSearch={str => console.log('search input value', searchInputRef.current?.value)}
-                    // onSearchValueChange={str => setSearchValue(str)}
-                    // defaultSearchValue={'book'}
+                    onTypeChange={type => console.log(type)}
                 />
             </div>
         </>

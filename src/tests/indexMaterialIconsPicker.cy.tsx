@@ -1089,3 +1089,42 @@ describe('test searchInputRef', () => {
       .trigger('keydown', { key: 'Enter' })
   });
 });
+
+describe('test onTypeChange', () => {
+  it('onTypeChange should not be called when the component renders for the first time', () => {
+    const onTypeChange = cy.stub();
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onTypeChange={onTypeChange}/></div>)
+      .get('[data-testid=mip-typeContainer]')
+      .click()
+      .then(() => expect(onTypeChange).not.to.be.calledOnce);
+  });
+
+  it('onTypeChange should be called with the selected when any of mip-typeOption is clicked', () => {
+    const onTypeChange = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onTypeChange={onTypeChange}/></div>);
+    ICON_TYPES.forEach((_, i) => {
+      cy
+        .get('[data-testid=mip-typeContainer]')
+        .click()
+        .get('[data-testid=mip-typeOption]')
+        .eq((i + 1) % ICON_TYPES.length)
+        .click()
+        .then(() => expect(onTypeChange).to.be.calledWith(ICON_TYPES[(i + 1) % ICON_TYPES.length]));
+    });
+  });
+
+  it('onTypeChange should be called once when the same mip-typeOption is clicked more than once', () => {
+    const onTypeChange = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onTypeChange={onTypeChange}/></div>);
+    for(let i = 0; i < 3; ++i) {
+      cy
+        .get('[data-testid=mip-typeContainer]')
+        .click()
+        .get('[data-testid=mip-typeOption]')
+        .eq(1)
+        .click()
+        .then(() => expect(onTypeChange).to.be.calledOnce);
+    }
+  });
+});
