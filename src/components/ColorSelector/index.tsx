@@ -16,7 +16,7 @@ import Saturation from '@uiw/react-color-saturation';
 import { hsvaToHex } from '@uiw/color-convert';
 
 export const ColorSelector = (props: IColorSelector) => {
-    const { styles = {}, hsva, setHsva } = props;
+    const { styles = {}, hsva, setHsva, onHsvaChange, hsvaProp } = props;
 
     const {
         colorSelectorContainer,
@@ -58,11 +58,11 @@ export const ColorSelector = (props: IColorSelector) => {
                     colorSelectedIndicator
                         ? colorSelectedIndicator(
                               COLOR_SELECTED_INDICATOR_BASE_STYLE({
-                                  color: hsvaToHex(hsva),
+                                  color: hsvaToHex(hsvaProp || hsva),
                               })
                           )
                         : COLOR_SELECTED_INDICATOR_BASE_STYLE({
-                              color: hsvaToHex(hsva),
+                              color: hsvaToHex(hsvaProp || hsva),
                           })
                 }
                 data-testid='mip-colorSelectedIndicator'
@@ -75,7 +75,7 @@ export const ColorSelector = (props: IColorSelector) => {
                 }
                 data-testid='mip-colorSelected'
             >
-                {hsvaToHex(hsva)}
+                {hsvaToHex(hsvaProp || hsva)}
             </span>
             <img
                 src={ArrowDownIcon}
@@ -105,21 +105,24 @@ export const ColorSelector = (props: IColorSelector) => {
                     ref={paletteContainerRef}
                 >
                     <Saturation
-                        hsva={hsva}
+                        hsva={hsvaProp || hsva}
                         style={
                             saturation
                                 ? saturation(SATURATION_BASE_STYLE)
                                 : SATURATION_BASE_STYLE
                         }
                         onChange={(newColor: { h: number, s: number, v: number, a: number }) => {
-                            console.log(newColor);
-                            setHsva({ ...hsva, ...newColor, a: hsva.a });
+                            typeof onHsvaChange === 'function' && onHsvaChange({ ...(hsvaProp || hsva), ...newColor, a: (hsvaProp || hsva).a });
+                            setHsva({ ...(hsvaProp || hsva), ...newColor, a: (hsvaProp || hsva).a });
                         }}
                     />
                     <Hue
-                        hue={hsva.h}
+                        hue={(hsvaProp || hsva).h}
                         style={hue ? hue(HUE_BASE_STYLE) : HUE_BASE_STYLE}
-                        onChange={(newHue) => setHsva({ ...hsva, ...newHue })}
+                        onChange={(newHue: { h: number, s: number, v: number, a: number }) => {
+                            typeof onHsvaChange === 'function' && onHsvaChange({ ...(hsvaProp || hsva), ...newHue });
+                            setHsva({ ...(hsvaProp || hsva), ...newHue });
+                        }}
                     />
                 </div>
             )}

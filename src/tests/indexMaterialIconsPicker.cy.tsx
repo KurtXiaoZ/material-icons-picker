@@ -1,6 +1,7 @@
 import { MaterialIconsPicker } from '../components/MaterialIconsPicker/index';
 import { DEFAULT_ROW_ADDITION_NUMBER, ICON_TYPES } from '../lib/constants';
 import { useState, useRef } from 'react';
+import { hsvaToHex } from '@uiw/color-convert';
 import * as baseStyles from '../lib/styles';
 import "cypress-real-events";
 
@@ -1285,5 +1286,86 @@ describe('test onHsvaChange', () => {
       .first()
       .click(0, 10)
       .then(() => expect(onHsvaChange).to.be.calledOnce);
+  });
+});
+
+describe('test hsva prop', () => {
+  it('mip-colorSelected has the value of hsva', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker hsva={{ h: 240, s: 100, v: 100, a: 1 }}/></div>)
+      .get('[data-testid=mip-colorSelected]')
+      .first()
+      .should('have.text', hsvaToHex({ h: 240, s: 100, v: 100, a: 1 }));
+  });
+
+  it('all mip-icon have the value of hsva', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker hsva={{ h: 240, s: 100, v: 100, a: 1 }}/></div>)
+      .get('[data-testid=mip-icon]')
+      .each($el => expect($el[0].style.color).to.be.equal(hexToRgb(hsvaToHex({ h: 240, s: 100, v: 100, a: 1 }))));
+  });
+
+  it('changing saturation does not work if the hsva prop has a value', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker hsva={{ h: 240, s: 100, v: 100, a: 1 }}/></div>)
+      .get('[data-testid=mip-colorSelectorContainer]')
+      .first()
+      .click()
+      .get('.w-color-saturation')
+      .first()
+      .click(10, 10)
+      .get('[data-testid=mip-colorSelected]')
+      .first()
+      .should('have.text', hsvaToHex({ h: 240, s: 100, v: 100, a: 1 }));
+  });
+
+  it('changing hue does not work if the hsva prop has a value', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker hsva={{ h: 240, s: 100, v: 100, a: 1 }}/></div>)
+      .get('[data-testid=mip-colorSelectorContainer]')
+      .first()
+      .click()
+      .get('.w-color-hue')
+      .first()
+      .click(0, 10)
+      .get('[data-testid=mip-colorSelected]')
+      .first()
+      .should('have.text', hsvaToHex({ h: 240, s: 100, v: 100, a: 1 }));
+  });
+
+  it('changing saturation works if both hsva and onHsvaChange exist', () => {
+    const Container = () => {
+      const [hsva, setHsva] = useState({ h: 240, s: 100, v: 100, a: 1 });
+      return <div style={WRAPPER_STYLES}><MaterialIconsPicker hsva={hsva} onHsvaChange={newHsva => setHsva(newHsva)}/></div>;
+    };
+    cy
+      .mount(<Container />)
+      .get('[data-testid=mip-colorSelectorContainer]')
+      .first()
+      .click()
+      .get('.w-color-saturation')
+      .first()
+      .click(10, 10)
+      .get('[data-testid=mip-colorSelected]')
+      .first()
+      .should('have.text', '#e6e6f2');
+  });
+
+  it('changing hue works if both hsva and onHsvaChange exist', () => {
+    const Container = () => {
+      const [hsva, setHsva] = useState({ h: 240, s: 100, v: 100, a: 1 });
+      return <div style={WRAPPER_STYLES}><MaterialIconsPicker hsva={hsva} onHsvaChange={newHsva => setHsva(newHsva)}/></div>;
+    };
+    cy
+      .mount(<Container />)
+      .get('[data-testid=mip-colorSelectorContainer]')
+      .first()
+      .click()
+      .get('.w-color-hue')
+      .first()
+      .click(0, 10)
+      .get('[data-testid=mip-colorSelected]')
+      .first()
+      .should('have.text', '#ff0000');
   });
 });

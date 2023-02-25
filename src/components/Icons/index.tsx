@@ -17,7 +17,7 @@ import LoadingIcon from '../../assets/icons/loading.svg';
 import cssStyles from './styles.module.css';
 
 export const Icons = (props: IIcons) => {
-    const { styles = {}, iconSearch, type, hsva } = props;
+    const { styles = {}, iconSearch, type, hsva, hsvaProp } = props;
 
     const {
         iconsContainer,
@@ -87,7 +87,7 @@ export const Icons = (props: IIcons) => {
                         styles={{ iconContainer, icon: iconStyle, iconTip }}
                         icon={icon}
                         type={type}
-                        hsva={hsva}
+                        hsva={hsvaProp || hsva}
                         ref={iconsContainerRef}
                         iconsContainerScrollTop={iconsContainerScrollTop}
                     />

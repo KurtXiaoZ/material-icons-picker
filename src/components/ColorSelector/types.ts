@@ -12,4 +12,6 @@ export interface IColorSelector {
     styles?: IStyles;
     hsva: { h: number; s: number; v: number; a: number };
     setHsva: (hsva: { h: number; s: number; v: number; a: number }) => void;
+    onHsvaChange?: (hsva: { h: number; s: number; v: number; a: number }) => void;
+    hsvaProp?: { h: number; s: number; v: number; a: number };
 }

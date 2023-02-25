@@ -6,14 +6,14 @@ import { ICON_TYPES } from './lib/constants';
 const cx = classNames.bind(styles);
 
 export const App = () => {
-    const [type, setType] = useState(ICON_TYPES[2]);
+    const [hsva, setHsva] = useState({ h: 240, s: 100, v: 100, a: 1 });
     const searchInputRef = useRef(null);
     return (
         <>
             <div className={cx(styles.wrapper)}>
                 <MaterialIconsPicker
-                    
-                    // onHsvaChange={hsva => console.log(hsva)}
+                    hsva={hsva}
+                    onHsvaChange={newHsva => setHsva(newHsva)}
                 />
             </div>
         </>

@@ -58,4 +58,5 @@ export interface IProps {
     defaultType?: { label: iconTypesLabel, value: iconTypesValue };
     onTypeOptionClick?: (type: { label: iconTypesLabel, value: iconTypesValue }) => void;
     onHsvaChange?: (hsva: { h: number, s: number, v: number, a: number }) => void;
+    hsva?: { h: number, s: number, v: number, a: number };
 }
