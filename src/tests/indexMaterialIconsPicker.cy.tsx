@@ -1259,3 +1259,31 @@ describe('test onTypeOptionClick', () => {
     }
   });
 });
+
+describe('test onHsvaChange', () => {
+  it('onHsvaChange is called when saturation changes', () => {
+    const onHsvaChange = cy.stub();
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onHsvaChange={onHsvaChange}/></div>)
+      .get('[data-testid=mip-colorSelectorContainer]')
+      .first()
+      .click()
+      .get('.w-color-saturation')
+      .first()
+      .click(10, 10)
+      .then(() => expect(onHsvaChange).to.be.calledOnce);
+  });
+
+  it('onHsvaChange is called when hue changes', () => {
+    const onHsvaChange = cy.stub();
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onHsvaChange={onHsvaChange}/></div>)
+      .get('[data-testid=mip-colorSelectorContainer]')
+      .first()
+      .click()
+      .get('.w-color-hue')
+      .first()
+      .click(0, 10)
+      .then(() => expect(onHsvaChange).to.be.calledOnce);
+  });
+});

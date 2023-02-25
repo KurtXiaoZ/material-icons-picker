@@ -111,9 +111,10 @@ export const ColorSelector = (props: IColorSelector) => {
                                 ? saturation(SATURATION_BASE_STYLE)
                                 : SATURATION_BASE_STYLE
                         }
-                        onChange={(newColor) =>
-                            setHsva({ ...hsva, ...newColor, a: hsva.a })
-                        }
+                        onChange={(newColor: { h: number, s: number, v: number, a: number }) => {
+                            console.log(newColor);
+                            setHsva({ ...hsva, ...newColor, a: hsva.a });
+                        }}
                     />
                     <Hue
                         hue={hsva.h}

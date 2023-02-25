@@ -11,8 +11,9 @@ export const App = () => {
     return (
         <>
             <div className={cx(styles.wrapper)}>
-                <MaterialIconsPicker 
-                    onTypeOptionClick={type => console.log(type)}
+                <MaterialIconsPicker
+                    
+                    // onHsvaChange={hsva => console.log(hsva)}
                 />
             </div>
         </>
