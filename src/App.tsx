@@ -14,6 +14,7 @@ export const App = () => {
                 <MaterialIconsPicker 
                     onTypeChange={newType => setType(newType)}
                     type={type}
+                    defaultType={ICON_TYPES[1]}
                 />
             </div>
         </>

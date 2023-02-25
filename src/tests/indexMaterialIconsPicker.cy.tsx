@@ -1168,3 +1168,64 @@ describe('test type', () => {
       .should('have.text', ICON_TYPES[0].label);
   });
 });
+
+describe('test defaultType', () => {
+  it('mip-typeSelected should have the value of defaultType.label', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker defaultType={ICON_TYPES[1]}/></div>)
+      .get('[data-testid=mip-typeSelected]')
+      .first()
+      .should('have.text', ICON_TYPES[1].label);
+  });
+
+  it('mip-typeSelected should have the value of type.label if both defaultType and type exist', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker defaultType={ICON_TYPES[1]} type={ICON_TYPES[2]}/></div>)
+      .get('[data-testid=mip-typeSelected]')
+      .first()
+      .should('have.text', ICON_TYPES[2].label);
+  });
+
+  it('new type can be selected given only defaultType', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker defaultType={ICON_TYPES[1]}/></div>)
+      .get('[data-testid=mip-typeContainer]')
+      .click()
+      .get('[data-testid=mip-typeOption]')
+      .first()
+      .click()
+      .get('[data-testid=mip-typeSelected]')
+      .first()
+      .should('have.text', ICON_TYPES[0].label);
+  });
+
+  it('new type can not be selected given both defaultType and type', () => {
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker defaultType={ICON_TYPES[1]} type={ICON_TYPES[2]}/></div>)
+      .get('[data-testid=mip-typeContainer]')
+      .click()
+      .get('[data-testid=mip-typeOption]')
+      .first()
+      .click()
+      .get('[data-testid=mip-typeSelected]')
+      .first()
+      .should('have.text', ICON_TYPES[2].label);
+  });
+
+  it('new type can be selected given defaultType, type, and onTypeChange', () => {
+    const Container = () => {
+      const [type, setType] = useState(ICON_TYPES[1]);
+      return <div style={WRAPPER_STYLES}><MaterialIconsPicker defaultType={ICON_TYPES[3]} type={type} onTypeChange={newType => setType(newType)}/></div>;
+    };
+    cy
+      .mount(<Container />)
+      .get('[data-testid=mip-typeContainer]')
+      .click()
+      .get('[data-testid=mip-typeOption]')
+      .first()
+      .click()
+      .get('[data-testid=mip-typeSelected]')
+      .first()
+      .should('have.text', ICON_TYPES[0].label);
+  });
+});
