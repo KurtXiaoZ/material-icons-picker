@@ -1,18 +1,18 @@
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import SearchIcon from '../../assets/icons/search.svg';
 import {
     SEARCH_CONTAINER_BASE_STYLE,
     SEARCH_ICON_BASE_STYLE,
     SEARCH_INPUT_BASE_STYLE,
 } from '../../lib/styles';
-import React from "react";
 import { IIconSearch } from './types';
 
-export const IconSearch = (props: IIconSearch) => {
+export const IconSearch = React.forwardRef((props: IIconSearch, propSearchInputRef: React.Ref<HTMLInputElement>) => {
     const { styles = {}, setIconSearch, onSearchValueChange, searchValue, defaultSearchValue } = props;
 
     const { searchContainer, searchIcon, searchInput } = styles;
-    const searchInputRef = useRef<HTMLInputElement>(null);
+    const inComponentSearchInputRef = useRef<HTMLInputElement>(null);
+    const searchInputRef = propSearchInputRef || inComponentSearchInputRef;
 
     return (
         <div
@@ -49,4 +49,4 @@ export const IconSearch = (props: IIconSearch) => {
             />
         </div>
     );
-};
+});

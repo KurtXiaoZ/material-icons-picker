@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface IStyles {
     container?: (baseStyle: object) => object;
     searchContainer?: (baseStyle: object) => object;
@@ -25,7 +27,11 @@ interface IStyles {
     iconsContainerPlaceholder?: (baseStyle: object) => object;
 }
 
-export interface IMaterialIconsPicker {
+export interface IRefs {
+    searchInputRef?: React.Ref<null | HTMLInputElement>;
+}
+
+export interface IProps {
     styles?: IStyles;
     onSearch?: (searchValue: string) => void;
     onSearchValueChange?: (searchValue: string) => void;

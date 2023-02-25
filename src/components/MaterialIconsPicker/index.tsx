@@ -1,21 +1,27 @@
-import { IMaterialIconsPicker } from './types';
+import { IProps, IRefs } from './types';
 import { IconSearch } from '../IconSearch';
 import { TypeSelector } from '../TypeSelector';
 import { ColorSelector } from '../ColorSelector';
 import { CONTAINER_BASE_STYLE, OPTION_CONTAINER_BASE_STYLE } from '../../lib/styles';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ICON_TYPES } from '../../lib/constants';
 import 'material-icons/iconfont/material-icons.css';
 import { Icons } from '../Icons';
 import { useUpdate } from '../../lib/hooks';
 
-export const MaterialIconsPicker = ({
-    styles = {},
-    onSearch,
-    onSearchValueChange,
-    searchValue,
-    defaultSearchValue,
-}: IMaterialIconsPicker) => {
+export const MaterialIconsPicker = React.forwardRef((props: IProps, refs: IRefs) => {
+    const {
+        styles = {},
+        onSearch,
+        onSearchValueChange,
+        searchValue,
+        defaultSearchValue,
+    } = props || {};
+
+    const {
+        searchInputRef
+    } = refs || {};
+
     const {
         container,
         optionContainer,
@@ -64,6 +70,7 @@ export const MaterialIconsPicker = ({
                 onSearchValueChange={onSearchValueChange}
                 searchValue={searchValue}
                 defaultSearchValue={defaultSearchValue}
+                ref={searchInputRef}
             />
             <div
                 data-testid='mip-optionContainer'
@@ -114,4 +121,4 @@ export const MaterialIconsPicker = ({
             />
         </div>
     );
-};
+});

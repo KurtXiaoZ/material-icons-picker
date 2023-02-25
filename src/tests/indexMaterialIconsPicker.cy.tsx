@@ -1,6 +1,6 @@
 import { MaterialIconsPicker } from '../components/MaterialIconsPicker/index';
 import { DEFAULT_ROW_ADDITION_NUMBER, ICON_TYPES } from '../lib/constants';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import * as baseStyles from '../lib/styles';
 import "cypress-real-events";
 
@@ -1059,5 +1059,33 @@ describe('test defaultSearchValue prop', () => {
       .type('123')
       .invoke('val')
       .should('eq', 'book123');
+  });
+});
+
+describe('test searchInputRef', () => {
+  it('validate that searchInputRef is passed to mip-searchInput using onSearch', () => {
+    const Container = () => {
+      const searchInputRef = useRef(null);
+      return <div style={WRAPPER_STYLES}><MaterialIconsPicker ref={{ searchInputRef }} onSearch={str => expect(searchInputRef.current.value).to.equal(str)}/></div>;
+    };
+    cy
+      .mount(<Container />)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('book')
+      .trigger('keydown', { key: 'Enter' })
+  });
+
+  it('validate that searchInputRef is passed to mip-searchInput using onSearchValueChange', () => {
+    const Container = () => {
+      const searchInputRef = useRef(null);
+      return <div style={WRAPPER_STYLES}><MaterialIconsPicker ref={{ searchInputRef }} onSearchValueChange={str => expect(searchInputRef.current.value).to.equal(str)}/></div>;
+    };
+    cy
+      .mount(<Container />)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('book')
+      .trigger('keydown', { key: 'Enter' })
   });
 });
