@@ -19,6 +19,7 @@ export const MaterialIconsPicker = React.forwardRef((props: IProps, refs: IRefs)
         onTypeChange,
         type: typeProp,
         defaultType,
+        onTypeOptionClick
     } = props || {};
 
     const {
@@ -95,6 +96,7 @@ export const MaterialIconsPicker = React.forwardRef((props: IProps, refs: IRefs)
                     typeProp={typeProp}
                     setType={setType}
                     onTypeChange={onTypeChange}
+                    onTypeOptionClick={onTypeOptionClick}
                 />
                 <ColorSelector
                     styles={{

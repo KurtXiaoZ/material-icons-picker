@@ -12,9 +12,7 @@ export const App = () => {
         <>
             <div className={cx(styles.wrapper)}>
                 <MaterialIconsPicker 
-                    onTypeChange={newType => setType(newType)}
-                    type={type}
-                    defaultType={ICON_TYPES[1]}
+                    onTypeOptionClick={type => console.log(type)}
                 />
             </div>
         </>

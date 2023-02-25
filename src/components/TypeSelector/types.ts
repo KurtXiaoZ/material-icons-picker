@@ -12,4 +12,5 @@ export interface ITypeSelector {
     typeProp?: { label: string; value: string };
     setType: (type: { label: string; value: string }) => void;
     onTypeChange?: (type: { label: string, value: string }) => void;
+    onTypeOptionClick?: (type: { label: string, value: string }) => void;
 }

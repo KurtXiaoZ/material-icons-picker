@@ -1229,3 +1229,33 @@ describe('test defaultType', () => {
       .should('have.text', ICON_TYPES[0].label);
   });
 });
+
+describe('test onTypeOptionClick', () => {
+  it('onTypeOptionClick is called when any mip-typeOption is clicked', () => {
+    const onTypeOptionClick = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onTypeOptionClick={onTypeOptionClick}/></div>);
+    for(let i = 0; i < ICON_TYPES.length; ++i) {
+      cy
+        .get('[data-testid=mip-typeContainer]')
+        .click()
+        .get('[data-testid=mip-typeOption]')
+        .eq(i)
+        .click()
+        .then(() => expect(onTypeOptionClick).to.be.calledWith(ICON_TYPES[i]));
+    }
+  });
+
+  it('onTypeOptionClick is called when any mip-typeOption is clicked if the type prop is set', () => {
+    const onTypeOptionClick = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onTypeOptionClick={onTypeOptionClick} type={ICON_TYPES[0]}/></div>);
+    for(let i = 0; i < ICON_TYPES.length; ++i) {
+      cy
+        .get('[data-testid=mip-typeContainer]')
+        .click()
+        .get('[data-testid=mip-typeOption]')
+        .eq(i)
+        .click()
+        .then(() => expect(onTypeOptionClick).to.be.calledWith(ICON_TYPES[i]));
+    }
+  });
+});

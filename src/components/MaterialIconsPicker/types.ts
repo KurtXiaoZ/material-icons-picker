@@ -56,4 +56,5 @@ export interface IProps {
     onTypeChange?: (type: { label: iconTypesLabel, value: iconTypesValue }) => void;
     type?: { label: iconTypesLabel, value: iconTypesValue };
     defaultType?: { label: iconTypesLabel, value: iconTypesValue };
+    onTypeOptionClick?: (type: { label: iconTypesLabel, value: iconTypesValue }) => void;
 }
