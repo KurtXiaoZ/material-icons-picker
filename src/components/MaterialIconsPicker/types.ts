@@ -60,4 +60,5 @@ export interface IProps {
     onHsvaChange?: (hsva: { h: number, s: number, v: number, a: number }) => void;
     hsva?: { h: number, s: number, v: number, a: number };
     defaultHsva?: { h: number, s: number, v: number, a: number };
+    onIconsChange?: (icons: string[]) => void;
 }

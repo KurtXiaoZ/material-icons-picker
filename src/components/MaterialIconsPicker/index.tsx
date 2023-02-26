@@ -23,6 +23,7 @@ export const MaterialIconsPicker = React.forwardRef((props: IProps, refs: IRefs)
         onHsvaChange,
         hsva: hsvaProp,
         defaultHsva,
+        onIconsChange,
     } = props || {};
 
     const {
