@@ -196,11 +196,6 @@ export const getIconsContainerRowColCounts = (
     return { rowCount, colCount };
 };
 
-export const ICON_PLACEHOLDER: object = {
-    width: 'auto',
-    aspectRatio: '1/1',
-};
-
 export const LOADING_CONTAINER_BASE_STYLE: object = {
     height: 'fit-content',
     gridColumn: '1 / -1',
