@@ -50,16 +50,6 @@ export const Icons = (props: IIcons) => {
         setIcons(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []);
     }, [rowCount, colCount]);
 
-    const renderPlaceholderItems = () => {
-        const items = [];
-        for(let i = 1; i <= colCount - icons.length % colCount; ++i) {
-            items.push(<div
-                style={iconStyle ? iconStyle(ICON_PLACEHOLDER) : ICON_PLACEHOLDER}
-            ></div>)
-        }
-        return items;
-    };
-
     return (
         <div
             style={
@@ -92,7 +82,6 @@ export const Icons = (props: IIcons) => {
                         iconsContainerScrollTop={iconsContainerScrollTop}
                     />
                 ))}
-                {icons.length % colCount !== 0 && renderPlaceholderItems()}
                 {loading && <div
                     style={loadingContainer ? loadingContainer(LOADING_CONTAINER_BASE_STYLE) : LOADING_CONTAINER_BASE_STYLE}
                     data-testid='mip-loadingContainer'
