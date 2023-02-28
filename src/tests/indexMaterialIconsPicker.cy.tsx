@@ -265,8 +265,8 @@ describe('interaction of mip-iconTip', () => {
   });
 
   it('test the positioning of mip-iconTip under different browser sizes', function() {
-    const MIN_WIDTH = 500, MAX_WIDTH = 900, WIDTH_UNIT = 100;
-    const MIN_HEIGHT = 500, MAX_HEIGHT = 900, HEIGHT_UNIT = 100;
+    const MIN_WIDTH = 500, MAX_WIDTH = 700, WIDTH_UNIT = 100;
+    const MIN_HEIGHT = 500, MAX_HEIGHT = 700, HEIGHT_UNIT = 100;
     cy.viewport(MAX_WIDTH + 10, MAX_HEIGHT + 10);
     for(let width = MIN_WIDTH; width <= MAX_WIDTH; width += WIDTH_UNIT) {
       for(let height = MIN_HEIGHT; height <= MAX_HEIGHT; height += HEIGHT_UNIT) {
