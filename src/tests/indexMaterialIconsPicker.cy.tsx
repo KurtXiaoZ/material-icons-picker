@@ -272,18 +272,39 @@ describe('interaction of mip-iconTip', () => {
   });
   */
   it('test the positioning of mip-iconTip under different browser sizes', function() {
-    const MIN_WIDTH = 500, MAX_WIDTH = 500, WIDTH_UNIT = 100;
-    const MIN_HEIGHT = 500, MAX_HEIGHT = 500, HEIGHT_UNIT = 100;
+    const MIN_WIDTH = 500, MAX_WIDTH = 600, WIDTH_UNIT = 100;
+    const MIN_HEIGHT = 500, MAX_HEIGHT = 600, HEIGHT_UNIT = 100;
     // cy.viewport(MAX_WIDTH + 10, MAX_HEIGHT + 10);
     for(let width = MIN_WIDTH; width <= MAX_WIDTH; width += WIDTH_UNIT) {
       for(let height = MIN_HEIGHT; height <= MAX_HEIGHT; height += HEIGHT_UNIT) {
         cy
           .viewport(MAX_WIDTH + 10, MAX_HEIGHT + 10)
           .mount(<div style={{ ...WRAPPER_STYLES, width: width + 'px', height: height + 'px' }}><MaterialIconsPicker /></div>)
-          .then(function() {
-            testIconTipPosition(this);
-          })
-      }
+          .get('[data-testid=mip-iconsContainer]')
+          .as('iconsContainers')
+          .get('[data-testid=mip-iconContainer]')
+          .as('iconContainers')
+          .get('[data-testid=mip-iconTip]')
+          .as('iconTips')
+          .then(() => {
+            const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: this.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
+            for(let i = 0; i < rowCount * colCount; ++i) {
+              cy
+                .wrap(this.iconContainers[i])
+                .realHover()
+                .then(() => {
+                  const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
+                  const iconContainerRect = this.iconContainers[i].getBoundingClientRect();
+                  const iconTipRect = this.iconTips[i].getBoundingClientRect();
+                  let expectedIconTipX = iconContainerRect.left + (iconContainerRect.width - iconTipRect.width) * 0.5;
+                  if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconsContainerRect.left + 2;
+                  else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + this.iconsContainers[0].clientWidth) expectedIconTipX = iconsContainerRect.left + iconsContainerRect.width - iconTipRect.width - 2;
+                  expect(Math.abs(expectedIconTipX - iconTipRect.left)).to.be.lessThan(2);
+                  expect(parseInt(this.iconTips[i].style.top)).to.be.oneOf([iconContainerRect.height + 2, -1 * iconTipRect.height - 2])
+                })
+            }
+          });
+       }
     }
   });
 });
