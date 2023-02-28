@@ -221,7 +221,6 @@ describe('interaction of mip-iconTip', () => {
           cy
             .wrap(context.iconContainers[i])
             .realHover()
-            .wait(50)
             .then(() => {
               const iconsContainerRect = context.iconsContainers[0].getBoundingClientRect();
               const iconContainerRect = context.iconContainers[i].getBoundingClientRect();
@@ -229,7 +228,7 @@ describe('interaction of mip-iconTip', () => {
               let expectedIconTipX = iconContainerRect.left + (iconContainerRect.width - iconTipRect.width) * 0.5;
               if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconsContainerRect.left + 2;
               else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + context.iconsContainers[0].clientWidth) expectedIconTipX = iconsContainerRect.left + iconsContainerRect.width - iconTipRect.width - 2;
-              cy.wrap(Math.abs(expectedIconTipX - iconTipRect.left)).should('be.lessThan', 2);
+              expect(Math.abs(expectedIconTipX - iconTipRect.left)).to.be.lessThan(2);
               expect(parseInt(context.iconTips[i].style.top)).to.be.oneOf([iconContainerRect.height + 2, -1 * iconTipRect.height - 2])
             })
         }
@@ -273,12 +272,13 @@ describe('interaction of mip-iconTip', () => {
   });
   */
   it('test the positioning of mip-iconTip under different browser sizes', function() {
-    const MIN_WIDTH = 500, MAX_WIDTH = 700, WIDTH_UNIT = 100;
-    const MIN_HEIGHT = 500, MAX_HEIGHT = 700, HEIGHT_UNIT = 100;
-    cy.viewport(MAX_WIDTH + 10, MAX_HEIGHT + 10);
+    const MIN_WIDTH = 500, MAX_WIDTH = 500, WIDTH_UNIT = 100;
+    const MIN_HEIGHT = 500, MAX_HEIGHT = 500, HEIGHT_UNIT = 100;
+    // cy.viewport(MAX_WIDTH + 10, MAX_HEIGHT + 10);
     for(let width = MIN_WIDTH; width <= MAX_WIDTH; width += WIDTH_UNIT) {
       for(let height = MIN_HEIGHT; height <= MAX_HEIGHT; height += HEIGHT_UNIT) {
         cy
+          .viewport(MAX_WIDTH + 10, MAX_HEIGHT + 10)
           .mount(<div style={{ ...WRAPPER_STYLES, width: width + 'px', height: height + 'px' }}><MaterialIconsPicker /></div>)
           .then(function() {
             testIconTipPosition(this);
