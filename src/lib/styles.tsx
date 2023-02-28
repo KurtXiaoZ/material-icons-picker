@@ -119,8 +119,8 @@ export const getIconTipPosition = ({
     const iconTipRect = iconTipRef.current?.getBoundingClientRect();
     let iconTipLeft = (iconContainerRect.width - iconTipRect.width) * 0.5;
     let iconTipTop = iconContainerRect.height + 2;
-    if(iconContainerRect.left + iconTipLeft < iconsContainerRect.left + 2) iconTipLeft = 0;
-    else if(iconContainerRect.left + iconTipLeft + iconTipRect.width + 2 > iconsContainerRect.left + containerRef.current?.clientWidth) iconTipLeft = iconContainerRect.width - iconTipRect.width;
+    if(iconContainerRect.left + iconTipLeft < iconsContainerRect.left + 2) iconTipLeft = iconsContainerRect.left + 2 - iconContainerRect.left;
+    else if(iconContainerRect.left + iconTipLeft + iconTipRect.width + 2 > iconsContainerRect.left + containerRef.current?.clientWidth) iconTipLeft = iconsContainerRect.left + containerRef.current?.clientWidth - (iconContainerRect.left + iconTipRect.width + 2);
     if(iconContainerRect.top + iconTipTop + iconTipRect.height + 2 > iconsContainerRect.top + iconsContainerRect.height) iconTipTop = -1 * iconTipRect.height - 2;
     return { iconTipTop, iconTipLeft };
 };
@@ -185,12 +185,11 @@ export const getIconsContainerRowColCounts = (
     const containerPaddingLeft = parseInt(iconsContainerComputedStyles?.getPropertyValue('padding-left') || '0');
     const containerPaddingRight = parseInt(iconsContainerComputedStyles?.getPropertyValue('padding-right') || '0');
     const containerPaddingTop = parseInt(iconsContainerComputedStyles?.getPropertyValue('padding-top') || '0');
-    const containerPaddingBottom = parseInt(iconsContainerComputedStyles?.getPropertyValue('padding-bottom') || '0');
     const containerColumnGap = parseInt(iconsContainerComputedStyles?.getPropertyValue('column-gap') || '0');
     const containerRowGap = parseInt(iconsContainerComputedStyles?.getPropertyValue('row-gap') || '0');
     const iconWidth = parseInt(iconContainerStyle.width || '0');
     const iconHeight = parseInt(iconContainerStyle.height || '0');
-    const rowCount = Math.floor((containerHeight - containerPaddingBottom - containerPaddingTop - containerRowGap) / (iconHeight + containerRowGap));
+    const rowCount = Math.round((containerHeight - containerPaddingTop - containerRowGap) / (iconHeight + containerRowGap));
     const colCount = Math.floor((containerWidth - containerPaddingLeft - containerPaddingRight - containerColumnGap) / (iconWidth + containerColumnGap));
     if(isNaN(rowCount) || isNaN(colCount)) return { rowCount: 0, colCount: 0 };
     return { rowCount, colCount };
