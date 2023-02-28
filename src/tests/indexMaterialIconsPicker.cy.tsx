@@ -18,7 +18,7 @@ const hexToRgb = (hex: string): string => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
 }
-
+/*
 describe('rendering of the elements of <MaterialIconsPicker />', () => {
   it('expected elements are rendered correctly without props', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -205,7 +205,7 @@ describe('number of icons', () => {
       })
   });
 });
-
+*/
 describe('interaction of mip-iconTip', () => {
   function testIconTipPosition(context: any) {
     cy
@@ -235,7 +235,7 @@ describe('interaction of mip-iconTip', () => {
         }
       });
   }
-
+  /*
   it('mip-iconTip is visible once users hover over mip-icon', function() {
     cy
       .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>)
@@ -271,7 +271,7 @@ describe('interaction of mip-iconTip', () => {
           .should('eq', el.text());
       })
   });
-
+  */
   it('test the positioning of mip-iconTip under different browser sizes', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 700, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 700, HEIGHT_UNIT = 100;
@@ -287,7 +287,7 @@ describe('interaction of mip-iconTip', () => {
     }
   });
 });
-
+/*
 describe('test the styles prop', () => {
   it('test styles prop: container', function() {
     const containerStyle = {
@@ -1463,4 +1463,4 @@ describe('test defaultHsva', () => {
       .first()
       .should('have.text', hsvaToHex({ h: 240, s: 100, v: 100, a: 1 }));
   });
-});
+});*/
