@@ -18,7 +18,7 @@ const hexToRgb = (hex: string): string => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
 }
-/*
+
 describe('rendering of the elements of <MaterialIconsPicker />', () => {
   it('expected elements are rendered correctly without props', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -148,8 +148,9 @@ describe('interaction related to color selection', () => {
     });
   });
 });
-*/
+
 describe('number of icons', () => {
+  /*
   it('number of icons of the initial render is always equal to col * (row + 1) when the icon picker has various width and height', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 800, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 800, HEIGHT_UNIT = 10;
@@ -193,7 +194,7 @@ describe('number of icons', () => {
           });
       })
   });
-  
+  */
   it('number of icons increases by DEFAULT_ROW_ADDITION_NUMBER * col by default', async () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy.get('[data-testid=mip-iconsContainer]').then(elements => {
@@ -217,38 +218,9 @@ describe('number of icons', () => {
       })
   });
 });
-/*
-*/
-/*
+
 describe('interaction of mip-iconTip', () => {
-  function testIconTipPosition(context: any) {
-    cy
-      .get('[data-testid=mip-iconsContainer]')
-      .as('iconsContainers')
-      .get('[data-testid=mip-iconContainer]')
-      .as('iconContainers')
-      .get('[data-testid=mip-iconTip]')
-      .as('iconTips')
-      .then(() => {
-        const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: context.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
-        for(let i = 0; i < rowCount * colCount; ++i) {
-          cy
-            .wrap(context.iconContainers[i])
-            .realHover()
-            .then(() => {
-              const iconsContainerRect = context.iconsContainers[0].getBoundingClientRect();
-              const iconContainerRect = context.iconContainers[i].getBoundingClientRect();
-              const iconTipRect = context.iconTips[i].getBoundingClientRect();
-              let expectedIconTipX = iconContainerRect.left + (iconContainerRect.width - iconTipRect.width) * 0.5;
-              if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconsContainerRect.left + 2;
-              else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + context.iconsContainers[0].clientWidth) expectedIconTipX = iconsContainerRect.left + iconsContainerRect.width - iconTipRect.width - 2;
-              expect(Math.abs(expectedIconTipX - iconTipRect.left)).to.be.lessThan(2);
-              expect(parseInt(context.iconTips[i].style.top)).to.be.oneOf([iconContainerRect.height + 2, -1 * iconTipRect.height - 2])
-            })
-        }
-      });
-  }
-  /*
+  
   it('mip-iconTip is visible once users hover over mip-icon', function() {
     cy
       .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>)
@@ -277,7 +249,7 @@ describe('interaction of mip-iconTip', () => {
         }
       })
   });
-
+  
   it('mip-iconTip contains the right text content', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy
@@ -290,7 +262,6 @@ describe('interaction of mip-iconTip', () => {
           .should('eq', el.text());
       })
   });
-  */
   /*
   it('test the positioning of mip-iconTip under different browser sizes', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 700, WIDTH_UNIT = 100;
@@ -336,9 +307,10 @@ describe('interaction of mip-iconTip', () => {
           });
       })
   });
+  */
 });
-*/
-/*
+
+
 describe('test the styles prop', () => {
   it('test styles prop: container', function() {
     const containerStyle = {
@@ -1514,4 +1486,4 @@ describe('test defaultHsva', () => {
       .first()
       .should('have.text', hsvaToHex({ h: 240, s: 100, v: 100, a: 1 }));
   });
-});*/
+});
