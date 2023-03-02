@@ -292,6 +292,7 @@ describe('interaction of mip-iconTip', () => {
               cy
                 .wrap(this.iconContainers[i])
                 .realHover()
+                .wait(50)
                 .then(() => {
                   const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
                   const iconContainerRect = this.iconContainers[i].getBoundingClientRect();
