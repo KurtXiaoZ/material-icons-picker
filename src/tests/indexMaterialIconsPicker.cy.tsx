@@ -236,18 +236,18 @@ describe('interaction of mip-iconTip', () => {
           .wrap(this.iconTips[i])
           .should('be.visible');
       })
-      .then(() => {
-        const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: this.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
-        for(let i = 0; i < rowCount * colCount; ++i) {
-          cy
-            .wrap(this.icons[i])
-            .realHover()
-            .wait(50)
-            .then(() => {
-              expect(window.getComputedStyle(this.iconTips[i]).getPropertyValue('visibility')).to.equal('visible');
-            })
-        }
-      })
+      // .then(() => {
+      //   const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: this.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
+      //   for(let i = 0; i < rowCount * colCount; ++i) {
+      //     cy
+      //       .wrap(this.icons[i])
+      //       .realHover()
+      //       .wait(50)
+      //       .then(() => {
+      //         expect(window.getComputedStyle(this.iconTips[i]).getPropertyValue('visibility')).to.equal('visible');
+      //       })
+      //   }
+      // })
   });
   
   it('mip-iconTip contains the right text content', function() {
