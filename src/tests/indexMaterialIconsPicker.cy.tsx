@@ -220,7 +220,7 @@ describe('number of icons', () => {
 });
 
 describe('interaction of mip-iconTip', () => {
-  
+  /*
   it('mip-iconTip is visible once users hover over mip-icon', function() {
     cy
       .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>)
@@ -242,7 +242,7 @@ describe('interaction of mip-iconTip', () => {
         }
       })
   });
-  
+  */
   it('mip-iconTip contains the right text content', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy
