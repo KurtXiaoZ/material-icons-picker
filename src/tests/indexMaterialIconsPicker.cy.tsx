@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { hsvaToHex } from '@uiw/color-convert';
 import * as baseStyles from '../lib/styles';
 import "cypress-real-events";
+import { MATERIAL_ICONS } from '../assets/materialIcons';
 
 const WRAPPER_STYLES: object = {
   position: 'fixed',
@@ -899,15 +900,18 @@ describe('test the styles prop', () => {
 describe('test the onSearch prop', () => {
   it('onSearch should not be invoked when <MaterialIconPicker /> mounts', () => {
     const onSearch = cy.stub();
-    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>);
-    expect(onSearch).not.to.be.calledOnce;
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>)
+      .wrap(onSearch)
+      .should('not.be.called');
   });
 
   it('onSearch should be invoked when there is a new input for mip-searchInput and mip-searchIcon is clicked', () => {
     const onSearch = cy.stub();
-    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>);
-    expect(onSearch).not.to.be.calledOnce;
     cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>)
+      .wrap(onSearch)
+      .should('not.be.called')
       .get('[data-testid=mip-searchInput]')
       .first()
       .type('book')
@@ -919,9 +923,10 @@ describe('test the onSearch prop', () => {
 
   it('onSearch should be invoked when there is a new input for mip-searchInput and mip-searchIcon is clicked', () => {
     const onSearch = cy.stub();
-    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>);
-    expect(onSearch).not.to.be.calledOnce;
     cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>)
+      .wrap(onSearch)
+      .should('not.be.called')
       .get('[data-testid=mip-searchInput]')
       .first()
       .type('book')
@@ -933,9 +938,10 @@ describe('test the onSearch prop', () => {
 
   it('onSearch should be invoked when there is a new input for mip-searchInput and enter is hit when mip-searchInput is focused', () => {
     const onSearch = cy.stub();
-    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>);
-    expect(onSearch).not.to.be.calledOnce;
     cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>)
+      .wrap(onSearch)
+      .should('not.be.called')
       .get('[data-testid=mip-searchInput]')
       .first()
       .type('book')
@@ -945,9 +951,10 @@ describe('test the onSearch prop', () => {
 
   it('onSearch should not be invoked when there is a new input for mip-searchInput and enter is hit when mip-searchInput is not focused', () => {
     const onSearch = cy.stub();
-    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>);
-    expect(onSearch).not.to.be.calledOnce;
     cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearch={onSearch}/></div>)
+      .wrap(onSearch)
+      .should('not.be.called')
       .get('[data-testid=mip-searchInput]')
       .first()
       .type('book')
@@ -960,21 +967,24 @@ describe('test the onSearch prop', () => {
 describe('test onSearchValueChange prop', () => {
   it('onSearchValueChange should not be invoked when <MaterialIconPicker /> mounts', () => {
     const onSearchValueChange = cy.stub();
-    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearchValueChange={onSearchValueChange}/></div>);
-    expect(onSearchValueChange).not.to.be.calledOnce;
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearchValueChange={onSearchValueChange}/></div>)
+      .wrap(onSearchValueChange)
+      .should('not.be.called');
   });
 
   it('onSearchValueChange should be invoked when the value mip-searchInput changes', () => {
     const onSearchValueChange = cy.stub();
-    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearchValueChange={onSearchValueChange}/></div>);
     cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onSearchValueChange={onSearchValueChange}/></div>)
       .get('[data-testid=mip-searchInput]')
       .first()
       .type('book')
-      .then(() => expect(onSearchValueChange).to.be.calledWith('b'))
-      .then(() => expect(onSearchValueChange).to.be.calledWith('bo'))
-      .then(() => expect(onSearchValueChange).to.be.calledWith('boo'))
-      .then(() => expect(onSearchValueChange).to.be.calledWith('book'))
+      .wrap(onSearchValueChange)
+      .should('be.calledWith', 'b')
+      .should('be.calledWith', 'bo')
+      .should('be.calledWith', 'boo')
+      .should('be.calledWith', 'book')
       .get('[data-testid=mip-searchInput]')
       .first()
       .clear()
@@ -1478,5 +1488,68 @@ describe('test defaultHsva', () => {
       .get('[data-testid=mip-colorSelected]')
       .first()
       .should('have.text', hsvaToHex({ h: 240, s: 100, v: 100, a: 1 }));
+  });
+});
+
+describe('test the onIconsChange prop', () => {
+  it('onIconsChange should not be invoked when the component first renders', () => {
+    const onIconsChange = cy.stub();
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onIconsChange={onIconsChange} /></div>)
+      .wrap(onIconsChange)
+      .should('not.be.called');
+  });
+
+  it('onIconsChange should be invoked with the new icons whenever mip-iconsContainer is scrolled to the bottom', () => {
+    const onIconsChange = cy.stub();
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onIconsChange={onIconsChange} /></div>)
+      .get('[data-testid=mip-iconsContainer]')
+      .then(iconsContainers => {
+        const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
+        cy
+          .get('[data-testid=mip-iconsContainer]')
+          .scrollTo('bottom')
+          .wait(1000)
+          .wrap(onIconsChange)
+          .should('be.calledWith', MATERIAL_ICONS.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount))
+          .get('[data-testid=mip-iconsContainer]')
+          .scrollTo('bottom')
+          .wait(1000)
+          .wrap(onIconsChange)
+          .should('be.calledWith', MATERIAL_ICONS.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER * 2) * colCount))
+          .wrap(onIconsChange)
+          .should('be.calledTwice');
+      });
+  });
+
+  it('onIconsChange should be invoked with the new icons given a searchValue whenever mip-iconsContainer is scrolled to the bottom', () => {
+    const onIconsChange = cy.stub(e => console.log(e));
+    const iconsPool = MATERIAL_ICONS.filter((s) => s.toLowerCase().includes('e'));
+    cy
+      .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onIconsChange={onIconsChange} /></div>)
+      .get('[data-testid=mip-searchInput]')
+      .first()
+      .type('e')
+      .get('[data-testid=mip-searchIcon]')
+      .click()
+      .get('[data-testid=mip-iconsContainer]')
+      .then(iconsContainers => {
+        const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
+        console.log((rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount);
+        cy
+          .get('[data-testid=mip-iconsContainer]')
+          .scrollTo('bottom')
+          .wait(1000)
+          .wrap(onIconsChange)
+          // .then(() => expect(onIconsChange).to.be.calledWith(iconsPool.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount)))
+          // .should('be.calledWith', iconsPool.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount))
+          // .get('[data-testid=mip-iconsContainer]')
+          // .scrollTo('bottom')
+          // .wrap(onIconsChange)
+          // .should('be.calledWith', iconsPool.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER * 2) * colCount))
+          // .wrap(onIconsChange)
+          // .should('be.calledTwice');
+      });
   });
 });

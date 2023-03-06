@@ -10,13 +10,13 @@ import {
 } from '../../lib/styles';
 import { IIcons } from './types';
 import { Icon } from '../Icon';
-import { useElementSize, useDebounce } from '../../lib/hooks';
+import { useElementSize, useDebounce, useUpdate } from '../../lib/hooks';
 import { useEffect, useState, UIEvent } from 'react';
 import LoadingIcon from '../../assets/icons/loading.svg';
 import cssStyles from './styles.module.css';
 
 export const Icons = (props: IIcons) => {
-    const { styles = {}, iconSearch, type, hsva, hsvaProp } = props;
+    const { styles = {}, iconSearch, type, hsva, hsvaProp, onIconsChange } = props;
 
     const {
         iconsContainer,
@@ -42,12 +42,14 @@ export const Icons = (props: IIcons) => {
     }, [iconSearch]);
 
     useEffect(() => {
-        if(loading) iconsContainerRef.current.scrollTop = iconsContainerRef.current.scrollHeight;
+        if(loading) iconsContainerRef.current.scrollTop = iconsContainerRef.current.scrollHeight - iconsContainerRef.current.clientHeight - 10;
     }, [loading]);
     
     useEffect(() => {
         setIcons(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []);
     }, [rowCount, colCount]);
+
+    // useUpdate(() => typeof onIconsChange === 'function' && onIconsChange(icons), [icons]);
 
     return (
         <div
@@ -62,7 +64,9 @@ export const Icons = (props: IIcons) => {
                 if(eventTarget.scrollTop + eventTarget.clientHeight === eventTarget.scrollHeight && icons.length < iconSearchResults.length) {
                     setLoading(true);
                     setTimeout(() => {
-                        setIcons((prevIcons: string[]) => [ ...prevIcons, ...iconSearchResults.slice(prevIcons.length, prevIcons.length + DEFAULT_ROW_ADDITION_NUMBER * colCount)]);
+                        const newIcons = [ ...icons, ...iconSearchResults.slice(icons.length, icons.length + DEFAULT_ROW_ADDITION_NUMBER * colCount)]
+                        typeof onIconsChange === 'function' && onIconsChange(newIcons);
+                        setIcons(newIcons);
                         setLoading(false);
                     }, 1000);
                 }

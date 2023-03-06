@@ -14,4 +14,5 @@ export interface IIcons {
     type: string;
     hsva: { h: number; s: number; v: number; a: number };
     hsvaProp?: { h: number; s: number; v: number; a: number };
+    onIconsChange?: (icons: string[]) => void;
 }
