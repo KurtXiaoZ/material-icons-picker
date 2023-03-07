@@ -224,7 +224,6 @@ describe('interaction of mip-iconTip', () => {
   it('mip-iconTip is visible once users hover over mip-icon', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
-    // cy.get('[data-testid=mip-iconTip]').as('iconTips');
     cy.get('[data-testid=mip-iconContainer]').as('icons');
     cy
       .get('[data-testid=mip-icon]')
@@ -232,10 +231,8 @@ describe('interaction of mip-iconTip', () => {
         const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: this.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
         for(let i = 0; i < rowCount * colCount; ++i) {
           cy.wrap(this.icons[i]).realHover()
-
           .wait(100)
           .get('[data-testid=mip-iconTip]').eq(i).should('be.visible');
-          // cy.then(() => expect(window.getComputedStyle(this.iconTips[i]).getPropertyValue('visibility')).to.equal('visible'));
         }
       });
   });
