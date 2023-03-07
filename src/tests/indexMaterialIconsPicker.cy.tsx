@@ -249,7 +249,7 @@ describe('interaction of mip-iconTip', () => {
           .should('eq', el.text());
       })
   });
-  /*
+  
   it('test the positioning of mip-iconTip under different browser sizes', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 700, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 700, HEIGHT_UNIT = 100;
@@ -294,7 +294,6 @@ describe('interaction of mip-iconTip', () => {
           });
       })
   });
-  */
 });
 
 
