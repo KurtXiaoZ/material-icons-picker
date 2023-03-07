@@ -1507,24 +1507,18 @@ describe('test the onIconsChange prop', () => {
       .get('[data-testid=mip-iconsContainer]')
       .then(iconsContainers => {
         const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
-        cy
-          .get('[data-testid=mip-iconsContainer]')
-          .scrollTo('bottom')
-          .wait(1000)
-          .wrap(onIconsChange)
-          .should('be.calledWith', MATERIAL_ICONS.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount))
-          .get('[data-testid=mip-iconsContainer]')
-          .scrollTo('bottom')
-          .wait(1000)
-          .wrap(onIconsChange)
-          .should('be.calledWith', MATERIAL_ICONS.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER * 2) * colCount))
-          .wrap(onIconsChange)
-          .should('be.calledTwice');
+        cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom');
+        cy.wait(1000);
+        cy.wrap(onIconsChange).should('be.calledWith', MATERIAL_ICONS.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount));
+        cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom');
+        cy.wait(1000);
+        cy.wrap(onIconsChange).should('be.calledWith', MATERIAL_ICONS.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER * 2) * colCount));
+        cy.wrap(onIconsChange).should('be.calledTwice');
       });
   });
 
   it('onIconsChange should be invoked with the new icons given a searchValue whenever mip-iconsContainer is scrolled to the bottom', () => {
-    const onIconsChange = cy.stub(e => console.log(e));
+    const onIconsChange = cy.stub();
     const iconsPool = MATERIAL_ICONS.filter((s) => s.toLowerCase().includes('e'));
     cy
       .mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onIconsChange={onIconsChange} /></div>)
@@ -1536,20 +1530,13 @@ describe('test the onIconsChange prop', () => {
       .get('[data-testid=mip-iconsContainer]')
       .then(iconsContainers => {
         const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
-        console.log((rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount);
-        cy
-          .get('[data-testid=mip-iconsContainer]')
-          .scrollTo('bottom')
-          .wait(1000)
-          .wrap(onIconsChange)
-          // .then(() => expect(onIconsChange).to.be.calledWith(iconsPool.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount)))
-          // .should('be.calledWith', iconsPool.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount))
-          // .get('[data-testid=mip-iconsContainer]')
-          // .scrollTo('bottom')
-          // .wrap(onIconsChange)
-          // .should('be.calledWith', iconsPool.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER * 2) * colCount))
-          // .wrap(onIconsChange)
-          // .should('be.calledTwice');
+        cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom');
+        cy.wait(1000);
+        cy.wrap(onIconsChange).should('be.calledWith', iconsPool.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount));
+        cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom');
+        cy.wait(1000);
+        cy.wrap(onIconsChange).should('be.calledWith', iconsPool.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount));
+        cy.wrap(onIconsChange).should('be.calledTwice');
       });
   });
 });
