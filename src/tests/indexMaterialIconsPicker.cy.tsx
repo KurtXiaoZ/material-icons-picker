@@ -178,7 +178,7 @@ describe('number of icons', () => {
               cy.wrap(iconContainers.length).should('eq', (rowCount + 1) * colCount);
               let visibleCount = iconContainers.length;
               const iconsContainerRect = iconsContainers[0].getBoundingClientRect();
-              const iconsContainerBottom = iconsContainerRect.top + iconsContainerRect.height;
+              const iconsContainerBottom = iconsContainerRect.bottom;
               for(let i = iconContainers.length - 1; i >= 0; --i) {
                 const iconContainerRect = iconContainers[i].getBoundingClientRect();
                 const iconContainerTop = iconContainerRect.top;
