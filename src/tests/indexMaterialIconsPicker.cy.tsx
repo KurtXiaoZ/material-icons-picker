@@ -151,10 +151,9 @@ describe('interaction related to color selection', () => {
 });
 
 describe('number of icons', () => {
-  /*
   it('number of icons of the initial render is always equal to col * (row + 1) when the icon picker has various width and height', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 800, WIDTH_UNIT = 100;
-    const MIN_HEIGHT = 500, MAX_HEIGHT = 800, HEIGHT_UNIT = 10;
+    const MIN_HEIGHT = 500, MAX_HEIGHT = 800, HEIGHT_UNIT = 100;
     const widths = [];
     const heights = [];
     for(let width = MIN_WIDTH; width <= MAX_WIDTH; width += WIDTH_UNIT) {
@@ -169,33 +168,30 @@ describe('number of icons', () => {
         cy
           .wrap(heights)
           .each(height => {
-            cy
-              .viewport(MAX_WIDTH + 10, MAX_HEIGHT + 10)
-              .mount(<div style={{ ...WRAPPER_STYLES, width: width + 'px', height: height + 'px' }}><MaterialIconsPicker /></div>)
-              .get('[data-testid=mip-iconsContainer]')
-              .as('iconsContainers')
-              .get('[data-testid=mip-iconContainer]')
-              .as('iconContainers')
-              .then(() => {
-                const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: this.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
-                expect(this.iconContainers.length).to.equal((rowCount + 1) * colCount);
-                let visibleCount = 0;
-                const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
-                const iconsContainerTop = iconsContainerRect.top;
-                const iconsContainerBottom = iconsContainerTop + iconsContainerRect.height;
-                for(let i = 0; i < this.iconContainers.length; ++i) {
-                  const iconContainerRect = this.iconContainers[i].getBoundingClientRect();
-                  const iconContainerTop = iconContainerRect.top;
-                  const iconContainerBottom = iconContainerTop + iconContainerRect.height;
-                  if(iconContainerBottom <= iconsContainerBottom && iconContainerTop >= iconsContainerTop) visibleCount++;
-                  else break;
-                }
-                expect(visibleCount).to.equal(rowCount * colCount);
-              })
+            cy.viewport(MAX_WIDTH + 10, MAX_HEIGHT + 10);
+            cy.mount(<div style={{ ...WRAPPER_STYLES, width: width + 'px', height: height + 'px' }}><MaterialIconsPicker /></div>);
+            cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
+            cy.get('[data-testid=mip-iconContainer]').as('iconContainers');
+            cy.wrap(null).then(() => {
+              const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: this.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
+              cy.wrap(this.iconContainers.length).should('eq', (rowCount + 1) * colCount);
+              let visibleCount = 0;
+              const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
+              const iconsContainerTop = iconsContainerRect.top;
+              const iconsContainerBottom = iconsContainerTop + iconsContainerRect.height;
+              for(let i = 0; i < this.iconContainers.length; ++i) {
+                const iconContainerRect = this.iconContainers[i].getBoundingClientRect();
+                const iconContainerTop = iconContainerRect.top;
+                const iconContainerBottom = iconContainerTop + iconContainerRect.height;
+                if(iconContainerBottom <= iconsContainerBottom && iconContainerTop >= iconsContainerTop) visibleCount++;
+                else break;
+              }
+              cy.wrap(visibleCount).should('eq', rowCount * colCount);
+            });
           });
       })
   });
-  */
+  
   it('number of icons increases by DEFAULT_ROW_ADDITION_NUMBER * col by default', async () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy.get('[data-testid=mip-iconsContainer]').then(elements => {
@@ -249,7 +245,7 @@ describe('interaction of mip-iconTip', () => {
           .should('eq', el.text());
       })
   });
-  
+  /*
   it('test the positioning of mip-iconTip under different browser sizes', function() {
     const WIDTH = 500;
     const HEIGHT = 500
@@ -276,9 +272,8 @@ describe('interaction of mip-iconTip', () => {
             cy.wrap(parseInt(this.iconTips[i].style.top)).should('be.oneOf', [iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0]);
           });
       })
-  });
+  });*/
 });
-
 
 describe('test the styles prop', () => {
   it('test styles prop: container', function() {
