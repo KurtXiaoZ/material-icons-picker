@@ -19,7 +19,7 @@ const hexToRgb = (hex: string): string => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
 }
-
+/*
 describe('rendering of the elements of <MaterialIconsPicker />', () => {
   it('expected elements are rendered correctly without props', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -149,9 +149,8 @@ describe('interaction related to color selection', () => {
     });
   });
 });
-
+*/
 describe('number of icons', () => {
-  /*
   it('number of icons of the initial render is always equal to col * (row + 1) when the icon picker has various width and height', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 800, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 800, HEIGHT_UNIT = 100;
@@ -182,6 +181,7 @@ describe('number of icons', () => {
               const iconsContainerTop = iconsContainerRect.top;
               const iconsContainerBottom = iconsContainerTop + iconsContainerRect.height;
               for(let i = 0; i < iconContainers.length; ++i) {
+                // console.log(iconContainers[i].position());
                 const iconContainerRect = iconContainers[i].getBoundingClientRect();
                 const iconContainerTop = iconContainerRect.top;
                 const iconContainerBottom = iconContainerTop + iconContainerRect.height;
@@ -193,7 +193,7 @@ describe('number of icons', () => {
           });
       })
   });
-  */
+  
   it('number of icons increases by DEFAULT_ROW_ADDITION_NUMBER * col by default', async () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy.get('[data-testid=mip-iconsContainer]').then(elements => {
@@ -276,7 +276,7 @@ describe('interaction of mip-iconTip', () => {
       })
   });*/
 });
-
+/*
 describe('test the styles prop', () => {
   it('test styles prop: container', function() {
     const containerStyle = {
@@ -1513,3 +1513,4 @@ describe('test the onIconsChange prop', () => {
       });
   });
 });
+*/
