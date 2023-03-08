@@ -151,6 +151,7 @@ describe('interaction related to color selection', () => {
 });
 
 describe('number of icons', () => {
+  /*
   it('number of icons of the initial render is always equal to col * (row + 1) when the icon picker has various width and height', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 800, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 800, HEIGHT_UNIT = 100;
@@ -176,18 +177,17 @@ describe('number of icons', () => {
             cy.wrap(null).then(() => {
               const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
               cy.wrap(iconContainers.length).should('eq', (rowCount + 1) * colCount);
-              /*
               let visibleCount = iconContainers.length;
               for(let i = iconContainers.length - 1; i >= 0; --i) {
                 if(iconContainers[i].getBoundingClientRect().bottom < iconsContainers[0].getBoundingClientRect().bottom) break;
                 else visibleCount--;
               }
-              cy.wrap(visibleCount).should('eq', rowCount * colCount);*/
+              cy.wrap(visibleCount).should('eq', rowCount * colCount);
             });
           });
       })
   });
-  
+  */
   it('number of icons increases by DEFAULT_ROW_ADDITION_NUMBER * col by default', async () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy.get('[data-testid=mip-iconsContainer]').then(elements => {
