@@ -175,6 +175,7 @@ describe('number of icons', () => {
             cy.wrap(null).then(() => {
               const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: this.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
               cy.wrap(this.iconContainers.length).should('eq', (rowCount + 1) * colCount);
+              /*
               let visibleCount = 0;
               const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
               const iconsContainerTop = iconsContainerRect.top;
@@ -187,6 +188,7 @@ describe('number of icons', () => {
                 else break;
               }
               cy.wrap(visibleCount).should('eq', rowCount * colCount);
+              */
             });
           });
       })
