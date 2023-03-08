@@ -183,6 +183,7 @@ describe('number of icons', () => {
                 const iconContainerRect = iconContainers[i].getBoundingClientRect();
                 const iconContainerTop = iconContainerRect.top;
                 const iconContainerBottom = iconContainerRect.bottom;
+                console.log(iconContainerBottom, iconsContainerBottom);
                 if(iconContainerBottom < iconsContainerBottom) break;
                 else visibleCount--;
               }
