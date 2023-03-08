@@ -253,19 +253,18 @@ describe('interaction of mip-iconTip', () => {
   it('test the positioning of mip-iconTip under different browser sizes', function() {
     const WIDTH = 500;
     const HEIGHT = 500
+    cy.viewport(WIDTH + 10, HEIGHT + 10);
+    cy.mount(<div style={{ ...WRAPPER_STYLES, width: WIDTH + 'px', height: HEIGHT + 'px' }}><MaterialIconsPicker /></div>);
+    cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
+    cy.get('[data-testid=mip-iconTip]').as('iconTips');
     cy
-      .viewport(WIDTH + 10, HEIGHT + 10)
-      .mount(<div style={{ ...WRAPPER_STYLES, width: WIDTH + 'px', height: HEIGHT + 'px' }}><MaterialIconsPicker /></div>)
-      .get('[data-testid=mip-iconsContainer]')
-      .as('iconsContainers')
-      .get('[data-testid=mip-iconTip]')
-      .as('iconTips')
       .get('[data-testid=mip-iconContainer]')
       .each((iconContainers, i) => {
         const iconContainer = iconContainers[0];
         cy
           .wrap(iconContainer)
           .realHover()
+          .wrap(null)
           .then(() => {
             const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
             const iconContainerRect = iconContainer.getBoundingClientRect();
@@ -273,11 +272,10 @@ describe('interaction of mip-iconTip', () => {
             let expectedIconTipX = iconContainerRect.left + (iconContainerRect.width - iconTipRect.width) * 0.5;
             if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconsContainerRect.left + 2;
             else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + this.iconsContainers[0].clientWidth) expectedIconTipX = iconsContainerRect.left + iconsContainerRect.width - iconTipRect.width - 2;
-            expect(Math.abs(expectedIconTipX - iconTipRect.left)).to.be.lessThan(2);
-            expect(parseInt(this.iconTips[i].style.top)).to.be.oneOf([iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0])
+            cy.wrap(Math.abs(expectedIconTipX - iconTipRect.left)).should('be.lessThan', 2);
+            cy.wrap(parseInt(this.iconTips[i].style.top)).should('be.oneOf', [iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0]);
           });
       })
-      
   });
 });
 
