@@ -10,7 +10,7 @@ import {
 } from '../../lib/styles';
 import { IIcons } from './types';
 import { Icon } from '../Icon';
-import { useElementSize, useDebounce, useUpdate } from '../../lib/hooks';
+import { useElementSize, useDebounce, useUpdate, useThrottle } from '../../lib/hooks';
 import { useEffect, useState, UIEvent } from 'react';
 import LoadingIcon from '../../assets/icons/loading.svg';
 import cssStyles from './styles.module.css';
@@ -35,6 +35,15 @@ export const Icons = (props: IIcons) => {
     const [iconsContainerScrollTop, setIconsContainerScrollTop] = useState(0);
     const [loading, setLoading] = useState(false);
     const debouncedUpdateScrollTop = useDebounce((e: { target: HTMLDivElement }) => setIconsContainerScrollTop(e.target.scrollTop), 100, []);
+    const throttledIconsUpdate = useThrottle(() => {
+        setLoading(true);
+        setTimeout(() => {
+            const newIcons = [ ...icons, ...iconSearchResults.slice(icons.length, icons.length + DEFAULT_ROW_ADDITION_NUMBER * colCount)]
+            typeof onIconsChange === 'function' && onIconsChange(newIcons);
+            setIcons(newIcons);
+            setLoading(false);
+        }, 1000);
+    }, 1000, []);
     
     useEffect(() => {
         setIcons(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []);
@@ -42,14 +51,14 @@ export const Icons = (props: IIcons) => {
     }, [iconSearch]);
 
     useEffect(() => {
-        if(loading) iconsContainerRef.current.scrollTop = iconsContainerRef.current.scrollHeight - iconsContainerRef.current.clientHeight - 10;
+        if(loading) iconsContainerRef.current.scrollTop = iconsContainerRef.current.scrollHeight;
     }, [loading]);
     
     useEffect(() => {
         setIcons(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []);
     }, [rowCount, colCount]);
 
-    // useUpdate(() => typeof onIconsChange === 'function' && onIconsChange(icons), [icons]);
+    useUpdate(() => typeof onIconsChange === 'function' && onIconsChange(iconSearchResults?.slice(0, (rowCount + 1) * colCount) || []), [iconSearch]);
 
     return (
         <div
@@ -62,13 +71,7 @@ export const Icons = (props: IIcons) => {
             onScroll={(e: UIEvent<HTMLElement>) => {
                 const eventTarget = e.target as HTMLElement;
                 if(eventTarget.scrollTop + eventTarget.clientHeight === eventTarget.scrollHeight && icons.length < iconSearchResults.length) {
-                    setLoading(true);
-                    setTimeout(() => {
-                        const newIcons = [ ...icons, ...iconSearchResults.slice(icons.length, icons.length + DEFAULT_ROW_ADDITION_NUMBER * colCount)]
-                        typeof onIconsChange === 'function' && onIconsChange(newIcons);
-                        setIcons(newIcons);
-                        setLoading(false);
-                    }, 1000);
+                    throttledIconsUpdate();
                 }
                 debouncedUpdateScrollTop(e);
             }}
