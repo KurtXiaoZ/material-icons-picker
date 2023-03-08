@@ -176,17 +176,16 @@ describe('number of icons', () => {
             cy.wrap(null).then(() => {
               const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
               cy.wrap(iconContainers.length).should('eq', (rowCount + 1) * colCount);
-              let visibleCount = 0;
+              let visibleCount = iconContainers.length;
               const iconsContainerRect = iconsContainers[0].getBoundingClientRect();
               const iconsContainerTop = iconsContainerRect.top;
               const iconsContainerBottom = iconsContainerTop + iconsContainerRect.height;
-              for(let i = 0; i < iconContainers.length; ++i) {
-                // console.log(iconContainers[i].position());
+              for(let i = iconContainers.length - 1; i >= 0; --i) {
                 const iconContainerRect = iconContainers[i].getBoundingClientRect();
-                const iconContainerTop = iconContainerRect.top;
+                const iconContainerTop = iconContainerRect.y;
                 const iconContainerBottom = iconContainerTop + iconContainerRect.height;
-                if(iconContainerBottom <= iconsContainerBottom && iconContainerTop >= iconsContainerTop) visibleCount++;
-                else break;
+                if(iconContainerBottom <= iconsContainerBottom && iconContainerTop >= iconsContainerTop) break;
+                else visibleCount--;
               }
               cy.wrap(visibleCount).should('eq', rowCount * colCount);
             });
