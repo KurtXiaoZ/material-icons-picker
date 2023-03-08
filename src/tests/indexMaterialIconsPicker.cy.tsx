@@ -170,25 +170,24 @@ describe('number of icons', () => {
           .each(height => {
             cy.viewport(MAX_WIDTH + 10, MAX_HEIGHT + 10);
             cy.mount(<div style={{ ...WRAPPER_STYLES, width: width + 'px', height: height + 'px' }}><MaterialIconsPicker /></div>);
-            cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
-            cy.get('[data-testid=mip-iconContainer]').as('iconContainers');
+            let iconsContainers: any, iconContainers: any;
+            cy.get('[data-testid=mip-iconsContainer]').then(elements => iconsContainers = elements);
+            cy.get('[data-testid=mip-iconContainer]').then(elements => iconContainers = elements);
             cy.wrap(null).then(() => {
-              const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: this.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
-              cy.wrap(this.iconContainers.length).should('eq', (rowCount + 1) * colCount);
-              /*
+              const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
+              cy.wrap(iconContainers.length).should('eq', (rowCount + 1) * colCount);
               let visibleCount = 0;
-              const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
+              const iconsContainerRect = iconsContainers[0].getBoundingClientRect();
               const iconsContainerTop = iconsContainerRect.top;
               const iconsContainerBottom = iconsContainerTop + iconsContainerRect.height;
-              for(let i = 0; i < this.iconContainers.length; ++i) {
-                const iconContainerRect = this.iconContainers[i].getBoundingClientRect();
+              for(let i = 0; i < iconContainers.length; ++i) {
+                const iconContainerRect = iconContainers[i].getBoundingClientRect();
                 const iconContainerTop = iconContainerRect.top;
                 const iconContainerBottom = iconContainerTop + iconContainerRect.height;
                 if(iconContainerBottom <= iconsContainerBottom && iconContainerTop >= iconsContainerTop) visibleCount++;
                 else break;
               }
               cy.wrap(visibleCount).should('eq', rowCount * colCount);
-              */
             });
           });
       })
