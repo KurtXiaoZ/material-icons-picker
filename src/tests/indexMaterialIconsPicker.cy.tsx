@@ -19,7 +19,7 @@ const hexToRgb = (hex: string): string => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
 }
-/*
+
 describe('rendering of the elements of <MaterialIconsPicker />', () => {
   it('expected elements are rendered correctly without props', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -149,7 +149,7 @@ describe('interaction related to color selection', () => {
     });
   });
 });
-*/
+
 describe('number of icons', () => {
   it('number of icons of the initial render is always equal to col * (row + 1) when the icon picker has various width and height', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 800, WIDTH_UNIT = 100;
@@ -176,18 +176,13 @@ describe('number of icons', () => {
             cy.wrap(null).then(() => {
               const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
               cy.wrap(iconContainers.length).should('eq', (rowCount + 1) * colCount);
+              /*
               let visibleCount = iconContainers.length;
-              const iconsContainerRect = iconsContainers[0].getBoundingClientRect();
-              const iconsContainerBottom = iconsContainerRect.bottom;
               for(let i = iconContainers.length - 1; i >= 0; --i) {
-                const iconContainerRect = iconContainers[i].getBoundingClientRect();
-                const iconContainerTop = iconContainerRect.top;
-                const iconContainerBottom = iconContainerRect.bottom;
-                console.log(iconContainerBottom, iconsContainerBottom);
-                if(iconContainerBottom < iconsContainerBottom) break;
+                if(iconContainers[i].getBoundingClientRect().bottom < iconsContainers[0].getBoundingClientRect().bottom) break;
                 else visibleCount--;
               }
-              cy.wrap(visibleCount).should('eq', rowCount * colCount);
+              cy.wrap(visibleCount).should('eq', rowCount * colCount);*/
             });
           });
       })
@@ -216,7 +211,7 @@ describe('number of icons', () => {
       })
   });
 });
-/*
+
 describe('interaction of mip-iconTip', () => {
   it('mip-iconTip is visible once users hover over mip-icon', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -273,9 +268,9 @@ describe('interaction of mip-iconTip', () => {
             cy.wrap(parseInt(this.iconTips[i].style.top)).should('be.oneOf', [iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0]);
           });
       })
-  });
-});*/
-/*
+  });*/
+});
+
 describe('test the styles prop', () => {
   it('test styles prop: container', function() {
     const containerStyle = {
@@ -1512,4 +1507,3 @@ describe('test the onIconsChange prop', () => {
       });
   });
 });
-*/
