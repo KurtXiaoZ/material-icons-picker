@@ -10,28 +10,39 @@
 // ***********************************************
 //
 //
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+/*
+Cypress.Commands.add('isNotInViewport', element => {
+    cy.get(element).then($el => {
+      const bottom = Cypress.$(cy.state('window')).height()
+      const rect = $el[0].getBoundingClientRect()
+  
+      expect(rect.top).to.be.greaterThan(bottom)
+      expect(rect.bottom).to.be.greaterThan(bottom)
+      expect(rect.top).to.be.greaterThan(bottom)
+      expect(rect.bottom).to.be.greaterThan(bottom)
+    })
+  })
+  
+Cypress.Commands.add('isInViewport', element => {
+  cy.get(element).then($el => {
+    const bottom = Cypress.$(cy.state('window')).height()
+    const rect = $el[0].getBoundingClientRect()
+
+    expect(rect.top).not.to.be.greaterThan(bottom)
+    expect(rect.bottom).not.to.be.greaterThan(bottom)
+    expect(rect.top).not.to.be.greaterThan(bottom)
+    expect(rect.bottom).not.to.be.greaterThan(bottom)
+  })
+})
+
+declare global {
+    namespace Cypress {
+        interface Chainable {
+            isNotInViewport(element: any): Chainable<void>
+            isInViewport(element: any): Chainable<void>
+        }
+    }
+}
+
+export {};*/

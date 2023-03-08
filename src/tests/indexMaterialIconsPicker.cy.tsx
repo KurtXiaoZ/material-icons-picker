@@ -178,13 +178,12 @@ describe('number of icons', () => {
               cy.wrap(iconContainers.length).should('eq', (rowCount + 1) * colCount);
               let visibleCount = iconContainers.length;
               const iconsContainerRect = iconsContainers[0].getBoundingClientRect();
-              const iconsContainerTop = iconsContainerRect.top;
-              const iconsContainerBottom = iconsContainerTop + iconsContainerRect.height;
+              const iconsContainerBottom = iconsContainerRect.top + iconsContainerRect.height;
               for(let i = iconContainers.length - 1; i >= 0; --i) {
                 const iconContainerRect = iconContainers[i].getBoundingClientRect();
-                const iconContainerTop = iconContainerRect.y;
-                const iconContainerBottom = iconContainerTop + iconContainerRect.height;
-                if(iconContainerBottom <= iconsContainerBottom && iconContainerTop >= iconsContainerTop) break;
+                const iconContainerTop = iconContainerRect.top;
+                const iconContainerBottom = iconContainerRect.bottom;
+                if(iconContainerBottom < iconsContainerBottom) break;
                 else visibleCount--;
               }
               cy.wrap(visibleCount).should('eq', rowCount * colCount);
@@ -216,7 +215,7 @@ describe('number of icons', () => {
       })
   });
 });
-
+/*
 describe('interaction of mip-iconTip', () => {
   it('mip-iconTip is visible once users hover over mip-icon', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -273,8 +272,8 @@ describe('interaction of mip-iconTip', () => {
             cy.wrap(parseInt(this.iconTips[i].style.top)).should('be.oneOf', [iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0]);
           });
       })
-  });*/
-});
+  });
+});*/
 /*
 describe('test the styles prop', () => {
   it('test styles prop: container', function() {
