@@ -12,7 +12,7 @@ export const App = () => {
         <>
             <div className={cx(styles.wrapper)}>
                 <MaterialIconsPicker
-                    onIconClick={icon => console.log(icon)}
+                    onIconMouseEnter={icon => console.log(icon)}
                     // defaultHsva={{ h: 100, s: 100, v: 100, a: 1 }}
                     // hsva={hsva}
                     // onHsvaChange={newHsva => setHsva(newHsva)}

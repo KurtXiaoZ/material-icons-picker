@@ -16,4 +16,5 @@ export interface IIcons {
     hsvaProp?: { h: number; s: number; v: number; a: number };
     onIconsChange?: (icons: string[]) => void;
     onIconClick?: (icon: string) => void;
+    onIconMouseEnter?: (icon: string) => void;
 }

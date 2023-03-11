@@ -62,6 +62,6 @@ export interface IProps {
     defaultHsva?: { h: number, s: number, v: number, a: number };
     onIconsChange?: (icons: string[]) => void;
     onIconClick?: (icon: string) => void;
-    onIconHover?: (icon: string) => void;
+    onIconMouseEnter?: (icon: string) => void;
     showIconTip?: boolean;
 }

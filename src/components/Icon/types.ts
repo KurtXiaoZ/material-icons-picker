@@ -16,4 +16,5 @@ export interface IIcon {
     ref: React.Ref<HTMLElement>;
     iconsContainerScrollTop: number,
     onIconClick?: (icon: string) => void;
+    onIconMouseEnter?: (icon: string) => void;
 }

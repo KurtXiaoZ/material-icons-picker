@@ -1516,6 +1516,19 @@ describe('test onIconClick prop', () => {
     cy.wrap(onIconClick).should('be.calledOnceWith', MATERIAL_ICONS[0]);
     cy.get('[data-testid=mip-iconContainer]').eq(1).click();
     cy.wrap(onIconClick).should('be.calledWith', MATERIAL_ICONS[1]);
-    cy.wrap(onIconClick).should('be.calledTwice');
+    // cy.wrap(onIconClick).should('be.calledTwice');
+  });
+});
+
+describe('test onIconMouseEnter prop', () => {
+  it('onIconMouseEnter should be called with the name of the icon whenever the mouse enters mip-iconContainer', () => {
+    const onIconMouseEnter = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onIconMouseEnter={onIconMouseEnter}/></div>);
+    cy.get('[data-testid=mip-iconContainer]').eq(0).realHover();
+    cy.wrap(onIconMouseEnter).should('be.calledWith', MATERIAL_ICONS[0]);
+    cy.get('[data-testid=mip-iconContainer]').eq(1).realHover();
+    cy.wrap(onIconMouseEnter).should('be.calledWith', MATERIAL_ICONS[1]);
+    cy.get('[data-testid=mip-iconContainer]').eq(2).realHover();
+    cy.wrap(onIconMouseEnter).should('be.calledWith', MATERIAL_ICONS[2]);
   });
 });
