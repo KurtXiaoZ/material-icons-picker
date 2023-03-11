@@ -17,4 +17,5 @@ export interface IIcons {
     onIconsChange?: (icons: string[]) => void;
     onIconClick?: (icon: string) => void;
     onIconMouseEnter?: (icon: string) => void;
+    showIconTip?: boolean;
 }

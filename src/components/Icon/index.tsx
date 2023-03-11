@@ -13,7 +13,7 @@ import { IIcon } from './types';
 const cx = classNames.bind(cssStyles);
 
 export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>) => {
-    const { styles = {}, icon, type, hsva, iconsContainerScrollTop, onIconClick, onIconMouseEnter } = props;
+    const { styles = {}, icon, type, hsva, iconsContainerScrollTop, onIconClick, onIconMouseEnter, showIconTip } = props;
 
     const { iconContainer, icon: iconStyle, iconTip } = styles;
 
@@ -22,14 +22,15 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
     const [iconTipBaseStyle, setIconTipBaseStyle] = useState(ICON_TIP_BASE_STYLE({ top: 0, left: 0 }));
 
     useEffect(() => {
-        const { iconTipTop: top = 0, iconTipLeft: left = 0 } = getIconTipPosition({
-            containerRef: ref,
-            iconTipRef,
-            iconContainerRef,
-        });
-        setIconTipBaseStyle(ICON_TIP_BASE_STYLE({ top, left }));
-
-    }, [iconsContainerScrollTop, icon, type, hsva, styles]);
+        if(showIconTip) {
+            const { iconTipTop: top = 0, iconTipLeft: left = 0 } = getIconTipPosition({
+                containerRef: ref,
+                iconTipRef,
+                iconContainerRef,
+            });
+            setIconTipBaseStyle(ICON_TIP_BASE_STYLE({ top, left }));
+        }
+    }, [iconsContainerScrollTop, icon, type, hsva, styles, showIconTip]);
 
     return (
         <div
@@ -59,14 +60,14 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
             >
                 {icon}
             </div>
-            <div
+            {showIconTip && <div
                 style={iconTip ? iconTip(iconTipBaseStyle) : iconTipBaseStyle}
                 className={cx(cssStyles.iconTip)}
                 ref={iconTipRef}
                 data-testid='mip-iconTip'
             >
                 {icon}
-            </div>
+            </div>}
         </div>
     );
 });

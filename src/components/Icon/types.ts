@@ -17,4 +17,5 @@ export interface IIcon {
     iconsContainerScrollTop: number,
     onIconClick?: (icon: string) => void;
     onIconMouseEnter?: (icon: string) => void;
+    showIconTip?: boolean;
 }

@@ -1532,3 +1532,17 @@ describe('test onIconMouseEnter prop', () => {
     cy.wrap(onIconMouseEnter).should('be.calledWith', MATERIAL_ICONS[2]);
   });
 });
+
+describe('test showIconTip prop', () => {
+  it('if showIconTip is set to false, mip-iconTip should not be in the document if mip-iconContainer is hovered', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker showIconTip={false}/></div>);
+    cy.get('[data-testid=mip-iconContainer]').eq(0).realHover();
+    cy.get('[data-testid=mip-iconTip]').should('not.exist');
+  });
+
+  it('if showIconTip is set to false, mip-iconTip should be in the document if mip-iconContainer is hovered', () => {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker showIconTip={true}/></div>);
+    cy.get('[data-testid=mip-iconContainer]').eq(0).realHover();
+    cy.get('[data-testid=mip-iconTip]').eq(0).should('be.visible');
+  });
+});
