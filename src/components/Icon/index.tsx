@@ -30,9 +30,10 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
     const iconContainerRef = useRef<HTMLDivElement | null>(null);
     const iconTipRef = useRef<HTMLDivElement | null>(null);
     const [iconTipBaseStyle, setIconTipBaseStyle] = useState(ICON_TIP_BASE_STYLE({ top: 0, left: 0 }));
+    const [showTip, setShowTip] = useState(false);
 
     useEffect(() => {
-        if(showIconTip) {
+        if(showIconTip && showTip) {
             const { iconTipTop: top = 0, iconTipLeft: left = 0 } = getIconTipPosition({
                 containerRef: ref,
                 iconTipRef,
@@ -40,7 +41,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
             });
             setIconTipBaseStyle(ICON_TIP_BASE_STYLE({ top, left }));
         }
-    }, [iconsContainerScrollTop, icon, type, hsva, styles, showIconTip]);
+    }, [iconsContainerScrollTop, icon, type, hsva, styles, showIconTip, showTip]);
 
     return (
         <div
@@ -53,7 +54,11 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
             ref={iconContainerRef}
             data-testid='mip-iconContainer'
             onClick={() => typeof onIconClick === 'function' && onIconClick(icon)}
-            onMouseEnter={() => typeof onIconMouseEnter === 'function' && onIconMouseEnter(icon)}
+            onMouseEnter={() => {
+                typeof onIconMouseEnter === 'function' && onIconMouseEnter(icon);
+                setShowTip(true);
+            }}
+            onMouseLeave={() => setShowTip(false)}
         >
             <div
                 className={cx(
@@ -70,9 +75,9 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
             >
                 {icon}
             </div>
-            {showIconTip && <div
+            {showIconTip && showTip && <div
                 style={iconTip ? iconTip(iconTipBaseStyle) : iconTipBaseStyle}
-                className={cx(cssStyles.iconTip)}
+                // className={cx(cssStyles.iconTip)}
                 ref={iconTipRef}
                 data-testid='mip-iconTip'
             >

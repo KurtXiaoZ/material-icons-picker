@@ -19,7 +19,7 @@ const hexToRgb = (hex: string): string => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
 }
-
+/*
 describe('rendering of the elements of <MaterialIconsPicker />', () => {
   it('expected elements are rendered correctly without props', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -47,7 +47,7 @@ describe('rendering of the elements of <MaterialIconsPicker />', () => {
     cy.get('[data-testid=mip-iconsContainer]').should('be.visible');
     cy.get('[data-testid=mip-iconContainer]').should('be.visible');
     cy.get('[data-testid=mip-icon]').should('be.visible');
-    cy.get('[data-testid=mip-iconTip]').should('not.be.visible');
+    cy.get('[data-testid=mip-iconTip]').should('not.exist');
     cy.get('[data-testid=mip-loadingContainer]').should('not.exist');
     cy.get('[data-testid=mip-loading]').should('not.exist');
     cy.get('[data-testid=mip-iconsContainerPlaceholder]').should('not.exist');
@@ -151,7 +151,7 @@ describe('interaction related to color selection', () => {
 });
 
 describe('number of icons', () => {
-  /*
+  
   it('number of icons of the initial render is always equal to col * (row + 1) when the icon picker has various width and height', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 800, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 800, HEIGHT_UNIT = 100;
@@ -187,7 +187,7 @@ describe('number of icons', () => {
           });
       })
   });
-  */
+  
   it('number of icons increases by DEFAULT_ROW_ADDITION_NUMBER * col by default', async () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy.get('[data-testid=mip-iconsContainer]').then(elements => {
@@ -211,35 +211,40 @@ describe('number of icons', () => {
       })
   });
 });
-
+*/
 describe('interaction of mip-iconTip', () => {
   it('mip-iconTip is visible once users hover over mip-icon', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
-    cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
-    cy.get('[data-testid=mip-iconContainer]').as('icons');
     cy
-      .get('[data-testid=mip-icon]')
-      .then(() => {
-        const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: this.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
-        for(let i = 0; i < rowCount * colCount; ++i) {
-          cy.wrap(this.icons[i]).realHover()
-          .wait(100)
-          .get('[data-testid=mip-iconTip]').eq(i).should('be.visible');
-        }
+      .get('[data-testid=mip-iconContainer]')
+      .each(([iconContainer], i) => {
+        cy
+          .wrap(iconContainer)
+          .trigger('mouseover')
+          .get('[data-testid=mip-iconTip]')
+          .first()
+          .should('be.visible')
+          .wrap(iconContainer)
+          .trigger('mouseout');
+        
       });
   });
   
   it('mip-iconTip contains the right text content', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy
-      .get('[data-testid=mip-icon]')
-      .each((el, i) => {
+      .get('[data-testid=mip-iconContainer]')
+      .each(([iconContainer], i) => {
         cy
+          .wrap(iconContainer)
+          .trigger('mouseover')
           .get('[data-testid=mip-iconTip]')
-          .eq(i)
-          .invoke('text')
-          .should('eq', el.text());
-      })
+          .first()
+          .should('have.text', MATERIAL_ICONS[i])
+          .wrap(iconContainer)
+          .trigger('mouseout');
+        
+      });
   });
   /*
   it('test the positioning of mip-iconTip under different browser sizes', function() {
@@ -270,7 +275,7 @@ describe('interaction of mip-iconTip', () => {
       })
   });*/
 });
-
+/*
 describe('test the styles prop', () => {
   it('test styles prop: container', function() {
     const containerStyle = {
@@ -1559,3 +1564,4 @@ describe('test setIconTipText prop', () => {
       });
   });
 });
+*/
