@@ -15,4 +15,5 @@ export interface IIcon {
     hsva: { h: number; s: number; v: number; a: number };
     ref: React.Ref<HTMLElement>;
     iconsContainerScrollTop: number,
+    onIconClick?: (icon: string) => void;
 }

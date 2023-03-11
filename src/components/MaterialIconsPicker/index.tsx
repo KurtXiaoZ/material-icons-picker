@@ -24,6 +24,7 @@ export const MaterialIconsPicker = React.forwardRef((props: IProps, refs: IRefs)
         hsva: hsvaProp,
         defaultHsva,
         onIconsChange,
+        onIconClick,
     } = props || {};
 
     const {
@@ -133,6 +134,7 @@ export const MaterialIconsPicker = React.forwardRef((props: IProps, refs: IRefs)
                 hsva={hsva}
                 hsvaProp={hsvaProp}
                 onIconsChange={onIconsChange}
+                onIconClick={onIconClick}
             />
         </div>
     );

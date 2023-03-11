@@ -13,7 +13,7 @@ import { IIcon } from './types';
 const cx = classNames.bind(cssStyles);
 
 export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>) => {
-    const { styles = {}, icon, type, hsva, iconsContainerScrollTop } = props;
+    const { styles = {}, icon, type, hsva, iconsContainerScrollTop, onIconClick } = props;
 
     const { iconContainer, icon: iconStyle, iconTip } = styles;
 
@@ -41,6 +41,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
             className={cx(cssStyles.iconContainer)}
             ref={iconContainerRef}
             data-testid='mip-iconContainer'
+            onClick={() => typeof onIconClick === 'function' && onIconClick(icon)}
         >
             <div
                 className={cx(

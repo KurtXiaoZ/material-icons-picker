@@ -1507,3 +1507,15 @@ describe('test the onIconsChange prop', () => {
       });
   });
 });
+
+describe('test onIconClick prop', () => {
+  it('onIconClick should be called with the name of the icon every time mip-iconContainer is clicked', () => {
+    const onIconClick = cy.stub();
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onIconClick={onIconClick}/></div>);
+    cy.get('[data-testid=mip-iconContainer]').eq(0).click();
+    cy.wrap(onIconClick).should('be.calledOnceWith', MATERIAL_ICONS[0]);
+    cy.get('[data-testid=mip-iconContainer]').eq(1).click();
+    cy.wrap(onIconClick).should('be.calledWith', MATERIAL_ICONS[1]);
+    cy.wrap(onIconClick).should('be.calledTwice');
+  });
+});
