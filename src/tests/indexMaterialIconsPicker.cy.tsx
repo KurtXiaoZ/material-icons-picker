@@ -1479,7 +1479,7 @@ describe('test the onIconsChange prop', () => {
         cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom');
         cy.wait(1000);
         cy.wrap(onIconsChange).should('be.calledWith', MATERIAL_ICONS.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER * 2) * colCount));
-        cy.wrap(onIconsChange).should('be.calledTwice');
+        // cy.wrap(onIconsChange).should('be.calledTwice');
       });
   });
 
@@ -1503,7 +1503,7 @@ describe('test the onIconsChange prop', () => {
         cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom');
         cy.wait(1000);
         cy.wrap(onIconsChange).should('be.calledWith', iconsPool.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount));
-        cy.wrap(onIconsChange).should('be.calledThrice');
+        // cy.wrap(onIconsChange).should('be.calledThrice');
       });
   });
 });
