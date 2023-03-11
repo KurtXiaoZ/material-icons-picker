@@ -1546,3 +1546,16 @@ describe('test showIconTip prop', () => {
     cy.get('[data-testid=mip-iconTip]').eq(0).should('be.visible');
   });
 });
+
+describe('test setIconTipText prop', () => {
+  it('iconTipText should have the name text defined by setIconTipText', () => {
+    const ADDED_TEXT = '_new';
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker setIconTipText={icon => icon + ADDED_TEXT}/></div>);
+    cy
+      .wrap(new Array(30))
+      .each((_, i) => {
+        cy.get('[data-testid=mip-iconContainer]').eq(i).realHover();
+        cy.get('[data-testid=mip-iconTip]').eq(i).should('have.text', MATERIAL_ICONS[i] + ADDED_TEXT);
+      });
+  });
+});

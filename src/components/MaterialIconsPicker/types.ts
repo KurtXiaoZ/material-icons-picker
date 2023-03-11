@@ -64,4 +64,5 @@ export interface IProps {
     onIconClick?: (icon: string) => void;
     onIconMouseEnter?: (icon: string) => void;
     showIconTip?: boolean;
+    setIconTipText?: (icon: string) => string;
 }

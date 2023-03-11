@@ -13,7 +13,17 @@ import { IIcon } from './types';
 const cx = classNames.bind(cssStyles);
 
 export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>) => {
-    const { styles = {}, icon, type, hsva, iconsContainerScrollTop, onIconClick, onIconMouseEnter, showIconTip } = props;
+    const {
+        styles = {},
+        icon,
+        type,
+        hsva,
+        iconsContainerScrollTop,
+        onIconClick,
+        onIconMouseEnter,
+        showIconTip,
+        setIconTipText
+    } = props;
 
     const { iconContainer, icon: iconStyle, iconTip } = styles;
 
@@ -66,7 +76,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
                 ref={iconTipRef}
                 data-testid='mip-iconTip'
             >
-                {icon}
+                {typeof setIconTipText === 'function' ? setIconTipText(icon) : icon}
             </div>}
         </div>
     );

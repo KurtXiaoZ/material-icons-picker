@@ -16,7 +16,18 @@ import LoadingIcon from '../../assets/icons/loading.svg';
 import cssStyles from './styles.module.css';
 
 export const Icons = (props: IIcons) => {
-    const { styles = {}, iconSearch, type, hsva, hsvaProp, onIconsChange, onIconClick, onIconMouseEnter, showIconTip } = props;
+    const { 
+        styles = {},
+        iconSearch,
+        type,
+        hsva,
+        hsvaProp,
+        onIconsChange,
+        onIconClick,
+        onIconMouseEnter,
+        showIconTip,
+        setIconTipText
+    } = props;
 
     const {
         iconsContainer,
@@ -89,6 +100,7 @@ export const Icons = (props: IIcons) => {
                         onIconClick={onIconClick}
                         onIconMouseEnter={onIconMouseEnter}
                         showIconTip={showIconTip}
+                        setIconTipText={setIconTipText}
                     />
                 ))}
                 {loading && <div
