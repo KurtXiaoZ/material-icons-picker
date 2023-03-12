@@ -245,34 +245,40 @@ describe('interaction of mip-iconTip', () => {
         
       });
   });
-  /*
+  
   it('test the positioning of mip-iconTip under different browser sizes', function() {
-    const WIDTH = 500;
-    const HEIGHT = 500
-    cy.viewport(WIDTH + 10, HEIGHT + 10);
-    cy.mount(<div style={{ ...WRAPPER_STYLES, width: WIDTH + 'px', height: HEIGHT + 'px' }}><MaterialIconsPicker /></div>);
-    cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
-    cy.get('[data-testid=mip-iconTip]').as('iconTips');
-    cy
-      .get('[data-testid=mip-iconContainer]')
-      .each((iconContainers, i) => {
-        const iconContainer = iconContainers[0];
+    const MIN_WIDTH = 500, MAX_WIDTH = 700, WIDTH_UNIT = 100;
+    const MIN_HEIGHT = 500, MAX_HEIGHT = 700, HEIGHT_UNIT = 100;
+    for(let width = MIN_WIDTH; width <= MAX_WIDTH; width += WIDTH_UNIT) {
+      for(let height = MIN_HEIGHT; height <= MAX_HEIGHT; height += HEIGHT_UNIT) {
+        cy.viewport(width + 10, height + 10);
+        cy.mount(<div style={{ ...WRAPPER_STYLES, width: width + 'px', height: height + 'px' }}><MaterialIconsPicker /></div>);
+        cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
         cy
-          .wrap(iconContainer)
-          .realHover()
-          .wrap(null)
-          .then(() => {
-            const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
-            const iconContainerRect = iconContainer.getBoundingClientRect();
-            const iconTipRect = this.iconTips[i].getBoundingClientRect();
-            let expectedIconTipX = iconContainerRect.left + (iconContainerRect.width - iconTipRect.width) * 0.5;
-            if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconsContainerRect.left + 2;
-            else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + this.iconsContainers[0].clientWidth) expectedIconTipX = iconsContainerRect.left + iconsContainerRect.width - iconTipRect.width - 2;
-            cy.wrap(Math.abs(expectedIconTipX - iconTipRect.left)).should('be.lessThan', 2);
-            cy.wrap(parseInt(this.iconTips[i].style.top)).should('be.oneOf', [iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0]);
+          .get('[data-testid=mip-iconContainer]')
+          .each((iconContainers, i) => {
+            const iconContainer = iconContainers[0];
+            cy
+              .wrap(iconContainer)
+              .trigger('mouseover')
+              .get('[data-testid=mip-iconTip]')
+              .as('iconTips')
+              .then(() => {
+                const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
+                const iconContainerRect = iconContainer.getBoundingClientRect();
+                const iconTipRect = this.iconTips[0].getBoundingClientRect();
+                let expectedIconTipX = iconContainerRect.left + (iconContainerRect.width - iconTipRect.width) * 0.5;
+                if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconsContainerRect.left + 2;
+                else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + this.iconsContainers[0].clientWidth) expectedIconTipX = iconsContainerRect.left + iconsContainerRect.width - iconTipRect.width - 2;
+                cy.wrap(Math.abs(expectedIconTipX - iconTipRect.left)).should('be.lessThan', 2);
+                cy.wrap(parseInt(this.iconTips[0].style.top)).should('be.oneOf', [iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0]);
+              })
+              .wrap(iconContainer)
+              .trigger('mouseout');
           });
-      })
-  });*/
+      }
+    }
+  });
 });
 
 describe('test the styles prop', () => {
