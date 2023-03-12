@@ -54,7 +54,7 @@ export const Icon = React.forwardRef((props: IIcon, ref: RefObject<HTMLElement>)
             ref={iconContainerRef}
             data-testid='mip-iconContainer'
             onClick={() => typeof onIconClick === 'function' && onIconClick(icon)}
-            onMouseEnter={() => {
+            onMouseOver={() => {
                 typeof onIconMouseEnter === 'function' && onIconMouseEnter(icon);
                 setShowTip(true);
             }}

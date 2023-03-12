@@ -19,7 +19,7 @@ const hexToRgb = (hex: string): string => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
 }
-/*
+
 describe('rendering of the elements of <MaterialIconsPicker />', () => {
   it('expected elements are rendered correctly without props', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -151,7 +151,7 @@ describe('interaction related to color selection', () => {
 });
 
 describe('number of icons', () => {
-  
+  /*
   it('number of icons of the initial render is always equal to col * (row + 1) when the icon picker has various width and height', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 800, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 800, HEIGHT_UNIT = 100;
@@ -186,7 +186,7 @@ describe('number of icons', () => {
             });
           });
       })
-  });
+  });*/
   
   it('number of icons increases by DEFAULT_ROW_ADDITION_NUMBER * col by default', async () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -211,22 +211,21 @@ describe('number of icons', () => {
       })
   });
 });
-*/
+
 describe('interaction of mip-iconTip', () => {
   it('mip-iconTip is visible once users hover over mip-icon', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy
       .get('[data-testid=mip-iconContainer]')
-      .each(([iconContainer], i) => {
+      .each((iconContainers, i) => {
         cy
-          .wrap(iconContainer)
+          .wrap(iconContainers[0])
           .trigger('mouseover')
           .get('[data-testid=mip-iconTip]')
           .first()
           .should('be.visible')
-          .wrap(iconContainer)
+          .wrap(iconContainers[0])
           .trigger('mouseout');
-        
       });
   });
   
@@ -234,14 +233,14 @@ describe('interaction of mip-iconTip', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy
       .get('[data-testid=mip-iconContainer]')
-      .each(([iconContainer], i) => {
+      .each((iconContainers, i) => {
         cy
-          .wrap(iconContainer)
+          .wrap(iconContainers[0])
           .trigger('mouseover')
           .get('[data-testid=mip-iconTip]')
           .first()
           .should('have.text', MATERIAL_ICONS[i])
-          .wrap(iconContainer)
+          .wrap(iconContainers[0])
           .trigger('mouseout');
         
       });
@@ -275,7 +274,7 @@ describe('interaction of mip-iconTip', () => {
       })
   });*/
 });
-/*
+
 describe('test the styles prop', () => {
   it('test styles prop: container', function() {
     const containerStyle = {
@@ -771,22 +770,27 @@ describe('test the styles prop', () => {
       })
     }}/></div>);
     cy
-      .get('[data-testid=mip-iconTip]')
-      .as('iconTip')
-      .then(() => Object.entries({ ...baseStyles.ICON_TIP_BASE_STYLE({}), ...iconTipStyle }))
-      .then(entries => entries.forEach(([key, val]) => {
-        if(key !== 'top' && key !== 'left') {
-          let expectedVal = val;
-          if(key === 'fontFamily') expectedVal = '"Arial serif"';
-          for(let i = 0; i < this.iconTip.length; ++i) {
-            cy
-              .wrap(this.iconTip[i].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim())
-              .should('eq', expectedVal);
-          }
-        }
-      }));
+      .get('[data-testid=mip-iconContainer]')
+      .each((iconContainers, i) => {
+        const iconTipStyles = Object.entries({ ...baseStyles.ICON_TIP_BASE_STYLE({}), ...iconTipStyle });
+        cy
+          .wrap(iconContainers[0])
+          .trigger('mouseover')
+          .get('[data-testid=mip-iconTip]')
+          .then(iconTips => {
+            iconTipStyles.forEach(([key, val]) => {
+              if(key !== 'top' && key !== 'left') {
+                let expectedVal = val;
+                if(key === 'fontFamily') expectedVal = '"Arial serif"';
+                cy.wrap(iconTips[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim()).should('eq', expectedVal);
+              }
+            });
+          })
+          .wrap(iconContainers[0])
+          .trigger('mouseout');
+      });
   });
-
+  
   it('test styles prop: loadingContainer', function() {
     const loadingContainerStyle = {
       opacity: '0.5',
@@ -1529,11 +1533,11 @@ describe('test onIconMouseEnter prop', () => {
   it('onIconMouseEnter should be called with the name of the icon whenever the mouse enters mip-iconContainer', () => {
     const onIconMouseEnter = cy.stub();
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker onIconMouseEnter={onIconMouseEnter}/></div>);
-    cy.get('[data-testid=mip-iconContainer]').eq(0).realHover();
+    cy.get('[data-testid=mip-iconContainer]').eq(0).trigger('mouseover').trigger('mouseout');
     cy.wrap(onIconMouseEnter).should('be.calledWith', MATERIAL_ICONS[0]);
-    cy.get('[data-testid=mip-iconContainer]').eq(1).realHover();
+    cy.get('[data-testid=mip-iconContainer]').eq(1).trigger('mouseover').trigger('mouseout');
     cy.wrap(onIconMouseEnter).should('be.calledWith', MATERIAL_ICONS[1]);
-    cy.get('[data-testid=mip-iconContainer]').eq(2).realHover();
+    cy.get('[data-testid=mip-iconContainer]').eq(2).trigger('mouseover').trigger('mouseout');
     cy.wrap(onIconMouseEnter).should('be.calledWith', MATERIAL_ICONS[2]);
   });
 });
@@ -1541,13 +1545,13 @@ describe('test onIconMouseEnter prop', () => {
 describe('test showIconTip prop', () => {
   it('if showIconTip is set to false, mip-iconTip should not be in the document if mip-iconContainer is hovered', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker showIconTip={false}/></div>);
-    cy.get('[data-testid=mip-iconContainer]').eq(0).realHover();
+    cy.get('[data-testid=mip-iconContainer]').eq(0).trigger('mouseover');
     cy.get('[data-testid=mip-iconTip]').should('not.exist');
   });
 
   it('if showIconTip is set to false, mip-iconTip should be in the document if mip-iconContainer is hovered', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker showIconTip={true}/></div>);
-    cy.get('[data-testid=mip-iconContainer]').eq(0).realHover();
+    cy.get('[data-testid=mip-iconContainer]').eq(0).trigger('mouseover');
     cy.get('[data-testid=mip-iconTip]').eq(0).should('be.visible');
   });
 });
@@ -1559,9 +1563,9 @@ describe('test setIconTipText prop', () => {
     cy
       .wrap(new Array(30))
       .each((_, i) => {
-        cy.get('[data-testid=mip-iconContainer]').eq(i).realHover();
-        cy.get('[data-testid=mip-iconTip]').eq(i).should('have.text', MATERIAL_ICONS[i] + ADDED_TEXT);
+        cy.get('[data-testid=mip-iconContainer]').eq(i).trigger('mouseover');
+        cy.get('[data-testid=mip-iconTip]').first().should('have.text', MATERIAL_ICONS[i] + ADDED_TEXT);
+        cy.get('[data-testid=mip-iconContainer]').eq(i).trigger('mouseout');
       });
   });
 });
-*/
