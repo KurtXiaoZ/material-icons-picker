@@ -502,11 +502,12 @@ describe('test the styles prop', () => {
       .as('typeOption')
       .then(() => Object.entries({ ...baseStyles.TYPE_OPTION_BASE_STYLE, ...typeOptionStyle }))
       .then(entries => entries.forEach(([key, val]) => {
-        let expectedVal = val;
-        if(key === 'fontFamily') expectedVal = '"Arial serif"';
         cy
           .wrap(this.typeOption[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
-          .should('eq', expectedVal);
+          .then(text => {
+            if(key === 'fontFamily') expect(text).to.be.oneOf(['Arial serif', '"Arial serif"']);
+            else expect(text).to.be.equal(val);
+          })
       }));
   });
 
@@ -526,11 +527,12 @@ describe('test the styles prop', () => {
       .as('colorSelectorContainer')
       .then(() => Object.entries({ ...baseStyles.COLOR_SELECTOR_CONTAINER_BASE_STYLE, ...colorSelectorContainerStyle }))
       .then(entries => entries.forEach(([key, val]) => {
-        let expectedVal = val;
-        if(key === 'fontFamily') expectedVal = '"Arial serif"';
         cy
           .wrap(this.colorSelectorContainer[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
-          .should('eq', expectedVal);
+          .then(text => {
+            if(key === 'fontFamily') expect(text).to.be.oneOf(['Arial serif', '"Arial serif"']);
+            else expect(text).to.be.equal(val);
+          })
       }));
   });
 
@@ -575,11 +577,12 @@ describe('test the styles prop', () => {
       .as('colorSelected')
       .then(() => Object.entries({ ...baseStyles.COLOR_SELECTED_BASE_STYLE, ...colorSelectedStyle }))
       .then(entries => entries.forEach(([key, val]) => {
-        let expectedVal = val;
-        if(key === 'fontFamily') expectedVal = '"Arial serif"';
         cy
           .wrap(this.colorSelected[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
-          .should('eq', expectedVal);
+          .then(text => {
+            if(key === 'fontFamily') expect(text).to.be.oneOf(['Arial serif', '"Arial serif"']);
+            else expect(text).to.be.equal(val);
+          });
       }));
   });
 
@@ -599,11 +602,12 @@ describe('test the styles prop', () => {
       .as('colorSelectorArrow')
       .then(() => Object.entries({ ...baseStyles.COLOR_SELECTOR_ARROW_BASE_STYLE, ...colorSelectorArrowStyle }))
       .then(entries => entries.forEach(([key, val]) => {
-        let expectedVal = val;
-        if(key === 'fontFamily') expectedVal = '"Arial serif"';
         cy
           .wrap(this.colorSelectorArrow[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
-          .should('eq', expectedVal);
+          .then(text => {
+            if(key === 'fontFamily') expect(text).to.be.oneOf(['Arial serif', '"Arial serif"']);
+            else expect(text).to.be.equal(val);
+          });
       }));
   });
 
@@ -780,9 +784,12 @@ describe('test the styles prop', () => {
           .then(iconTips => {
             iconTipStyles.forEach(([key, val]) => {
               if(key !== 'top' && key !== 'left') {
-                let expectedVal = val;
-                if(key === 'fontFamily') expectedVal = '"Arial serif"';
-                cy.wrap(iconTips[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim()).should('eq', expectedVal);
+                cy
+                  .wrap(iconTips[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim())
+                  .then(text => {
+                    if(key === 'fontFamily') expect(text).to.be.oneOf(['Arial serif', '"Arial serif"']);
+                    else expect(text).to.be.equal(val);
+                  });
               }
             });
           })
@@ -867,7 +874,10 @@ describe('test the styles prop', () => {
         if(key === 'fontFamily') expectedVal = '"Arial serif"';
         cy
           .wrap(this.iconsContainerPlaceholder[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()]?.trim())
-          .should('eq', expectedVal);
+          .then(text => {
+            if(key === 'fontFamily') expect(text).to.be.oneOf(['Arial serif', '"Arial serif"']);
+            else expect(text).to.be.equal(val);
+          })
       }));
   });
 });
@@ -1482,13 +1492,10 @@ describe('test the onIconsChange prop', () => {
       .get('[data-testid=mip-iconsContainer]')
       .then(iconsContainers => {
         const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
-        cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom');
-        cy.wait(1000);
+        cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom', { duration: 500 });
         cy.wrap(onIconsChange).should('be.calledWith', MATERIAL_ICONS.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount));
-        cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom');
-        cy.wait(1000);
+        cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom', { duration: 500 });
         cy.wrap(onIconsChange).should('be.calledWith', MATERIAL_ICONS.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER * 2) * colCount));
-        // cy.wrap(onIconsChange).should('be.calledTwice');
       });
   });
 
@@ -1506,13 +1513,10 @@ describe('test the onIconsChange prop', () => {
       .then(iconsContainers => {
         const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
         cy.wrap(onIconsChange).should('be.calledOnceWith', iconsPool.slice(0, (rowCount + 1) * colCount));
-        cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom');
-        cy.wait(1000);
+        cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom', { duration: 500 });
         cy.wrap(onIconsChange).should('be.calledWith', iconsPool.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount));
-        cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom');
-        cy.wait(1000);
+        cy.get('[data-testid=mip-iconsContainer]').scrollTo('bottom', { duration: 500 });
         cy.wrap(onIconsChange).should('be.calledWith', iconsPool.slice(0, (rowCount + 1 + DEFAULT_ROW_ADDITION_NUMBER) * colCount));
-        // cy.wrap(onIconsChange).should('be.calledThrice');
       });
   });
 });
@@ -1525,7 +1529,6 @@ describe('test onIconClick prop', () => {
     cy.wrap(onIconClick).should('be.calledOnceWith', MATERIAL_ICONS[0]);
     cy.get('[data-testid=mip-iconContainer]').eq(1).click();
     cy.wrap(onIconClick).should('be.calledWith', MATERIAL_ICONS[1]);
-    // cy.wrap(onIconClick).should('be.calledTwice');
   });
 });
 

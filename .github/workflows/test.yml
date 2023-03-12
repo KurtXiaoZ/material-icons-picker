@@ -14,15 +14,15 @@ jobs:
       - name: Cypress run on chrome
         uses: cypress-io/github-action@v5
         with:
-          command: npm run cy:tests
+          command: npm run cy:chrome
           browser: chrome
       - name: Cypress run on firefox
         uses: cypress-io/github-action@v5
         with:
-          command: npm run cy:tests
+          command: npm run cy:firefox
           browser: firefox
       - name: Cypress run on electron
         uses: cypress-io/github-action@v5
         with:
-          command: npm run cy:tests
+          command: npm run cy:electron
           browser: electron

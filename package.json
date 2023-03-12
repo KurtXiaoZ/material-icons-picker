@@ -19,7 +19,9 @@
         "eject": "react-scripts eject",
         "prettier": "npx prettier --write .",
         "cy:open": "cypress open",
-        "cy:tests": "cypress run --component"
+        "cy:chrome": "cypress run --component --browser chrome",
+        "cy:firefox": "cypress run --component --browser firefox",
+        "cy:electron": "cypress run --component --browser electron"
     },
     "eslintConfig": {
         "extends": [
