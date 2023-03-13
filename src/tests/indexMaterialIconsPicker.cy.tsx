@@ -174,21 +174,21 @@ describe('number of icons', () => {
             cy.get('[data-testid=mip-iconContainer]').as('iconContainers');
             cy.wrap(null).then(() => {
               const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: this.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
-              let visibleCount = this.iconContainers.length;
               const size = this.iconContainers.length;
+              let visibleCount = size;
               cy
-                // .wrap(size)
-                // .should('eq', (rowCount + 1) * colCount)
+                .wrap(size)
+                .should('eq', (rowCount + 1) * colCount)
                 .then(() => {
                   const size = this.iconContainers.length;
                   for(let i = size - 1; i >= 0; --i) {
-                    // cy.wrap(this.iconContainers[i].offsetTop).should('eq', 12345);
-                    cy.wrap(this.iconsContainers[0].scrollHeight).should('eq', 12345);
+                    console.log(i);
                     if(this.iconContainers[i].offsetTop < this.iconsContainers[0].scrollHeight) break;
                     else visibleCount--;
                   }
                   // expect(visibleCount).to.be.equal(rowCount * colCount);
                 })
+                .then(() => expect(visibleCount).to.be.equal(rowCount * colCount))
                 // .wrap(visibleCount)
                 // .should('eq', rowCount * colCount);
             });
