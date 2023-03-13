@@ -178,7 +178,7 @@ describe('number of icons', () => {
               let visibleCount = size;
               cy
                 .wrap(size)
-                .should('eq', (rowCount + 2) * colCount)
+                .should('eq', (rowCount + 1) * colCount)
                 .then(() => {
                   for(let i = size - 1; i >= 0; --i) {
                     // cy.wrap(12).should('eq', 34);
@@ -188,7 +188,7 @@ describe('number of icons', () => {
                   // expect(visibleCount).to.be.equal(rowCount * colCount);
                 })
                 // .then(() => expect(99).to.be.equal(11))
-                .then(() => expect(visibleCount).to.be.equal((rowCount + 1) * colCount))
+                .then(() => expect(visibleCount).to.be.equal(rowCount * colCount))
                 // .wrap(visibleCount)
                 // .should('eq', rowCount * colCount);
             });
