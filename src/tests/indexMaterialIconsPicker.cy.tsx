@@ -178,8 +178,10 @@ describe('number of icons', () => {
               cy.wrap(this.iconContainers.length).should('eq', (rowCount + 1) * colCount);
               let visibleCount = this.iconContainers.length;
               for(let i = this.iconContainers.length - 1; i >= 0; --i) {
-                core.debug('offsetTop', this.iconContainers[i]);
-                core.debug('offsetHeight', this.iconsContainers[0].scrollHeight);
+                core.debug('offsetTop');
+                core.debug(this.iconContainers[i]);
+                core.debug('offsetHeight');
+                core.debug(this.iconsContainers[0].scrollHeight);
                 if(this.iconContainers[i].offsetTop < this.iconsContainers[0].scrollHeight) break;
                 else visibleCount--;
               }
