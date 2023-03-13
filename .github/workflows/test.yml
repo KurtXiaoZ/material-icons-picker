@@ -16,6 +16,8 @@ jobs:
         with:
           command: npm run cy:chrome
           browser: chrome
+        env:
+          DEBUG: '@cypress/github-action'
       - name: Cypress run on firefox
         uses: cypress-io/github-action@v5
         with:
