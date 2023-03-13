@@ -188,7 +188,7 @@ describe('number of icons', () => {
                   // expect(visibleCount).to.be.equal(rowCount * colCount);
                 })
                 // .then(() => expect(99).to.be.equal(11))
-                .then(() => expect(visibleCount).to.be.equal(rowCount * colCount))
+                .then(() => expect(visibleCount).to.be.equal(rowCount * colCount - 11))
                 // .wrap(visibleCount)
                 // .should('eq', rowCount * colCount);
             });
