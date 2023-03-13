@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@actions/core": "^1.10.0",
         "@uiw/color-convert": "^1.1.1",
         "@uiw/react-color-hue": "^1.1.1",
         "@uiw/react-color-saturation": "^1.1.1",
