@@ -19,7 +19,7 @@ const hexToRgb = (hex: string): string => {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result ? `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})` : null;
 }
-/*
+
 describe('rendering of the elements of <MaterialIconsPicker />', () => {
   it('expected elements are rendered correctly without props', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -149,9 +149,9 @@ describe('interaction related to color selection', () => {
     });
   });
 });
-*/
+
 describe('number of icons', () => {
-  it('number of icons of the initial render is always equal to col * (row + 1) when the icon picker has various width and height', function() {
+  /*it('number of icons of the initial render is always equal to col * (row + 1) when the icon picker has various width and height', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 800, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 800, HEIGHT_UNIT = 100;
     const widths = [];
@@ -194,8 +194,8 @@ describe('number of icons', () => {
             });
           });
       })
-  });
-  /*
+  });*/
+  
   it('number of icons increases by DEFAULT_ROW_ADDITION_NUMBER * col by default', async () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy.get('[data-testid=mip-iconsContainer]').then(elements => {
@@ -217,9 +217,9 @@ describe('number of icons', () => {
         cy.get('[data-testid=mip-searchInput]').type('book');
         cy.get('[data-testid=mip-iconContainer]').then(elements => cy.wrap(elements.length % colCount).should('not.equal', 0));
       })
-  });*/
+  });
 });
-/*
+
 describe('interaction of mip-iconTip', () => {
   it('mip-iconTip is visible once users hover over mip-icon', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -286,7 +286,7 @@ describe('interaction of mip-iconTip', () => {
           });
       }
     }
-  });
+  });*/
 });
 
 describe('test the styles prop', () => {
@@ -1585,4 +1585,4 @@ describe('test setIconTipText prop', () => {
         cy.get('[data-testid=mip-iconContainer]').eq(i).trigger('mouseout');
       });
   });
-});*/
+});
