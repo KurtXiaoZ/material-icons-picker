@@ -174,15 +174,20 @@ describe('number of icons', () => {
             cy.get('[data-testid=mip-iconContainer]').as('iconContainers');
             cy.wrap(null).then(() => {
               const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: this.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
-              cy.wrap(this.iconContainers.length).should('eq', (rowCount + 1) * colCount);
               let visibleCount = this.iconContainers.length;
-              for(let i = this.iconContainers.length - 1; i >= 0; --i) {
-                cy.wrap(this.iconContainers[i].offsetTop).should('eq', 12345);
-                // cy.wrap(this.iconsContainers[0].scrollHeight).should('eq', 12345);
-                if(this.iconContainers[i].offsetTop < this.iconsContainers[0].scrollHeight) break;
-                else visibleCount--;
-              }
-              cy.wrap(visibleCount).should('eq', rowCount * colCount);
+              cy
+                .wrap(this.iconContainers.length)
+                .should('eq', (rowCount + 1) * colCount)
+                .then(() => {
+                  for(let i = this.iconContainers.length - 1; i >= 0; --i) {
+                    // cy.wrap(this.iconContainers[i].offsetTop).should('eq', 12345);
+                    // cy.wrap(this.iconsContainers[0].scrollHeight).should('eq', 12345);
+                    if(this.iconContainers[i].offsetTop < this.iconsContainers[0].scrollHeight) break;
+                    else visibleCount--;
+                  }
+                })
+                .wrap(visibleCount)
+                .should('eq', rowCount * colCount);
             });
           });
       })
