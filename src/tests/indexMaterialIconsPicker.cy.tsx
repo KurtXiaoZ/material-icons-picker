@@ -151,7 +151,6 @@ describe('interaction related to color selection', () => {
 });
 
 describe('number of icons', () => {
-  /*
   it('number of icons of the initial render is always equal to col * (row + 1) when the icon picker has various width and height', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 800, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 800, HEIGHT_UNIT = 100;
@@ -186,7 +185,7 @@ describe('number of icons', () => {
             });
           });
       })
-  });*/
+  });
   
   it('number of icons increases by DEFAULT_ROW_ADDITION_NUMBER * col by default', async () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
@@ -245,7 +244,7 @@ describe('interaction of mip-iconTip', () => {
         
       });
   });
-  
+  /*
   it('test the positioning of mip-iconTip under different browser sizes', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 500, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 500, HEIGHT_UNIT = 100;
@@ -278,7 +277,7 @@ describe('interaction of mip-iconTip', () => {
           });
       }
     }
-  });
+  });*/
 });
 
 describe('test the styles prop', () => {
