@@ -177,17 +177,17 @@ describe('number of icons', () => {
               let visibleCount = this.iconContainers.length;
               const size = this.iconContainers.length;
               cy
-                .wrap(size)
-                .should('eq', (rowCount + 1) * colCount)
+                // .wrap(size)
+                // .should('eq', (rowCount + 1) * colCount)
                 .then(() => {
                   const size = this.iconContainers.length;
                   for(let i = size - 1; i >= 0; --i) {
-                    // cy.wrap(this.iconContainers[i].offsetTop).should('eq', 12345);
+                    cy.wrap(this.iconContainers[i].offsetTop).should('eq', 12345);
                     // cy.wrap(this.iconsContainers[0].scrollHeight).should('eq', 12345);
                     if(this.iconContainers[i].offsetTop < this.iconsContainers[0].scrollHeight) break;
                     else visibleCount--;
                   }
-                  expect(visibleCount).to.be.equal(rowCount * colCount);
+                  // expect(visibleCount).to.be.equal(rowCount * colCount);
                 })
                 // .wrap(visibleCount)
                 // .should('eq', rowCount * colCount);
