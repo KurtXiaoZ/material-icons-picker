@@ -177,6 +177,8 @@ describe('number of icons', () => {
               cy.wrap(this.iconContainers.length).should('eq', (rowCount + 1) * colCount);
               let visibleCount = this.iconContainers.length;
               for(let i = this.iconContainers.length - 1; i >= 0; --i) {
+                cy.wrap(this.iconContainers[i].offsetTop).should('eq', 12345);
+                // cy.wrap(this.iconsContainers[0].scrollHeight).should('eq', 12345);
                 if(this.iconContainers[i].offsetTop < this.iconsContainers[0].scrollHeight) break;
                 else visibleCount--;
               }
