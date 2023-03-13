@@ -1,6 +1,5 @@
 import { MaterialIconsPicker } from '../components/MaterialIconsPicker/index';
 import { DEFAULT_ROW_ADDITION_NUMBER, ICON_TYPES } from '../lib/constants';
-import * as core from '@actions/core';
 import { useState, useRef } from 'react';
 import { hsvaToHex } from '@uiw/color-convert';
 import * as baseStyles from '../lib/styles';
@@ -178,10 +177,6 @@ describe('number of icons', () => {
               cy.wrap(this.iconContainers.length).should('eq', (rowCount + 1) * colCount);
               let visibleCount = this.iconContainers.length;
               for(let i = this.iconContainers.length - 1; i >= 0; --i) {
-                core.debug('offsetTop');
-                core.debug(this.iconContainers[i]);
-                core.debug('offsetHeight');
-                core.debug(this.iconsContainers[0].scrollHeight);
                 if(this.iconContainers[i].offsetTop < this.iconsContainers[0].scrollHeight) break;
                 else visibleCount--;
               }
