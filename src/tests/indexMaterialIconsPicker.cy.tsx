@@ -175,19 +175,22 @@ describe('number of icons', () => {
             cy.wrap(null).then(() => {
               const { rowCount, colCount } = baseStyles.getIconsContainerRowColCounts({ current: this.iconsContainers[0] }, baseStyles.ICON_CONTAINER_BASE_STYLE);
               let visibleCount = this.iconContainers.length;
+              const size = this.iconContainers.length;
               cy
-                .wrap(this.iconContainers.length)
+                .wrap(size)
                 .should('eq', (rowCount + 1) * colCount)
                 .then(() => {
-                  for(let i = this.iconContainers.length - 1; i >= 0; --i) {
+                  const size = this.iconContainers.length;
+                  for(let i = size - 1; i >= 0; --i) {
                     // cy.wrap(this.iconContainers[i].offsetTop).should('eq', 12345);
                     // cy.wrap(this.iconsContainers[0].scrollHeight).should('eq', 12345);
                     if(this.iconContainers[i].offsetTop < this.iconsContainers[0].scrollHeight) break;
                     else visibleCount--;
                   }
+                  expect(visibleCount).to.be.equal(rowCount * colCount);
                 })
-                .wrap(visibleCount)
-                .should('eq', rowCount * colCount);
+                // .wrap(visibleCount)
+                // .should('eq', rowCount * colCount);
             });
           });
       })
