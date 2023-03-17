@@ -31,18 +31,10 @@ export const COLOR_SELECTOR_CONTAINER_BASE_STYLE: object = {
     cursor: 'pointer',
 };
 
-export const COLOR_SELECTED_INDICATOR_BASE_STYLE = ({
-    color,
-}: {
-    color: string;
-}): object => ({
+export const COLOR_SELECTED_INDICATOR_BASE_STYLE: object = {
     height: '100%',
     aspectRatio: '1/1',
-    backgroundColor: color,
-    borderRadius: '50%',
-    border: '1px solid black',
-    display: 'inline-block',
-});
+};
 
 export const COLOR_SELECTED_BASE_STYLE: object = {
     fontFamily: 'Arial serif',
@@ -269,7 +261,7 @@ export const TYPE_OPTIONS_CONTAINER_BASE_STYLE = ({
     top: height,
     left: '0px',
     border: '1px solid black',
-    width,
+    width: width - 2,
     height: 'fit-content',
     backgroundColor: 'rgb(34, 34, 34)',
     boxShadow: 'rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',

@@ -14,6 +14,7 @@ import { useElementSize, useEventOutside } from '../../lib/hooks';
 import Hue from '@uiw/react-color-hue';
 import Saturation from '@uiw/react-color-saturation';
 import { hsvaToHex } from '@uiw/color-convert';
+import FullCircle from '../../assets/icons/fullCircle.svg';
 
 export const ColorSelector = (props: IColorSelector) => {
     const { styles = {}, hsva, setHsva, onHsvaChange, hsvaProp } = props;
@@ -53,20 +54,18 @@ export const ColorSelector = (props: IColorSelector) => {
             onMouseDown={() => setShowPaletteContainer(true)}
             data-testid='mip-colorSelectorContainer'
         >
-            <span
+            <svg
                 style={
                     colorSelectedIndicator
-                        ? colorSelectedIndicator(
-                              COLOR_SELECTED_INDICATOR_BASE_STYLE({
-                                  color: hsvaToHex(hsvaProp || hsva),
-                              })
-                          )
-                        : COLOR_SELECTED_INDICATOR_BASE_STYLE({
-                              color: hsvaToHex(hsvaProp || hsva),
-                          })
+                        ? colorSelectedIndicator(COLOR_SELECTED_INDICATOR_BASE_STYLE)
+                        : COLOR_SELECTED_INDICATOR_BASE_STYLE
                 }
+                preserveAspectRatio
                 data-testid='mip-colorSelectedIndicator'
-            ></span>
+                viewBox='0 0 100 100'
+            >
+                <circle cx="50" cy="50" r="50" fill={hsvaToHex(hsvaProp || hsva)} />
+            </svg>
             <span
                 style={
                     colorSelected

@@ -490,7 +490,7 @@ describe('test the styles prop', () => {
       .then(entries => entries.forEach(([key, val]) => {
         let expectedVal: any = val;
         if(key === 'top') expectedVal = '39px';
-        else if(key === 'width') expectedVal = '225px';
+        else if(key === 'width') expectedVal = val + 'px';
         cy
           .wrap(this.typeOptionsContainer[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
           .should('eq', expectedVal);
@@ -564,11 +564,10 @@ describe('test the styles prop', () => {
     cy
       .get('[data-testid=mip-colorSelectedIndicator]')
       .as('colorSelectedIndicator')
-      .then(() => Object.entries({ ...baseStyles.COLOR_SELECTED_INDICATOR_BASE_STYLE({ color: '#000000' }), ...colorSelectedIndicatorStyle }))
+      .then(() => Object.entries({ ...baseStyles.COLOR_SELECTED_INDICATOR_BASE_STYLE, ...colorSelectedIndicatorStyle }))
       .then(entries => entries.forEach(([key, val]) => {
         let expectedVal = val;
         if(key === 'aspectRatio') expectedVal = '1 / 1';
-        else if(key === 'backgroundColor') expectedVal = 'rgb(0, 0, 0)';
         cy
           .wrap(this.colorSelectedIndicator[0].style[key.split(/(?=[A-Z])/).join('-').toLowerCase()].trim())
           .should('eq', expectedVal);
