@@ -225,7 +225,7 @@ describe('interaction of mip-iconTip', () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
     cy
       .get('[data-testid=mip-iconContainer]')
-      .each((iconContainers, i) => {
+      .each(iconContainers => new Cypress.Promise(resolve => {
         cy
           .wrap(iconContainers[0])
           .trigger('mouseover')
@@ -234,7 +234,8 @@ describe('interaction of mip-iconTip', () => {
           .should('be.visible')
           .wrap(iconContainers[0])
           .trigger('mouseout');
-      });
+        resolve();
+      }));
   });
   
   it('mip-iconTip contains the right text content', function() {
@@ -265,7 +266,7 @@ describe('interaction of mip-iconTip', () => {
         cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
         cy
           .get('[data-testid=mip-iconContainer]')
-          .each((iconContainers, i) => new Cypress.Promise(resolve => {
+          .each(iconContainers => new Cypress.Promise(resolve => {
             // cy.wait(500);
             const iconContainer = iconContainers[0];
             cy.wrap(iconContainer).trigger('mouseover');
@@ -281,8 +282,8 @@ describe('interaction of mip-iconTip', () => {
                 else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + this.iconsContainers[0].clientWidth) expectedIconTipX = iconsContainerRect.left + iconsContainerRect.width - iconTipRect.width - 2;
                 // cy.wrap(Math.abs(expectedIconTipX - iconTipRect.left)).should('be.lessThan', 2);
                 cy.wrap(parseInt(this.iconTips[0].style.top)).should('be.oneOf', [iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0]);
-              });
-            cy.wrap(iconContainer).trigger('mouseout');
+              })
+              .wrap(iconContainer).trigger('mouseout');
             resolve();
             // cy.wait(500);
           })
