@@ -253,7 +253,7 @@ describe('interaction of mip-iconTip', () => {
         
       });
   });
-  /*
+  
   it('test the positioning of mip-iconTip under different browser sizes', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 500, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 500, HEIGHT_UNIT = 100;
@@ -286,7 +286,7 @@ describe('interaction of mip-iconTip', () => {
           });
       }
     }
-  });*/
+  });
 });
 
 describe('test the styles prop', () => {
