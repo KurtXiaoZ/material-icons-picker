@@ -238,23 +238,6 @@ describe('interaction of mip-iconTip', () => {
       }));
   });
   
-  it('mip-iconTip contains the right text content', function() {
-    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
-    cy
-      .get('[data-testid=mip-iconContainer]')
-      .each((iconContainers, i) => new Cypress.Promise(resolve => {
-        cy
-          .wrap(iconContainers[0])
-          .trigger('mouseover')
-          .get('[data-testid=mip-iconTip]')
-          .first()
-          .should('have.text', MATERIAL_ICONS[i])
-          .wrap(iconContainers[0])
-          .trigger('mouseout');
-        resolve();
-      }));
-  });
-  
   it('test the positioning of mip-iconTip under different browser sizes', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 500, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 500, HEIGHT_UNIT = 100;
@@ -295,6 +278,23 @@ describe('interaction of mip-iconTip', () => {
          );
       // }
     // }
+  });
+
+  it('mip-iconTip contains the right text content', function() {
+    cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
+    cy
+      .get('[data-testid=mip-iconContainer]')
+      .each((iconContainers, i) => new Cypress.Promise(resolve => {
+        cy
+          .wrap(iconContainers[0])
+          .trigger('mouseover')
+          .get('[data-testid=mip-iconTip]')
+          .first()
+          .should('have.text', MATERIAL_ICONS[i])
+          .wrap(iconContainers[0])
+          .trigger('mouseout');
+        resolve();
+      }));
   });
 });
 
