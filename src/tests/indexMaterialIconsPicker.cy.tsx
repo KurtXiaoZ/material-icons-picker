@@ -265,8 +265,8 @@ describe('interaction of mip-iconTip', () => {
         cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
         cy
           .get('[data-testid=mip-iconContainer]')
-          .each((iconContainers, i) => {
-            cy.wait(500);
+          .each((iconContainers, i) => new Cypress.Promise(() => {
+            // cy.wait(500);
             const iconContainer = iconContainers[0];
             cy.wrap(iconContainer).trigger('mouseover');
             cy
@@ -283,8 +283,9 @@ describe('interaction of mip-iconTip', () => {
                 cy.wrap(parseInt(this.iconTips[0].style.top)).should('be.oneOf', [iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0]);
               });
             cy.wrap(iconContainer).trigger('mouseout');
-            cy.wait(500);
-         });
+            // cy.wait(500);
+          });
+         );
       // }
     // }
   });
