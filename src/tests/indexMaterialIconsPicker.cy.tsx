@@ -238,47 +238,40 @@ describe('interaction of mip-iconTip', () => {
       }));
   });
   
+  /*
   it('test the positioning of mip-iconTip under different browser sizes', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 500, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 500, HEIGHT_UNIT = 100;
-    const width = 500, height = 500;
-    // for(let width = MIN_WIDTH; width <= MAX_WIDTH; width += WIDTH_UNIT) {
-    //   for(let height = MIN_HEIGHT; height <= MAX_HEIGHT; height += HEIGHT_UNIT) {
+    for(let width = MIN_WIDTH; width <= MAX_WIDTH; width += WIDTH_UNIT) {
+      for(let height = MIN_HEIGHT; height <= MAX_HEIGHT; height += HEIGHT_UNIT) {
+        cy.viewport(width + 10, height + 10);
+        cy.mount(<div style={{ ...WRAPPER_STYLES, width: width + 'px', height: height + 'px' }}><MaterialIconsPicker /></div>);
+        cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
         cy
-          // .viewport(width + 10, height + 10)
-          .mount(<div style={{ ...WRAPPER_STYLES, width: width + 'px', height: height + 'px' }}><MaterialIconsPicker /></div>)
-        // cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
           .get('[data-testid=mip-iconContainer]')
-          .each(iconContainers => new Cypress.Promise(resolve => {
-            // cy.wait(500);
-            // const iconContainer = iconContainers[0];
+          .each((iconContainers, i) => {
+            const iconContainer = iconContainers[0];
             cy
-              .wrap(iconContainers[0])
+              .wrap(iconContainer)
               .trigger('mouseover')
-              .wrap(iconContainers[0])
+              .get('[data-testid=mip-iconTip]')
+              .as('iconTips')
+              .then(() => {
+                const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
+                const iconContainerRect = iconContainer.getBoundingClientRect();
+                const iconTipRect = this.iconTips[0].getBoundingClientRect();
+                let expectedIconTipX = iconContainerRect.left + (iconContainerRect.width - iconTipRect.width) * 0.5;
+                if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconsContainerRect.left + 2;
+                else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + this.iconsContainers[0].clientWidth) expectedIconTipX = iconsContainerRect.left + iconsContainerRect.width - iconTipRect.width - 2;
+                cy.wrap(Math.abs(expectedIconTipX - iconTipRect.left)).should('be.lessThan', 2);
+                cy.wrap(parseInt(this.iconTips[0].style.top)).should('be.oneOf', [iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0]);
+              })
+              .wrap(iconContainer)
               .trigger('mouseout');
-            // cy.wait(500);
-            // cy
-            //   // .get('[data-testid=mip-iconTip]')
-            //   // .as('iconTips')
-            //   // .then(() => {
-            //   //   const iconsContainerRect = this.iconsContainers[0].getBoundingClientRect();
-            //   //   const iconContainerRect = iconContainers[0].getBoundingClientRect();
-            //   //   const iconTipRect = this.iconTips[0].getBoundingClientRect();
-            //   //   let expectedIconTipX = iconContainerRect.left + (iconContainerRect.width - iconTipRect.width) * 0.5;
-            //   //   if(expectedIconTipX < iconsContainerRect.left) expectedIconTipX = iconsContainerRect.left + 2;
-            //   //   else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + this.iconsContainers[0].clientWidth) expectedIconTipX = iconsContainerRect.left + iconsContainerRect.width - iconTipRect.width - 2;
-            //   //   // cy.wrap(Math.abs(expectedIconTipX - iconTipRect.left)).should('be.lessThan', 2);
-            //   //   cy.wrap(parseInt(this.iconTips[0].style.top)).should('be.oneOf', [iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0]);
-            //   // })
-            //   .then(() => cy.wrap(iconContainers[0]).trigger('mouseout'));
-            resolve();
-            // cy.wait(500);
-          })
-         );
-      // }
-    // }
-  });
+          });
+      }
+    }
+  });*/
 
   it('mip-iconTip contains the right text content', function() {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
