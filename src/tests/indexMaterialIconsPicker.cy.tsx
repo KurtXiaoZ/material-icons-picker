@@ -261,10 +261,10 @@ describe('interaction of mip-iconTip', () => {
     const width = 500, height = 500;
     // for(let width = MIN_WIDTH; width <= MAX_WIDTH; width += WIDTH_UNIT) {
     //   for(let height = MIN_HEIGHT; height <= MAX_HEIGHT; height += HEIGHT_UNIT) {
-        cy.viewport(width + 10, height + 10);
-        cy.mount(<div style={{ ...WRAPPER_STYLES, width: width + 'px', height: height + 'px' }}><MaterialIconsPicker /></div>);
-        cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
         cy
+          .viewport(width + 10, height + 10)
+          .mount(<div style={{ ...WRAPPER_STYLES, width: width + 'px', height: height + 'px' }}><MaterialIconsPicker /></div>)
+        // cy.get('[data-testid=mip-iconsContainer]').as('iconsContainers');
           .get('[data-testid=mip-iconContainer]')
           .each(iconContainers => new Cypress.Promise(resolve => {
             // cy.wait(500);
