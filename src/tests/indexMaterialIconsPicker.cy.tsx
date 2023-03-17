@@ -266,9 +266,8 @@ describe('interaction of mip-iconTip', () => {
           .get('[data-testid=mip-iconContainer]')
           .each((iconContainers, i) => {
             const iconContainer = iconContainers[0];
+            cy.wrap(iconContainer).trigger('mouseover');
             cy
-              .wrap(iconContainer)
-              .trigger('mouseover')
               .get('[data-testid=mip-iconTip]')
               .as('iconTips')
               .then(() => {
@@ -280,9 +279,8 @@ describe('interaction of mip-iconTip', () => {
                 else if(expectedIconTipX + iconTipRect.width + 2 > iconsContainerRect.left + this.iconsContainers[0].clientWidth) expectedIconTipX = iconsContainerRect.left + iconsContainerRect.width - iconTipRect.width - 2;
                 // cy.wrap(Math.abs(expectedIconTipX - iconTipRect.left)).should('be.lessThan', 2);
                 cy.wrap(parseInt(this.iconTips[0].style.top)).should('be.oneOf', [iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0]);
-              })
-              .wrap(iconContainer)
-              .trigger('mouseout');
+              });
+            cy.wrap(iconContainer).trigger('mouseout');
           });
       }
     }
