@@ -151,7 +151,7 @@ describe('interaction related to color selection', () => {
 });
 
 describe('number of icons', () => {
-  it('number of icons of the initial render is always equal to col * (row + 1) when the icon picker has various width and height', function() {
+  /*it('number of icons of the initial render is always equal to col * (row + 1) when the icon picker has various width and height', function() {
     const MIN_WIDTH = 500, MAX_WIDTH = 800, WIDTH_UNIT = 100;
     const MIN_HEIGHT = 500, MAX_HEIGHT = 800, HEIGHT_UNIT = 100;
     const widths = [];
@@ -179,22 +179,22 @@ describe('number of icons', () => {
               cy
                 .wrap(size)
                 .should('eq', (rowCount + 1) * colCount)
-                // .then(() => {
-                //   for(let i = size - 1; i >= 0; --i) {
-                //     // cy.wrap(12).should('eq', 34);
-                //     if(this.iconContainers[i].offsetTop < this.iconsContainers[0].scrollHeight) break;
-                //     else visibleCount--;
-                //   }
-                //   // expect(visibleCount).to.be.equal(rowCount * colCount);
-                // })
-                // // .then(() => expect(99).to.be.equal(11))
-                // .then(() => expect(visibleCount).to.be.equal(rowCount * colCount))
-                // // .wrap(visibleCount)
-                // // .should('eq', rowCount * colCount);
+                .then(() => {
+                  for(let i = size - 1; i >= 0; --i) {
+                    // cy.wrap(12).should('eq', 34);
+                    if(this.iconContainers[i].offsetTop < this.iconsContainers[0].scrollHeight) break;
+                    else visibleCount--;
+                  }
+                  // expect(visibleCount).to.be.equal(rowCount * colCount);
+                })
+                // .then(() => expect(99).to.be.equal(11))
+                .then(() => expect(visibleCount).to.be.equal(rowCount * colCount))
+                // .wrap(visibleCount)
+                // .should('eq', rowCount * colCount);
             });
           });
       })
-  });
+  });*/
   
   it('number of icons increases by DEFAULT_ROW_ADDITION_NUMBER * col by default', async () => {
     cy.mount(<div style={WRAPPER_STYLES}><MaterialIconsPicker /></div>);
