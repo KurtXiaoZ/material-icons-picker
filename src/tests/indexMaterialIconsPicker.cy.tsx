@@ -270,6 +270,7 @@ describe('interaction of mip-iconTip', () => {
             // cy.wait(500);
             const iconContainer = iconContainers[0];
             cy.wrap(iconContainer).trigger('mouseover');
+            cy.wait(500);
             cy
               .get('[data-testid=mip-iconTip]')
               .as('iconTips')
