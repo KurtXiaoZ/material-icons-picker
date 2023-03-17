@@ -284,7 +284,7 @@ describe('interaction of mip-iconTip', () => {
                 // cy.wrap(Math.abs(expectedIconTipX - iconTipRect.left)).should('be.lessThan', 2);
                 cy.wrap(parseInt(this.iconTips[0].style.top)).should('be.oneOf', [iconContainerRect.height + 2, -1 * iconTipRect.height - 2, 0]);
               })
-              then(() => cy.wrap(iconContainer).trigger('mouseout'));
+              .then(() => cy.wrap(iconContainer).trigger('mouseout'));
             resolve();
             // cy.wait(500);
           })
