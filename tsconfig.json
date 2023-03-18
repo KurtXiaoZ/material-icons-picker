@@ -1,7 +1,6 @@
 {
     "compilerOptions": {
         "jsx": "react-jsx",
-        "esModuleInterop": true,
-        "types": ["cypress", "node", "cypress-real-events"]
+        "esModuleInterop": true
     }
 }

@@ -1,4 +1,5 @@
 .DS_Store
+.github/
 node_modules/
 cypress/
 public/
@@ -6,3 +7,4 @@ src/tests/
 src/App.tsx
 src/index.js
 src/styles.module.css
+src/cypress.config.ts

@@ -53,7 +53,7 @@
     ]
   },
   "description": "React material icon picker",
-  "main": "index.js",
+  "main": "package.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KurtXiaoZ/material-icons-picker.git"
