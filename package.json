@@ -1,55 +1,73 @@
 {
-    "name": "my-app",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-        "@uiw/color-convert": "^1.1.1",
-        "@uiw/react-color-hue": "^1.1.1",
-        "@uiw/react-color-saturation": "^1.1.1",
-        "classnames": "^2.3.2",
-        "cypress-real-events": "^1.7.6",
-        "material-icons": "^1.13.1",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "react-scripts": "5.0.1"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "eject": "react-scripts eject",
-        "prettier": "npx prettier --write .",
-        "cy:open": "cypress open",
-        "cy:chrome": "cypress run --component --browser chrome",
-        "cy:firefox": "cypress run --component --browser firefox",
-        "cy:electron": "cypress run --component --browser electron"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "devDependencies": {
-        "cypress": "^12.5.0",
-        "jest": "^27.5.1",
-        "prettier": "2.8.3",
-        "typescript": "^4.9.4"
-    },
-    "jest": {
-        "transformIgnorePatterns": [
-            "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
-        ]
-    }
+  "name": "react-material-icon-picker",
+  "version": "0.1.0",
+  "private": false,
+  "dependencies": {
+    "@uiw/color-convert": "^1.1.1",
+    "@uiw/react-color-hue": "^1.1.1",
+    "@uiw/react-color-saturation": "^1.1.1",
+    "classnames": "^2.3.2",
+    "cypress-real-events": "^1.7.6",
+    "material-icons": "^1.13.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "prettier": "npx prettier --write .",
+    "cy:open": "cypress open",
+    "cy:chrome": "cypress run --component --browser chrome",
+    "cy:firefox": "cypress run --component --browser firefox",
+    "cy:electron": "cypress run --component --browser electron"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "cypress": "^12.5.0",
+    "jest": "^27.5.1",
+    "prettier": "2.8.3",
+    "typescript": "^4.9.4"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
+    ]
+  },
+  "description": "React material icon picker",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KurtXiaoZ/material-icons-picker.git"
+  },
+  "author": "KurtXiaoZ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KurtXiaoZ/material-icons-picker/issues"
+  },
+  "homepage": "https://github.com/KurtXiaoZ/material-icons-picker#readme",
+  "keywords": [
+    "react",
+    "react-component",
+    "material-icon",
+    "material-icon-picker"
+  ]
 }

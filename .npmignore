@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+cypress/
+public/
+src/tests/
+src/App.tsx
+src/index.js
+src/styles.module.css
