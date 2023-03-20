@@ -1,6 +1,6 @@
 import styles from './styles.module.css';
 import classNames from 'classnames/bind';
-import { MaterialIconsPicker } from './components/MaterialIconsPicker';
+import { MaterialIconsPicker } from './package.js';
 import { useState, useRef } from 'react';
 import { ICON_TYPES } from './lib/constants';
 const cx = classNames.bind(styles);

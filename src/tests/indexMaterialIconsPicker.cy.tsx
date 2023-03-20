@@ -3,7 +3,6 @@ import { DEFAULT_ROW_ADDITION_NUMBER, ICON_TYPES } from '../lib/constants';
 import { useState, useRef } from 'react';
 import { hsvaToHex } from '@uiw/color-convert';
 import * as baseStyles from '../lib/styles';
-import "cypress-real-events";
 import { MATERIAL_ICONS } from '../assets/materialIcons';
 
 const WRAPPER_STYLES: object = {
